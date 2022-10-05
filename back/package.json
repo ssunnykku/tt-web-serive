@@ -27,7 +27,15 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
     "supertest": "^6.1.6",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "redis": "^4.3.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",
