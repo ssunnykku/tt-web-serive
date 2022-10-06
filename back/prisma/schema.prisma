@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comments {
+  id         Int      @id @default(autoincrement())
+  commenter  Int
+  comment    String   @db.VarChar(100)
+  created_at DateTime @default(now()) @db.DateTime(0)
+  users      users    @relation(fields: [commenter], references: [id], onDelete: Cascade, map: "commenter")
+
+  @@index([commenter], map: "commerter_idx")
+}
+
+model users {
+  id         Int        @id @default(autoincrement())
+  name       String     @unique(map: "name_UNIQUE") @db.VarChar(20)
+  age        Int        @db.UnsignedInt
+  married    Int        @db.TinyInt
+  comment    String?    @db.Text
+  created_at DateTime   @default(now()) @db.DateTime(0)
+  comments   comments[]
+}
