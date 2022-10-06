@@ -1,0 +1,7 @@
+.mainPage2{
+    background-image: url('../../images/MainPage2.png');
+    width: 100%;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
+};
