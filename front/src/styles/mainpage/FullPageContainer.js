@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 
 const FullpageContainer= styled.div`
-.container{
+.container1{
   scroll-behavior: smooth;
-  width: 100%;
   height: 100vh;
   scroll-snap-type: y mandatory;
   scroll-padding-top: 10px;
   overflow-y: scroll;
 }
-.container::-webkit-scrollbar {width:0; background: transparent;}
-.container > div {
+.container1::-webkit-scrollbar {width:0; background: transparent;}
+.container1 > div {
   scroll-snap-align: start;
 }`
 

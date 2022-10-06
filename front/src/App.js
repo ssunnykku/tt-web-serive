@@ -1,17 +1,14 @@
-import React, { useState, useEffect, useReducer, createContext } from "react";
-import FullpageContainer from "./styles/mainpage/FullPageContainer";
-import MainPage1 from "./pages/MainPage1";
-import MainPage2 from "./pages/MainPage2";
-import MainPage3 from "./pages/MainPage3";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+
 function App() {
   return (
-    <FullpageContainer>
-      <div className="container">
-        <MainPage1/>
-        <MainPage2/>
-        <MainPage3/>
-      </div>
-    </FullpageContainer>
+    <Router>
+      <Routes>
+        <Route path="/" exact element={<MainPage />} />
+      </Routes>
+    </Router>
   );
 }
 
