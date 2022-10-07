@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
-    "test": "jest --setupFiles dotenv/config"
+    "test": "jest --setupFiles dotenv/config",
+    "migrate": "npx prisma migrate dev"
   },
   "repository": {
     "type": "git",
