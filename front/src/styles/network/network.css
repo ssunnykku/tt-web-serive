@@ -1,0 +1,18 @@
+.NetworkContainer{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.SearchFormContainer{
+    display: flex;
+    align-items: center;
+    justify-content:flex-end;
+    margin-right: 5%;
+    width: 100%;
+    border-bottom: 2px solid grey;
+}
+#showMore-btn{
+    display: block;
+    margin: 0 auto;
+}
+

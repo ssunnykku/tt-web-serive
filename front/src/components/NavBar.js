@@ -19,7 +19,9 @@ const NavBar = () => {
           navigate('/')
         }} className="nav-link">Home</a></li>
         <li className="nav-item"><a href="#" className="nav-link">MyPage</a></li>
-        <li className="nav-item"><a href="#" className="nav-link">Challenges</a></li>
+        <li className="nav-item"><a onClick={()=>{
+          navigate('/network')
+        }} className="nav-link">Challenges</a></li>
         <li className="nav-item"><a href="#" className="nav-link">Login/Join</a></li>
       </ul>
       <div onClick={navToggle} className={toggleIcon}>

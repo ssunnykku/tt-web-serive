@@ -1,0 +1,17 @@
+.imageWrap {
+    text-align: center;
+}
+.cardtext{
+    font-size: 0.9rem;
+}
+.cardSubText{
+    color: rgb(179, 176, 176);
+}
+.duration{
+    font-size: 0.9rem;
+    color: rgb(179, 176, 176);
+    margin-top: 3%;
+}
+.cardtitle{
+    margin-top: 4%;
+}
