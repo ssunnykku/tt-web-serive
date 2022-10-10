@@ -2,12 +2,8 @@
     margin: 0;
     box-sizing: border-box;
 }
-html{
-    font-size: 100%;
-}
-body{
-    font-size: 1.5rem;
-}
+
+
 li{
     list-style: none;
 }
@@ -23,6 +19,9 @@ a{
     height: 8vh;
     background: none;
     opacity: 100%;
+}
+.nav-link{
+    font-size: 1.5rem;
 }
 .nav-brand{
     text-transform: uppercase;
