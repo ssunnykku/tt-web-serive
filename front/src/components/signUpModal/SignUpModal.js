@@ -27,14 +27,19 @@ function SignUpModal({ setModalOpen }) {
     return email
       .toLowerCase()
       .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
       );
   };
-
+  const validatePwd = (pwd) => {
+    // 비밀번호 : 숫자+영문자+특수문자 조합으로 8자리 이상 입력
+    return pwd
+      .toLowerCase()
+      .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/);
+  };
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPwdValid = pwd.length >= 4;
+  const isPwdValid = validatePwd(pwd);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPwdSame = pwd === checkPwd;
   // 이름이 2글자 이상인지 여부를 확인함.
@@ -102,7 +107,7 @@ function SignUpModal({ setModalOpen }) {
                   setCheckEmail(e.target.value);
                 }}
               ></input>
-              <button className="emailCheck">이메일 인증하기</button>
+              <button className="emailCheck">이메일 중복확인</button>
             </div>
             {!isEmailValid && <alert>이메일 형식이 올바르지 않습니다.</alert>}
             <h3>비밀번호</h3>
@@ -114,7 +119,9 @@ function SignUpModal({ setModalOpen }) {
               }}
             ></input>
             {!isPwdValid && (
-              <alert>비밀번호는 4글자 이상으로 설정해 주세요.</alert>
+              <alert>
+                숫자,영문자,특수문자 조합으로 8자리 이상 설정해 주세요.
+              </alert>
             )}
             <h3>비밀번호 확인</h3>
             <input
