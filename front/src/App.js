@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
-import SignUpModal from "./components/signUpModal/SignUpModal";
+import Modal from "../src/components/Modals/Modal";
 function App() {
   return (
     <div>
-      <SignUpModal></SignUpModal>
+      <Modal></Modal>
     </div>
   );
 }
