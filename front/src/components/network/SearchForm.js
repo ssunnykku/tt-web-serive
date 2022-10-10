@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../../styles/network/searchform.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-const SearchForm = ({ data, setData }) => {
+const SearchForm = ({ data, setData,originalData }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  
   const handleChange = (e) => {
     setSearchTerm(e.target.value)
   }; 
   useEffect(() => {
-    const results = data.filter((item) =>
+    const results = originalData.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setData(results);
