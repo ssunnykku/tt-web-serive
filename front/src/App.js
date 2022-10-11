@@ -1,8 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
-import MyPage from "./pages/MyPage";
 import Network from "./pages/Network";
+import LoginModal from "./components/LoginModal/LoginModal";
+import SignUpModal from "./components/signUpModal/SignUpModal";
 
 function App() {
   return (
@@ -10,13 +11,11 @@ function App() {
       <Routes>
         <Route path="/" exact element={<MainPage />} />
         <Route path="/network" exact element={<Network />} />
-        <Route path="/mypage" element={<MyPage/>}/>
+        <Route path="/login" element={<LoginModal />} />
+        <Route path="/signup" element={<SignUpModal />} />
       </Routes>
     </Router>
   );
-
 }
-
-
 
 export default App;

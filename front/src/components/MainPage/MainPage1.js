@@ -1,10 +1,19 @@
 import React from "react";
+import { useState } from "react";
+import LoginModal from "../LoginModal/LoginModal";
 import "../../styles/mainpage/mainpage1.css";
 import StyledButton from "../../styles/commonstyles/Button";
 import NavBar from "../NavBar";
-import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+
 const MainPage1 = () => {
-  const navigate = useNavigate();
+  //열기, 닫기를 부모로부터 받아옴
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
+  //로그인 모달창 노출
+  const showLoginModal = () => {
+    setLoginModalOpen(true);
+  };
+
   return (
     <>
       <div className="mainPage1">
@@ -16,14 +25,11 @@ const MainPage1 = () => {
             <a>에서 쉽고 빠르게</a>
           </div>
           <div className="buttonContainer">
-            <StyledButton
-              onClick={() => {
-                navigate("/network");
-              }}
-            >
-              챌린지
-            </StyledButton>
-            <StyledButton>로그인</StyledButton>
+            <StyledButton>챌린지</StyledButton>
+            <StyledButton onClick={showLoginModal}>로그인</StyledButton>
+            {loginModalOpen && (
+              <LoginModal setLoginModalOpen={setLoginModalOpen} />
+            )}
           </div>
         </div>
       </div>
