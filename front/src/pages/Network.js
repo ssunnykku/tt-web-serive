@@ -8,7 +8,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../styles/network/network.css";
 import StyledButton from "../styles/commonstyles/Button";
 const Network = () => {
-  const originalData=data;
+  const originalData = data;
   const [ChallangeList, setChallangeList] = useState(data);
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
@@ -19,8 +19,15 @@ const Network = () => {
     <div className="NetworkContainer">
       <NavBar />
       <div className="SearchFormContainer">
-        <SearchForm originalData={originalData} data={ChallangeList} setData={setChallangeList} />
-        <SortDropDown />
+        <SearchForm
+          originalData={originalData}
+          data={ChallangeList}
+          setData={setChallangeList}
+        />
+        <SortDropDown originalData={originalData} data={ChallangeList} setData={setChallangeList} />
+      </div>
+      <div className="challangePostButtonContainer">
+      <button className="challangePostButton">+</button>
       </div>
       <Container>
         <Row>

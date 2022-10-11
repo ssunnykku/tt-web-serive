@@ -13,12 +13,16 @@ const NavBar = () => {
   return (
     <div className="navBar">
      <nav className="nav">
-      <a href='#' className="nav-brand">✓미션체크</a>
+      <a onClick={()=>{
+        navigate('/')
+      }} className="nav-brand">✓미션체크</a>
       <ul className={active}>
         <li className="nav-item"><a onClick={()=>{
           navigate('/')
         }} className="nav-link">Home</a></li>
-        <li className="nav-item"><a href="#" className="nav-link">MyPage</a></li>
+        <li className="nav-item"><a onClick={()=>{
+          navigate('/mypage')
+        }} href="#" className="nav-link">MyPage</a></li>
         <li className="nav-item"><a onClick={()=>{
           navigate('/network')
         }} className="nav-link">Challenges</a></li>

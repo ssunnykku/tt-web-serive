@@ -5,7 +5,6 @@ import Card from 'react-bootstrap/Card';
 import '../styles/network/networkcard.css'
 const NetworkCard = ({item}) => {
     const [challange]=useState(data)
-    console.log(item)
   return (
     <Card className='mb-3 ms-3 mr-5' style={{ width: '15rem' }}>
       <Card.Body>

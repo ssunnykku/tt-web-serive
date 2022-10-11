@@ -5,6 +5,7 @@ import MainPage2 from "../components/MainPage/MainPage2";
 import MainPage3 from "../components/MainPage/MainPage3";
 import styled from "styled-components";
 import MainPage4 from "../components/MainPage/MainPage4";
+import MainPage5 from "../components/MainPage/MainPage5";
 
 function MainPage() {
   return (
@@ -12,6 +13,7 @@ function MainPage() {
       <div className="container1">
         <MainPage1/>
         <MainPage2/>
+        <MainPage5/>
         <MainPage3/>
         <MainPage4/>
       </div>

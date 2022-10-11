@@ -1,0 +1,9 @@
+.mainpage5{
+    display: flex;
+    background-image: url('../../images/mainpage/MainPage5.jpeg');
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+}
