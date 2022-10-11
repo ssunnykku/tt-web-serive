@@ -21,6 +21,13 @@ datasource db {
 //   createdAt        DateTime @default(now())
 //   updatedAt        DateTime @updatedAt
 // }
+model user {
+  userId     Int         @id @unique @default(autoincrement())
+  name       String
+  email      String
+  password   String
+  challenges challenge[] @relation("challengToUser")
+}
 
 model challenge {
   challengeId Int      @id @unique @default(autoincrement())
@@ -30,18 +37,11 @@ model challenge {
   toDate      String
   img         String   @db.Text
   // status      challenge_status @default(DRAFT)
+  dateGap     Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   users user[] @relation("challengToUser")
-}
-
-model user {
-  userId     Int         @id @unique @default(autoincrement())
-  name       String
-  email      String
-  password   String
-  challenges challenge[] @relation("challengToUser")
 }
 
 model hashTag {

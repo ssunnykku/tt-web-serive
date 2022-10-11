@@ -1,22 +1,23 @@
 import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
-import { challengeService } from "../services/challengeService";
-import { challengeModel } from "../models/challengeModel";
+import { userChallengeService } from "../services/userChallengeService";
+// - get(user별), get(개별) post(개설하기)
+const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const challengeRouter = Router();
+const userChallengeRouter = Router();
 
-//Create
-challengeRouter.post("/add", async (req, res, next) => {
+//Create /userChallenge/add / user별로 수정할 예정
+userChallengeRouter.post("/add", async (req, res, next) => {
   try {
     const { title, description, fromDate, toDate, img } = req.body;
-    const newChallenge = await challengeService.addChallenge({
+    const newChallenge = await userChallengeService.addChallenge({
       title,
       description,
       fromDate,
       toDate,
       img,
+      dateGap,
     });
     if (newChallenge.errorMessage) {
       throw new Error(newChallenge.errorMessage);
@@ -28,16 +29,14 @@ challengeRouter.post("/add", async (req, res, next) => {
   }
 });
 
-// Get (전체)
-challengeRouter.get("/", async (req, res) => {
-  const result = await prisma.challenge.findMany();
+// get (user별 불러오기로 수정해야 함)
+userChallengeRouter.get("/", async (req, res) => {
+  const result = await userChallengeService.getChallenges();
   res.status(200).json({ result });
 });
 
-// Get (선택한 항목) ???
-
-// Delete
-challengeRouter.delete("/:id", async (req, res) => {
+// Delete (분리해줘...)
+userChallengeRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
   const foundChallenge = await prisma.challenge.findUnique({
@@ -60,7 +59,7 @@ challengeRouter.delete("/:id", async (req, res) => {
 });
 
 // Put
-challengeRouter.put("/:id", async (req, res) => {
+userChallengeRouter.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, fromDate, toDate, img } = req.body;
@@ -92,7 +91,7 @@ challengeRouter.put("/:id", async (req, res) => {
   }
 });
 
-// challengeRouter.put("/:id", async (res, req) => {
+// userChallengeRouter.put("/:id", async (res, req) => {
 //   const { id } = req.params;
 //   const findChallenge = await prisma.challenge.findUnique({
 //     where: {
@@ -117,4 +116,4 @@ challengeRouter.put("/:id", async (req, res) => {
 //   res.status(200).json({ result });
 // });
 
-export { challengeRouter };
+export { userChallengeRouter };

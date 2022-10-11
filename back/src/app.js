@@ -2,7 +2,8 @@ import cors from "cors";
 import express from "express";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 
-import { challengeRouter } from "./routers/challenges";
+import { challengeRouter } from "./routers/challengeRouter";
+import { userChallengeRouter } from "./routers/userChallengeRouter";
 
 const app = express();
 app.use(cors());
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/challenges", challengeRouter);
-app.use("/myPages", myPageRouter);
+app.use("/userChallenge", userChallengeRouter);
 
 app.use(errorMiddleware);
 
