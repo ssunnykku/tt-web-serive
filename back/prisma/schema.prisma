@@ -23,14 +23,16 @@ datasource db {
 // }
 
 model challenge {
-  challengeId Int      @id @unique @default(autoincrement())
-  title       String   @db.VarChar(50)
+  challengeId Int       @id @unique @default(autoincrement())
+  title       String    @db.VarChar(50)
   description String
   fromDate    String
   toDate      String
-  img         String   @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  img         String    @db.Text
+  // status      challenge_status @default(DRAFT)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
   // user        user?    @relation(fields: [userUserId], references: [userId])
   // userUserId  Int?
   // write       write    @relation(fields: [], references: [])

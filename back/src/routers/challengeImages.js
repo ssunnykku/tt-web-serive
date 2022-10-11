@@ -23,7 +23,7 @@ const upload = multer({
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
-  limits: { fileSize: 5 * 104 * 1024 },
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 router.post("img", upload.single("img"), (req, res) => {
@@ -33,19 +33,35 @@ router.post("img", upload.single("img"), (req, res) => {
 
 const upload2 = multer();
 router.post("/", upload2.none(), async (req, res, next) => {
-    try {
-        const { title, description, fromDate, toDate, } = req.body;
-        const { img } = req.url
-        const post = await prisma.challenge.create({
-            data: {
-                title,
-                description,
-                fromDate,
-                toDate,
-                img,
-            }
-        })
+  try {
+    const { title, description, fromDate, toDate } = req.body;
+    const { img } = req.body.url;
+    const post = await prisma.challenge.create({
+      data: {
+        title,
+        description,
+        fromDate,
+        toDate,
+        img,
+      },
+    });
+    const hashtags = req.body.content.match(/#[^\s#]*/g);
+    if (hashtags) {
+      const result = await Promise.all(
+        hashtags.map((tag) =>
+          hashtag.findOrCreate({
+            where: {
+              title: tag.slice(1).toLowerCase(),
+            },
+          })
+        )
+      );
+      await post.addHashtags(result.map((r) => r[0]));
     }
+    res.redirect("/");
+  } catch (error) {
+    next(error);
+  }
 });
 
-const uploa
+module.exports = router;
