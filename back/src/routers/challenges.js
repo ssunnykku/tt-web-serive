@@ -1,24 +1,22 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { challengeService } from "../services/challengeService";
+import { challengeModel } from "../models/challengeModel";
 
 const prisma = new PrismaClient();
 
 const challengeRouter = Router();
 
 //Create
-challengeRouter.post("/add", async (req, res) => {
+challengeRouter.post("/add", async (req, res, next) => {
   try {
-    const { title, description, fromDate, toDate, img, createdAt, updatedAt } =
-      req.body;
+    const { title, description, fromDate, toDate, img } = req.body;
     const newChallenge = await challengeService.addChallenge({
       title,
       description,
       fromDate,
       toDate,
       img,
-      createdAt,
-      updatedAt,
     });
     if (newChallenge.errorMessage) {
       throw new Error(newChallenge.errorMessage);
@@ -30,11 +28,15 @@ challengeRouter.post("/add", async (req, res) => {
   }
 });
 
+// Get (전체)
 challengeRouter.get("/", async (req, res) => {
   const result = await prisma.challenge.findMany();
   res.status(200).json({ result });
 });
 
+// Get (선택한 항목)
+
+// Delete
 challengeRouter.delete("/:id", async (req, res) => {
   const { id } = req.params;
 
@@ -57,6 +59,7 @@ challengeRouter.delete("/:id", async (req, res) => {
   res.status(200).json({ result });
 });
 
+// Put
 challengeRouter.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
