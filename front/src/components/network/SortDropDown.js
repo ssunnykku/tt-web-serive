@@ -28,7 +28,7 @@ const SortDropDown = ({originalData, data, setData}) => {
           setInitialState('진행중인챌린지')
           const results= originalData.filter((item)=>
           new Date(item.toDate)>= new Date(dateString))
-          console.log(results)
+          setData(results)
         }}>진행중인 챌린지</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
