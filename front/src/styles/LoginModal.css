@@ -28,6 +28,7 @@
     --size-border-radius: 6px;
   
   }
+
 * {
     box-sizing: border-box;
     font-family: 'Nanum Gothic', sans-serif;;
@@ -55,6 +56,7 @@
     background: #fff;
     background-color: var(--color-white);
     border-radius: 6px;
+    box-shadow: 12px 12px 20px gray;
 }
 .LoginModalContents{
     margin: 0 auto;
@@ -74,24 +76,40 @@
 }
 
 .LoginModalContents {
-    font-size: 25px;
+    font-size: 18px;
     color: black;
     text-align: center;
     margin-bottom: 15px;
 }
 
-.LoginModalContents h3{
-    font-size: 17px;
-    font-weight: bold;
-    padding-top: 7px;
-}
 alert{
     color: red;
+}
+
+a{
+    margin-top: 20px;
+}
+
+p{
+    margin-top: 30px;
+}
+
+.border{
+    margin-top: 30px;
+}
+
+.SocialBtn{
+    margin-top: 40px;
+}
+
+.NaverBtn{
+    margin-right: 26px;
 }
 
 .LoginModalContents input{
     width: 400px;
     height: 45px;
+    margin-top: 20px;
     border-radius: 6px;
     border: 2px solid #CDCCCC;
 }
@@ -100,37 +118,8 @@ alert{
     border-color:#6A71E6;
 }
 
-.emailBox{
-    display: flex;
-}
-.emailBox .emailInputBox{
-    width: 260px;
-    margin-right: 20px
-}
-/* .emailBox .emailCheck {
-    font-size: 15px;
-    color: #7c7979;
-    border: none;
-    background-color: #CDCCCC;
-    border-radius: 6px;
-
-}
-.emailBox .emailCheck span{
-    font-size:11px;
-} */
-.LoginModalContents .checkBoxContents{
-    margin-top: 20px;
-}
-.LoginModalContents .checkBox{
-    width: 14px;
-    height: 14px;
-}
-.LoginModalContents .checkBoxContent span{
-    font-size: small;
-}
-
 .LoginBtn{
-    border: 0;
+    border: 2px solid #CDCCCC;
     outline: none;
     background-color:#6A71E6;
     border-radius: 6px;
@@ -143,7 +132,7 @@ alert{
 }
 
 .LoginBtn:disabled{
-    border: 0;
+    border: 2px solid #CDCCCC;
     outline: none;
     background-color: #7c7979;
     border-radius: 6px;
@@ -153,4 +142,9 @@ alert{
     margin-top: 20px;
     font-size: large;
     font-weight: 500;
+}
+.LoginBtn:hover{
+    background: white;
+    border: 2px solid;
+    color: gray;
 }
