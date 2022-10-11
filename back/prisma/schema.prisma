@@ -7,22 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model comments {
-  id         Int      @id @default(autoincrement())
-  commenter  Int
-  comment    String   @db.VarChar(100)
-  created_at DateTime @default(now()) @db.DateTime(0)
-  users      users    @relation(fields: [commenter], references: [id], onDelete: Cascade, map: "commenter")
-
-  @@index([commenter], map: "commerter_idx")
+model liked {
+  likedId     String @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
+  userId      String @unique(map: "userId_UNIQUE") @db.VarChar(45)
+  challengeId Int    @unique(map: "challengeId_UNIQUE")
 }
 
-model users {
-  id         Int        @id @default(autoincrement())
-  name       String     @unique(map: "name_UNIQUE") @db.VarChar(20)
-  age        Int        @db.UnsignedInt
-  married    Int        @db.TinyInt
-  comment    String?    @db.Text
-  created_at DateTime   @default(now()) @db.DateTime(0)
-  comments   comments[]
+model refreshToken {
+  refreshToken String @id @unique(map: "refreshToken_UNIQUE") @db.VarChar(500)
+  userId       String @db.VarChar(45)
+}
+
+model user {
+  userId      String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  challengeId Int?
+  name        String @db.VarChar(10)
+  email       String @unique(map: "email_UNIQUE") @db.VarChar(30)
+  password    String @db.VarChar(30)
+  withdrawal  Int    @db.TinyInt
 }
