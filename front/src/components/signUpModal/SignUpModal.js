@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "../../style/signUpModal.css";
+import "../../styles/signUpModal.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
