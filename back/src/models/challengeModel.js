@@ -4,7 +4,9 @@ const prisma = new PrismaClient();
 
 class challengeModel {
   static async create({ newChallenge }) {
-    const createdChallenge = await prisma.challenge.create(newChallenge);
+    const createdChallenge = await prisma.challenge.create({
+      data: newChallenge,
+    });
     return createdChallenge;
   }
 }

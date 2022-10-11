@@ -16,9 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/challenges", challengeRouter);
-// app.get("/challenges", (req, res) => {
-//   res.send(`<h2>challenges 생성 페이지</h2>`);
-// });
+app.use("/myPages", myPageRouter);
 
 app.use(errorMiddleware);
 

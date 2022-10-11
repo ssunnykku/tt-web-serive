@@ -34,7 +34,7 @@ challengeRouter.get("/", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Get (선택한 항목)
+// Get (선택한 항목) ???
 
 // Delete
 challengeRouter.delete("/:id", async (req, res) => {

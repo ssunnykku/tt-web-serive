@@ -1,17 +1,20 @@
 import { challengeModel } from "../models/challengeModel";
-const { PrismaClient } = require("@prisma/client");
 
-const prisma = new PrismaClient();
 
 class challengeService {
+  // challenge 생성 (create)
   static async addChallenge({ title, description, fromDate, toDate, img }) {
     const newChallenge = { title, description, fromDate, toDate, img };
-    const createdChallenge = await challengeModel.create({ newChallenge });
+    const createdChallenge = await challengeModel.create({
+      newChallenge,
+    });
     return createdChallenge;
   }
-  //   static async getChallenges({
-
-  //   })
+  // Get (전체)
+    static async getChallenges({
+        const challenges = await challengeModel.
+    })
 }
+
 
 export { challengeService };
