@@ -4,7 +4,7 @@ import MainPage from "./pages/MainPage";
 import Network from "./pages/Network";
 import LoginModal from "./components/LoginModal/LoginModal";
 import SignUpModal from "./components/signUpModal/SignUpModal";
-
+import MyPage from "./pages/MyPage";
 function App() {
   return (
     <Router>
@@ -13,6 +13,7 @@ function App() {
         <Route path="/network" exact element={<Network />} />
         <Route path="/login" element={<LoginModal />} />
         <Route path="/signup" element={<SignUpModal />} />
+        <Route path="/mypage" element={<MyPage/>}/>
       </Routes>
     </Router>
   );
