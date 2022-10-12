@@ -10,8 +10,6 @@ dotenv.config();
 class loginService {
   // 1. 회원가입 서비스
   static async addUser({ email, password, confirmPassword, name }) {
-    console.log("db접근 전");
-
     const user = await Login.findByEmail({ email });
     if (user) {
       const errorMessage = "이미 사용중인 email입니다.";
@@ -31,6 +29,7 @@ class loginService {
     const newUser = { userId, email, password: hashpassword, name };
     const createNewUser = await Login.createUser({ userId, newUser });
     createNewUser.errorMessage = null;
+    console.log(createNewUser);
     //  // 토큰 스키마에 유저id추가
     await Login.createToken({ userId });
     // await Login.createLiked({ userId, likedId });
@@ -58,7 +57,8 @@ class loginService {
     console.log("서비스 4");
 
     // //로그인 정보 검사 후 refresh, access token 발급을 위한 코드>> 프론트에 넘겨줘야한다
-    const secretKey = process.env.JWT_SECRET_KEY || "jwt-secret-key";
+    const date = new Date();
+    const secretKey = process.env.JWT_SECRET_KEY;
     const accessToken = jwt.sign({ userId: user.userId }, secretKey, {
       expiresIn: "1h",
     });
@@ -66,7 +66,11 @@ class loginService {
       expiresIn: "14d",
     });
     // 리프레시 토큰 db update
+    //계속 토큰이 만료된다.??? 만료 관련 이슈 확인하기
+    //expiredAt이거 프론트단에 보내얗 한ㄴ다?
+    //https://developers.cafe24.com/app/front/develop/oauth/retoken
     console.log("서비스 5");
+    console.log(accessToken);
 
     const userId = user.userId;
 

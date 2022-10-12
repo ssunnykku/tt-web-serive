@@ -26,6 +26,7 @@ model user {
   email             String @unique(map: "email_UNIQUE") @db.VarChar(30)
   password          String @db.VarChar(100)
   withdrawal        Int    @default(0) @db.TinyInt
+  img               Bytes? @db.Blob
 }
 
 model point {

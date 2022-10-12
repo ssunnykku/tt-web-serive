@@ -1,7 +1,7 @@
 import is from "@sindresorhus/is";
 import { loginService } from "../services/loginService";
 import { Router } from "express";
-// import { loginRequired } from "../middleware/loginRequired";
+import { loginRequired } from "../middlewares/loginRequired";
 const loginRouter = Router();
 
 //  1. 회원가입 라우터
@@ -30,7 +30,7 @@ loginRouter.post("/register", async (req, res, next) => {
       throw new Error(newUser, errorMessage);
     }
 
-    res.status(201).json(newUser);
+    res.status(201).send(newUser);
   } catch (error) {
     next(error);
   }
@@ -55,23 +55,19 @@ loginRouter.post("/login", async (req, res, next) => {
 //3.📌 없어도 되는 로직 나중에 한번 확인해보기
 //로그인한 유저 한명 정보 가져오기- (:id 파라미터로 찾는거 필요 없는게 이번엔 챌린지 id페이지 접근이라 )
 //챌린지id를 파라미터로 받아서 챌린지 get 하는건 필요
-loginRouter.get(
-  "/current",
-  // loginRequired,
-  async (req, res, next) => {
-    try {
-      const userId = req.currentUserId;
+loginRouter.get("/currentUser", loginRequired, async (req, res, next) => {
+  try {
+    const userId = req.currentUserId;
+    const currentUser = await loginService.findCurrentUser({ userId });
 
-      const currentUser = await loginService.findCurrentUser({ userId });
-
-      if (currentUser.errorMessage) {
-        throw new Error(currentUser.errorMessage);
-      }
-    } catch (error) {
-      next(error);
+    if (currentUser.errorMessage) {
+      throw new Error(currentUser.errorMessage);
     }
+    res.status(200).json(currentUser);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 4. 비밀번호수정
 
@@ -84,7 +80,7 @@ loginRouter.put(
       const password = req.body.password;
 
       const updatePW = await loginService.updatePW({ userId, password });
-      res.status(201).json(updatePW);
+      res.status(201).send(updatePW);
     } catch (error) {
       next(error);
     }

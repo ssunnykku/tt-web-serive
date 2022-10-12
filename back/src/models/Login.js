@@ -16,9 +16,9 @@ class Login {
         withdrawal: 0,
         joinedChallengeId: null,
         holdChallengeId: null,
+        img: null,
       },
     });
-    console.log("1:", registerUser);
     return registerUser;
   }
 
