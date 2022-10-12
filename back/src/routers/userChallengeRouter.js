@@ -75,8 +75,8 @@ userChallengeRouter.put("/edit/:id", async (req, res) => {
 
 // get(1개 불러오기)
 userChallengeRouter.get("/:id", async (req, res) => {
-  const result = await userChallengeService.findUniqueId(id);
   const { id } = req.params;
+  const result = await userChallengeService.findUniqueId(id);
 
   res.status(200).json({ result });
 });

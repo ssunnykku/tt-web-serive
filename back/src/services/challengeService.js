@@ -42,7 +42,15 @@ class challengeService {
 
     return challenges;
   }
-  // Get (선택한 항목)
+  // id 값을 게시물 1개 선택하기(params 값을 이용)
+  static async findUniqueId(id) {
+    const findId = await challengeModel.findUnique(id);
+    if (!findId) {
+      const error = new Error("invalid id");
+      throw error;
+    }
+    return findId;
+  }
 }
 
 export { challengeService };

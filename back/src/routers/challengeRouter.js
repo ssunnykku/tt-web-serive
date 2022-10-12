@@ -38,6 +38,11 @@ challengeRouter.get("/ongoing", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Get (선택한 항목)
+// Get (선택한 항목 1개)
+challengeRouter.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const result = await challengeService.findUniqueId(id);
+  res.status(200).json({ result });
+});
 
 export { challengeRouter };

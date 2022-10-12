@@ -55,18 +55,6 @@ class userChallengeService {
 
   // Update (유저별로 수정하기)
   static async updateOne(id, title, description, fromDate, toDate, img) {
-    // // endRemainingDate(남은 날짜)
-    // const endDay = new Date(toDate);
-    // const today = new Date();
-    // const endRemainingDate =
-    //   1 + Math.floor((endDay - today) / (1000 * 60 * 60 * 24));
-
-    // // startRemainingDate(today-fromDate) (0: 시작 당일 / -: 시작 예정 / +: 시작하고 날짜)
-    // const startDay = new Date(fromDate);
-    // const startRemainingDate = Math.floor(
-    //   (today - startDay) / (1000 * 60 * 60 * 24)
-    // );
-
     const updateChallenge = await userChallengeModel.update(
       id,
       title,

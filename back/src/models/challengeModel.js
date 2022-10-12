@@ -36,6 +36,14 @@ class challengeModel {
     });
     return challenges;
   }
-  // Get (선택한 항목)
+  // (params 값) 게시물 1개 선택
+  static async findUnique(id) {
+    const challenge = await prisma.challenge.findUnique({
+      where: {
+        challengeId: Number(id),
+      },
+    });
+    return challenge;
+  }
 }
 export { challengeModel };
