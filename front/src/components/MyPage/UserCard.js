@@ -3,7 +3,6 @@ import { Card, Row, Button, Col } from "react-bootstrap";
 import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/mypage/mypage.css";
 const UserCard = () => {
-  const [image, setImage] = useState(null);
   return (
     <div className="userprofile">
       <img
@@ -18,3 +17,5 @@ const UserCard = () => {
 };
 
 export default UserCard;
+
+

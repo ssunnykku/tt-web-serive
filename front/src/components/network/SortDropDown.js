@@ -23,7 +23,7 @@ const SortDropDown = ({originalData, data, setData}) => {
         }}>최신순</Dropdown.Item>
         <Dropdown.Item onClick={()=>{
           setInitialState('참여인원순')
-        }}>참여인원순</Dropdown.Item>
+        }}>참여인원순</Dropdown.Item> 
         <Dropdown.Item onClick={()=>{
           setInitialState('진행중인챌린지')
           const results= originalData.filter((item)=>
@@ -36,9 +36,3 @@ const SortDropDown = ({originalData, data, setData}) => {
 };
 
 export default SortDropDown;
-// useEffect(() => {
-//   const results = originalData.filter((item) =>
-//     item.title.toLowerCase().includes(searchTerm.toLowerCase())
-//   );
-//   setData(results);
-// }, [searchTerm]);

@@ -17,8 +17,8 @@ const NetworkCard = ({item}) => {
         </div>
         <Card.Subtitle>{item?.title}</Card.Subtitle>
         <Card.Title className='mb-2 text-muted cardtitle'>{item?.description}</Card.Title>
-        <div className='cardtext'>👨‍👧‍👧 100 <a className='cardSubText'>{item?.from} 시작</a> </div>
-        <div className='duration'>주3일 2주 </div>
+        <div className='cardtext'>👨‍👧‍👧 100 ❤️</div>
+        <div className='duration'><a className='cardSubText'>{item?.fromDate}-{item?.toDate}</a> </div>
       </Card.Body>
     </Card>
   )
