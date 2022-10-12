@@ -1,10 +1,6 @@
 import { Router } from "express";
-import { userChallengeModel } from "../models/userChallengeModel";
 import { userChallengeService } from "../services/userChallengeService";
 
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
 const userChallengeRouter = Router();
 
 // userChallenge
@@ -58,8 +54,8 @@ userChallengeRouter.delete("/:id", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Update
-userChallengeRouter.put("/:id", async (req, res) => {
+// Update (유저별로 수정하기)
+userChallengeRouter.put("/edit/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, fromDate, toDate, img } = req.body;
@@ -75,6 +71,14 @@ userChallengeRouter.put("/:id", async (req, res) => {
   } catch (error) {
     res.json({ message: error.message });
   }
+});
+
+// get(1개 불러오기)
+userChallengeRouter.get("/:id", async (req, res) => {
+  const result = await userChallengeService.findUniqueId(id);
+  const { id } = req.params;
+
+  res.status(200).json({ result });
 });
 
 // // Put 분리 해줘..
