@@ -43,10 +43,8 @@ pointRouter.put(
         const currentPoint = await pointService.getPointInfo({ userId });
         const point=currentPoint.point;
 
-        //일단 성공시 +10포인트로 디폴트
-        const updatepoint = point-10;
-        console.log(updatepoint,"라우터")
-  
+        //일단 참여시 -50포인트로 디폴트
+        const updatepoint = point-50;  
         //해당 사용자 아이디로 Point 정보를 db에서 찾아 업데이트함.
         const updatedPoint = await pointService.setPoint({
             userId,

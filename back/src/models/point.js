@@ -6,7 +6,7 @@ class Point {
   static async findByUserId({ userId }) {
     const points = await prisma.point.findUnique({
       where:{
-        userId: Number(userId) ,
+        userId: (userId) ,
       } });
     return points;
   }
@@ -14,10 +14,11 @@ class Point {
   static async update({ userId, updatepoint }) {
     const updatePoint = await prisma.point.update({
       where: {
-        userId : Number(userId)
+        userId : (userId)
       },
       data: {
         point: updatepoint,
+
       }
     });
     return updatePoint;
