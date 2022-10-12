@@ -16,7 +16,26 @@ class challengeModel {
     const challenges = await prisma.challenge.findMany();
     return challenges;
   }
-
+  // 진행중인 챌린지만 불러오기
+  static async findOngoing() {
+    const challenges = await prisma.challenge.findMany({
+      where: {
+        AND: [
+          {
+            startRemainingDate: {
+              gte: Number(0),
+            },
+          },
+          {
+            endRemainingDate: {
+              gte: Number(0),
+            },
+          },
+        ],
+      },
+    });
+    return challenges;
+  }
   // Get (선택한 항목)
 }
 export { challengeModel };

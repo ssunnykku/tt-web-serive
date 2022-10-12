@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { PrismaClient } from "@prisma/client";
 import { challengeService } from "../services/challengeService";
-import { challengeModel } from "../models/challengeModel";
 
 const prisma = new PrismaClient();
 const challengeRouter = Router();
@@ -30,6 +29,12 @@ challengeRouter.post("/add", async (req, res, next) => {
 // Get (전체)
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
+  res.status(200).json({ result });
+});
+
+// Get (진행중인 챌린지 전체)
+challengeRouter.get("/ongoing", async (req, res) => {
+  const result = await challengeService.getOngoing();
   res.status(200).json({ result });
 });
 
