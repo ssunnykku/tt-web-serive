@@ -14,15 +14,21 @@ model liked {
 }
 
 model refreshToken {
-  refreshToken String @id @unique(map: "refreshToken_UNIQUE") @db.VarChar(500)
-  userId       String @db.VarChar(45)
+  refreshToken String @db.VarChar(500)
+  userId       String @id @db.VarChar(45)
 }
 
 model user {
-  userId      String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
-  challengeId Int?
-  name        String @db.VarChar(10)
-  email       String @unique(map: "email_UNIQUE") @db.VarChar(30)
-  password    String @db.VarChar(30)
-  withdrawal  Int    @db.TinyInt
+  userId            String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  joinedChallengeId Int?   @unique(map: "joinedChallengeId_UNIQUE")
+  holdChallengeId   Int?   @unique(map: "holdChallengeId_UNIQUE")
+  name              String @db.VarChar(10)
+  email             String @unique(map: "email_UNIQUE") @db.VarChar(30)
+  password          String @db.VarChar(100)
+  withdrawal        Int    @default(0) @db.TinyInt
+}
+
+model point {
+  userId String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  point  Int?
 }
