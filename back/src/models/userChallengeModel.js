@@ -33,12 +33,27 @@ class userChallengeModel {
     return challenge;
   }
   // Update (유저별로 수정하기)
-  static async update(id, title, description, fromDate, toDate, img) {
+  static async update(
+    id,
+    title,
+    description,
+    fromDate,
+    toDate,
+    img,
+    endRemainingDate,
+    startRemainingDate
+  ) {
     const challenge = await prisma.challenge.update({
       where: {
         challengeId: Number(id),
       },
-      data: { title, description, fromDate, toDate, img },
+      data: {
+        title,
+        description,
+        fromDate,
+        toDate,
+        img,
+      },
     });
     return challenge;
   }
