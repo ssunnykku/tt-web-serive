@@ -50,8 +50,8 @@ function SignUpModal({ setModalOpen }) {
   return (
     <>
       <div className="modalBackground">
-        <div className="signUpModal">
-          <div className="signUpModalContents">
+        <div className="challengeDetailModal">
+          <div className="challengeDetailModalContents">
             <img
               className="closeBtn"
               src={Close_round_light}
@@ -59,61 +59,54 @@ function SignUpModal({ setModalOpen }) {
               width="32px"
               height="32px"
             ></img>
-            <span className="title">회원가입</span>
-            <h3>이름</h3>
-            <input
-              placeholder="이름을 입력해 주세요"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-            ></input>
-            {!isNameValid && (
-              <alert>이름은 2글자 이상으로 설정해 주세요.</alert>
-            )}
-            <h3>이메일</h3>
-            <div className="emailBox">
-              <input
-                className="emailInputBox"
-                placeholder="(예시) mission123@gmail.com"
-                onChange={(e) => {
-                  setCheckEmail(e.target.value);
-                }}
-              ></input>
-              <button className="emailCheck">이메일 중복확인</button>
+
+            <div className="challengeDetailTop">
+              <div className="challengeTopLeft">
+                <img className="challengeImage" src={challengeImage}></img>
+                <p className="chanllegeDday">
+                  <img src={TimeLight}></img>챌린지 시작까지 {chanllegeDday}일
+                  전
+                </p>
+              </div>
+              <div className="challengeTopRight">
+                <a>
+                  <img src={OfficialChallenge}></img>공식 챌린지
+                </a>
+                <a>
+                  <img src={FavoriteLight}></img>
+                </a>
+              </div>
             </div>
-            {!isEmailValid && <alert>이메일 형식이 올바르지 않습니다.</alert>}
-            <h3>비밀번호</h3>
-            <input
-              type="password"
-              placeholder="비밀번호를 입력해 주세요."
-              onChange={(e) => {
-                setPwd(e.target.value);
-              }}
-            ></input>
-            {!isPwdValid && (
-              <alert>
-                숫자,영문자,특수문자 조합으로 8자리 이상 설정해 주세요.
-              </alert>
-            )}
-            <h3>비밀번호 확인</h3>
-            <input
-              type="password"
-              placeholder="비밀번호를 다시 한번 입력해 주세요."
-              onChange={(e) => {
-                setCheckPwd(e.target.value);
-              }}
-            ></input>
-            {!isPwdSame && <alert>비밀번호가 일치하지 않습니다.</alert>}
-            <div className="checkBoxContents">
-              <input
-                type="checkBox"
-                className="checkBox"
-                onClick={clickCheckedBox}
-              ></input>
-              <span>개인정보 수집 및 이용 동의(필수)</span>
+
+            <div className="challengeMiddle">
+              <div className="challengeJoinNumberPoint">
+                <p className="challengeJoinNumber">
+                  <img src={UserFill}></img> 참가인원 {challengeJoinNumber}명
+                </p>
+                <p className="challengePoint">
+                  <img src={Gift}></img> 포인트 총 {}포인트
+                </p>
+              </div>
+              <p>챌린지 인증방법</p>
+              <p>{challengeManual}</p>
+              <div>
+                <div>
+                  <img src={Happy}></img>
+                  <p>이렇게 찍어주세요!</p>
+                  <img src={HappyCertificate}></img>
+                  <p>"문구가 잘 보이도록 밝은 곳에서 찍힌 사진</p>
+                </div>
+                <div>
+                  <img src={Sad}></img>
+                  <p>이렇게 하면 안돼요!</p>
+                  <img src={HappyCertificate}></img>
+                  <p>"문구가 명확히 보이지 않는 사진</p>
+                </div>
+              </div>
             </div>
-            <button className="signUpBtn" type="submit" disabled={!isFormValid}>
-              회원가입하기
+
+            <button className="challengeJoinBtn" type="submit">
+              참가하기
             </button>
           </div>
         </div>
