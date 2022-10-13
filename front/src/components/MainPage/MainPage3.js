@@ -6,7 +6,7 @@ const MainPage3 = () => {
     <div className='mainPage3'>
       <NavBar/>
       <div className='mainPage3Title'>
-        <h1>"나 한명 잘한다고 크게 달라질까?"</h1>
+        <h1>"나 한명 잘한다고 크게 달라질까? 아니오"</h1>
       </div>
       <div className='mainPage3GraphContainer'>
         <h1>이미지</h1>
