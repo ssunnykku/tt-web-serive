@@ -13,9 +13,9 @@ model liked {
   challengeId Int    @unique(map: "challengeId_UNIQUE")
 }
 
-model refreshToken {
-  refreshToken String @db.VarChar(500)
-  userId       String @id @db.VarChar(45)
+model point {
+  userId String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  point  Int?
 }
 
 model user {
@@ -29,7 +29,7 @@ model user {
   img               Bytes? @db.Blob
 }
 
-model point {
-  userId String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
-  point  Int?
+model refreshToken {
+  refreshToken String @db.VarChar(500)
+  userId       String @id @db.VarChar(45)
 }
