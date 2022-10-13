@@ -32,11 +32,11 @@ challengeRouter.get("/", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Get (진행중인 챌린지 전체)
-challengeRouter.get("/ongoing", async (req, res) => {
-  const result = await challengeService.getOngoing();
-  res.status(200).json({ result });
-});
+// // Get (진행중인 챌린지 전체) 보류
+// challengeRouter.get("/ongoing", async (req, res) => {
+//   const result = await challengeService.getOngoing();
+//   res.status(200).json({ result });
+// });
 
 // Get (선택한 항목 1개)
 challengeRouter.get("/:id", async (req, res) => {
