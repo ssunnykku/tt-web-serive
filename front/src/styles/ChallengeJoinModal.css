@@ -28,7 +28,6 @@
     --size-border-radius: 6px;
   
   }
-
 * {
     box-sizing: border-box;
     font-family: 'Nanum Gothic', sans-serif;;
@@ -46,24 +45,23 @@
     background-color: rgba(0,0,0,0.6);
     z-index: 10000;
 }
-.LoginModal {
+.challengeDetailModal {
     /* background-color: #FFFCFC; */
-    width: 460px;
-    height: 620px;
+    width: 575px;
+    height: 698px;
     position: relative;
     box-sizing: border-box;
     margin:50px auto;
     background: #fff;
     background-color: var(--color-white);
     border-radius: 6px;
-    box-shadow: 12px 12px 20px gray;
 }
-.LoginModalContents{
+.challengeDetailModalContents{
     margin: 0 auto;
     /* margin-left: 10px; */
     width: 100%;
     position: relative;
-    padding: 0 30px 32px;
+    padding: 0 20px 20px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -71,55 +69,76 @@
 }
 .closeBtn{
     position: relative;
-    margin-left: 370px;
+    margin-left: 480px;
     margin-top: 10px;
 }
 
-.LoginModalContents {
-    font-size: 18px;
-    color: black;
+.challengeImageDday{
+    margin: ;
+}
+
+
+
+
+
+
+.title{
+    font-size: 25px;
     text-align: center;
     margin-bottom: 15px;
 }
 
+.challengeDetailModalContents h3{
+    font-size: 17px;
+    font-weight: bold;
+    padding-top: 7px;
+}
 alert{
     color: red;
 }
 
-a{
-    margin-top: 20px;
-}
-
-p{
-    margin-top: 30px;
-}
-
-.border{
-    margin-top: 30px;
-}
-
-.SocialBtn{
-    margin-top: 40px;
-}
-
-.NaverBtn{
-    margin-right: 26px;
-}
-
-.LoginModalContents input{
+.challengeDetailModalContents input{
     width: 400px;
     height: 45px;
-    margin-top: 20px;
     border-radius: 6px;
     border: 2px solid #CDCCCC;
 }
-.LoginModalContents input:focus{
+.challengeDetailModalContents input:focus{
     outline: none;
     border-color:#6A71E6;
 }
 
-.LoginBtn{
-    border: 2px solid #CDCCCC;
+.emailBox{
+    display: flex;
+}
+.emailBox .emailInputBox{
+    width: 260px;
+    margin-right: 20px
+}
+.emailBox .emailCheck {
+    font-size: 15px;
+    color: #7c7979;
+    border: none;
+    background-color: #CDCCCC;
+    border-radius: 6px;
+
+}
+.emailBox .emailCheck span{
+    font-size:11px;
+}
+.challengeDetailModalContents .checkBoxContents{
+    margin-top: 20px;
+}
+.challengeDetailModalContents .checkBox{
+    width: 14px;
+    height: 14px;
+}
+.challengeDetailModalContents .checkBoxContent span{
+    font-size: small;
+}
+
+.challengeDetailBtn{
+    border: 0;
     outline: none;
     background-color:#6A71E6;
     border-radius: 6px;
@@ -131,8 +150,8 @@ p{
     font-weight: 500;
 }
 
-.LoginBtn:disabled{
-    border: 2px solid #CDCCCC;
+.challengeDetailBtn:disabled{
+    border: 0;
     outline: none;
     background-color: #7c7979;
     border-radius: 6px;
@@ -142,9 +161,4 @@ p{
     margin-top: 20px;
     font-size: large;
     font-weight: 500;
-}
-.LoginBtn:hover{
-    background: white;
-    border: 2px solid;
-    color: gray;
 }
