@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { pointRouter } from "./routers/pointRouter";
-
+import { userRouter } from "./routers/userRouter";
 
 const app = express();
 app.use(cors());
@@ -16,6 +16,7 @@ app.get("/",(req, res)=>{
   res.send("data project root api")
 });
 app.use(pointRouter);
+app.use(userRouter)
 app.use(errorMiddleware);
 
 

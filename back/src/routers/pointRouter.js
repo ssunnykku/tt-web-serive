@@ -1,4 +1,4 @@
-//import {loginRequired} from "../middlewares/loginRequired";
+import {loginRequired} from "../middlewares/loginRequired";
 import { Router } from "express";
 const pointRouter = Router();
 import { pointService } from "../services/pointService";
@@ -6,11 +6,12 @@ import { pointService } from "../services/pointService";
 
 // 등록된 point 수정하기(더하기)
 pointRouter.put(
-    "/addpoint/:userId",
-    //loginRequired,
+    "/addpoint",
+    loginRequired,
     async function (req, res, next) {
       try {
-        const userId=req.params.userId;      
+        const userId = req.currentUserId;
+        //const userId=req.params.userId;      
         const currentPoint = await pointService.getPointInfo({ userId });
         const point=currentPoint.point;
 
@@ -35,11 +36,12 @@ pointRouter.put(
   );
 // 등록된 point 수정하기(빼기)
 pointRouter.put(
-    "/minuspoint/:userId",
-    //loginRequired,
+    "/minuspoint",
+    loginRequired,
     async function (req, res, next) {
       try {
-        const userId=req.params.userId;
+        const userId = req.currentUserId;
+        //const userId=req.params.userId;
         const currentPoint = await pointService.getPointInfo({ userId });
         const point=currentPoint.point;
 
@@ -64,12 +66,12 @@ pointRouter.put(
 
   //point 조회하기
   pointRouter.get(
-    "/point/:userid",
-    //loginRequired,
+    "/point",
+    loginRequired,
     async function (req, res, next) {
       try {
-        //const userId = req.currentUserId;
-        const userId = req.params.userid;
+        const userId = req.currentUserId;
+        //const userId = req.params.userid;
         const currentPoint = await pointService.getPointInfo({ userId });
         const point=currentPoint.point;
         res.status(200).send(point.toString());
