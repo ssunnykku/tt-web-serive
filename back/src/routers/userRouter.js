@@ -1,5 +1,5 @@
 import is from "@sindresorhus/is";
-import { loginService } from "../services/loginService";
+import { loginService } from "../services/userService";
 import { Router } from "express";
 import { loginRequired } from "../middlewares/loginRequired";
 const loginRouter = Router();

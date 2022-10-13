@@ -1,5 +1,5 @@
 //db에 접근하는 코드 import 해야 함
-import { Login } from "../models/Login";
+import { Login } from "../models/User";
 import bcrypt from "bcrypt";
 // use `prisma` in your application to read and write data in your DBimport bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
