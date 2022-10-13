@@ -3,6 +3,7 @@ import express from "express";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { pointRouter } from "./routers/pointRouter";
 import { userRouter } from "./routers/userRouter";
+import { likedRouter } from "./routers/likedRouter";
 
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 app.use(userRouter);
 app.use(pointRouter);
+app.use(likedRouter);
 app.use(errorMiddleware);
 
 export { app };

@@ -14,10 +14,10 @@ function loginRequired(req, res, next) {
       // console.log("jwt:", jwt.verify);
       const secretKey = process.env.JWT_SECRET_KEY;
       const jwtDecoded = jwt.verify(accessToken, secretKey);
-      console.log("decoded", jwtDecoded);
-      console.log("🙏", jwtDecoded.userId);
+      // console.log("decoded", jwtDecoded);
+      // console.log("🙏", jwtDecoded.userId);
       const userId = jwtDecoded.userId;
-      console.log("추출한 userId", userId);
+      // console.log("추출한 userId", userId);
       // token에서 추출한 유저의 id를 currentUserId에 할당해서 req보냄
       req.currentUserId = userId;
       //next하면 이 미들웨어 벗어남
