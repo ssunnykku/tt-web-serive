@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/LoginModal.css";
 import styled from "styled-components";
@@ -8,11 +8,11 @@ import NaverButton from "../../images/user/NaverLogin.png";
 import KakaoButton from "../../images/user/KakaoLogin.png";
 
 import * as Api from "../../api";
-// import { DispatchContext } from "../../App";
+import { DispatchContext } from "../../App";
 
 function LoginModal({ setLoginModalOpen }) {
   const navigate = useNavigate();
-  // const dispatch = useContext(DispatchContext);
+  const dispatch = useContext(DispatchContext);
 
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -38,29 +38,29 @@ function LoginModal({ setLoginModalOpen }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // try {
-    //   // "user/login" 엔드포인트로 post요청함.
-    //   const res = await Api.post("user/login", {
-    //     email,
-    //     pwd,
-    //   });
-    //   // 유저 정보는 response의 data임.
-    //   const user = res.data;
-    //   // JWT 토큰은 유저 정보의 token임.
-    //   const jwtToken = user.token;
-    //   // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-    //   sessionStorage.setItem("userToken", jwtToken);
-    //   // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-    //   dispatch({
-    //     type: "LOGIN_SUCCESS",
-    //     payload: user,
-    //   });
+    try {
+      // "user/login" 엔드포인트로 post요청함.
+      const res = await Api.post("user/login", {
+        email,
+        pwd,
+      });
+      // 유저 정보는 response의 data임.
+      const user = res.data;
+      // JWT 토큰은 유저 정보의 token임.
+      const jwtToken = user.token;
+      // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
+      sessionStorage.setItem("userToken", jwtToken);
+      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
 
-    //   // 기본 페이지로 이동함.
-    //   navigate("/", { replace: true });
-    // } catch (err) {
-    //   console.log("로그인에 실패하였습니다.\n", err);
-    // }
+      // 기본 페이지로 이동함.
+      navigate("/", { replace: true });
+    } catch (err) {
+      console.log("로그인에 실패하였습니다.\n", err);
+    }
   };
 
   //모달창 끄기
