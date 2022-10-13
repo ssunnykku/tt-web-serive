@@ -8,9 +8,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import "../styles/network/network.css";
 import StyledButton from "../styles/commonstyles/Button";
 import CreateChallengePage from "./CreateChallengePage";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 const Network = () => {
+  const navigate=useNavigate()
   const originalData = data;
   const [ChallangeList, setChallangeList] = useState(data);
   const [visible, setVisible] = useState(4);
@@ -37,9 +39,12 @@ const Network = () => {
         />
       </div>
       <div className="challangePostButtonContainer">
-        <Link to="./network/pages/CreateChallengePage">
-          <button className="challangePostButton">+</button>
-        </Link>
+        
+          <button className="challangePostButton"
+          onClick={()=>{
+            navigate('/network/pages/CreateChallengePage')
+          }}>+</button>
+        
       </div>
       <Container className="forContainer">
         <Row>

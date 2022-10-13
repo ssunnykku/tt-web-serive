@@ -61,6 +61,7 @@ const CheckImgUploader = () => {
               <img className="icon" src={happy}></img>이렇게 찍어주세요!
             </span>
             <img
+              className="img"
               src={goodImage}
               onClick={() => {
                 fileInput.current.click();
@@ -81,6 +82,7 @@ const CheckImgUploader = () => {
               <img className="icon" src={sad}></img>이렇게 찍으면 안돼요!
             </span>
             <img
+              className="img"
               src={badImage}
               onClick={() => {
                 fileInput.current.click();

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import * as Api from "../api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+
 import like from "../images/userLiked/like.png";
 import liked from "../images/userLiked/liked.png";
 const UserLike = () => {
