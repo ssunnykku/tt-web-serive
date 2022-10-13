@@ -8,12 +8,11 @@ import MainPage from "./pages/MainPage";
 import Network from "./pages/Network";
 import LoginModal from "./components/LoginModal/LoginModal";
 import SignUpModal from "./components/signUpModal/SignUpModal";
-
 import MyPage from "./pages/MyPage";
-
-
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
+
+
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -65,7 +64,6 @@ function App() {
         <Route path="/mypage" element={<MyPage/>}/>
       </Routes>
     </Router>
-
   );
 }
 

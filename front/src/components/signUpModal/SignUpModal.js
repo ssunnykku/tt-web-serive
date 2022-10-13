@@ -6,7 +6,7 @@ import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
 // import Modal from "../../Modals/Modal";
 
-function SignUpModal({ setModalOpen }) {
+function SignUpModal({ setSignUpModalOpen }) {
   //   const navigate = useNavigate();
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
@@ -72,7 +72,7 @@ function SignUpModal({ setModalOpen }) {
   };
   //모달창 끄기
   const closeModal = () => {
-    setModalOpen(false);
+    setSignUpModalOpen(false);
   };
 
   return (

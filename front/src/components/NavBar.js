@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import "../styles/navbar/navbar.css";
-import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
-const NavBar = () => {
-  const navigate=useNavigate()
-  const [active,setActive]=useState('nav-menu');
-  const [toggleIcon,setToggleIcon]=useState('nav-toggler');
-  const navToggle=()=>{
-    active === 'nav-menu' ? setActive('nav-menu nav-active') : setActive('nav-menu');
+import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
+import SignUpModal from "../components/signUpModal/SignUpModal";
 
-    toggleIcon === 'nav-toggler' ? setToggleIcon('nav-toggler toggle') : setToggleIcon('nav-toggler')
-  }
+const NavBar = () => {
+  const navigate = useNavigate();
+  const [active, setActive] = useState("nav-menu");
+  const [toggleIcon, setToggleIcon] = useState("nav-toggler");
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const navToggle = () => {
+    active === "nav-menu"
+      ? setActive("nav-menu nav-active")
+      : setActive("nav-menu");
+
+    toggleIcon === "nav-toggler"
+      ? setToggleIcon("nav-toggler toggle")
+      : setToggleIcon("nav-toggler");
+  };
+  const showSignUpModal = () => {
+    setSignUpModalOpen(true);
+  };
   return (
     <div className="navBar">
      <nav className="nav">
