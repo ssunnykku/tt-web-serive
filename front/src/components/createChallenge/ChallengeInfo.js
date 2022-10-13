@@ -33,6 +33,7 @@ const ChallengeInfo = () => {
   const onEndDate = (data) => {
     setEndDate(data);
   };
+  console.log(endDateString);
 
   return (
     <>
