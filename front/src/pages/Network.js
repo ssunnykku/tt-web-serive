@@ -7,12 +7,18 @@ import NetworkCard from "../components/NetworkCard";
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/network/network.css";
 import StyledButton from "../styles/commonstyles/Button";
+import CreateChallengePage from "./CreateChallengePage";
+import { Link } from "react-router-dom";
+
 const Network = () => {
   const originalData = data;
   const [ChallangeList, setChallangeList] = useState(data);
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
+  };
+  const click = () => {
+    document.location.href("/CreateChallengePage");
   };
 
   return (
@@ -24,10 +30,16 @@ const Network = () => {
           data={ChallangeList}
           setData={setChallangeList}
         />
-        <SortDropDown  originalData={originalData} data={ChallangeList} setData={setChallangeList} />
+        <SortDropDown
+          originalData={originalData}
+          data={ChallangeList}
+          setData={setChallangeList}
+        />
       </div>
       <div className="challangePostButtonContainer">
-      <button className="challangePostButton">+</button>
+        <Link to="./network/pages/CreateChallengePage">
+          <button className="challangePostButton">+</button>
+        </Link>
       </div>
       <Container className="forContainer">
         <Row>

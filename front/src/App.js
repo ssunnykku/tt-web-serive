@@ -9,10 +9,9 @@ import Network from "./pages/Network";
 import LoginModal from "./components/LoginModal/LoginModal";
 import SignUpModal from "./components/signUpModal/SignUpModal";
 import MyPage from "./pages/MyPage";
+import CreateChallenge from "./pages/CreateChallengePage";
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
-
-
 
 function App() {
   // useReducer 훅을 통해 userState 상태와 dispatch함수를 생성함.
@@ -54,14 +53,17 @@ function App() {
   }
 
   return (
-
     <Router>
       <Routes>
         <Route path="/" exact element={<MainPage />} />
         <Route path="/network" exact element={<Network />} />
         <Route path="/login" element={<LoginModal />} />
         <Route path="/signup" element={<SignUpModal />} />
-        <Route path="/mypage" element={<MyPage/>}/>
+        <Route path="/mypage" element={<MyPage />} />
+        <Route
+          path="/network/pages/CreateChallengePage"
+          element={<CreateChallenge />}
+        />
       </Routes>
     </Router>
   );
