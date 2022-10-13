@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+import { remainingDateMiddleware } from "../middlewares/remainingDateMiddleware";
 
 const prisma = new PrismaClient();
 
@@ -38,7 +39,15 @@ class userChallengeModel {
       where: {
         challengeId: Number(id),
       },
-      data: { title, description, fromDate, toDate, img },
+      data: {
+        title,
+        description,
+        fromDate,
+        toDate,
+        img,
+        startRemainingDate: remainingDateMiddleware(fromDate),
+        endRemainingDate: remainingDateMiddleware(toDate) * -1,
+      },
     });
     return challenge;
   }
