@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import Network from "./pages/Network";
+import CreateChallengePage from "./pages/CreateChallengePage";
 
 function App() {
   return (
@@ -12,9 +13,6 @@ function App() {
       </Routes>
     </Router>
   );
-
 }
-
-
 
 export default App;

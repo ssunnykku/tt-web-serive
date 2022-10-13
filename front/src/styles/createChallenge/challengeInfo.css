@@ -1,0 +1,54 @@
+.inner {
+    position: relative;
+    box-sizing: border-box;
+    margin-left: 30px;
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+span {
+    position: relative;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+input {
+    position: relative;
+    width: 280px;
+    height:35px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 2px solid #CDCCCC;
+}
+.description{
+    text-decoration-style: none;
+    position: relative;
+    width: 280px;
+    height: 60px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    border: 2px solid #CDCCCC;
+}
+input:focus{
+    outline: none;
+    border-color:#6A71E6;
+}
+textarea:focus{
+    outline: none;
+    border-color:#6A71E6;
+}
+
+.date{
+    display: flex;
+}
+.date p {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.date input {
+    width: 130px;
+    height:30px;
+}

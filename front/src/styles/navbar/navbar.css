@@ -2,12 +2,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-html{
-    font-size: 100%;
-}
-body{
-    font-size: 1.5rem;
-}
+
 li{
     list-style: none;
 }
