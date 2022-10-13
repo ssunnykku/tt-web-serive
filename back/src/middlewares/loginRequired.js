@@ -9,17 +9,14 @@ function loginRequired(req, res, next) {
     // 해당 access token이 정상적인 토큰인지 확인 후 userId 추출
     //여기까지는 해커 탈취한 토큰으로 req보내면 정상인증이 된다
     try {
-      console.log("🐰", accessToken);
-      // console.log("🐰", process.env.JWT_SECRET_KEY);
-      // console.log("jwt:", jwt.verify);
       const secretKey = process.env.JWT_SECRET_KEY;
       const jwtDecoded = jwt.verify(accessToken, secretKey);
-      console.log("decoded", jwtDecoded);
-      console.log("🙏", jwtDecoded.userId);
+      
       const userId = jwtDecoded.userId;
-      console.log("추출한 userId", userId);
+
       // token에서 추출한 유저의 id를 currentUserId에 할당해서 req보냄
       req.currentUserId = userId;
+
       //next하면 이 미들웨어 벗어남
       next();
     } catch (error) {

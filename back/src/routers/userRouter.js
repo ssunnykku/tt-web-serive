@@ -39,12 +39,11 @@ userRouter.post("/login", async (req, res, next) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-
     const user = await userService.userLogin({ email, password });
-
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
     }
+    
     res.status(200).send(user);
   } catch (error) {
     next(error);
@@ -56,6 +55,7 @@ userRouter.post("/login", async (req, res, next) => {
 userRouter.get("/currentUser", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
+ 
     const currentUser = await userService.findCurrentUser({ userId });
 
     if (currentUser.errorMessage) {
@@ -93,11 +93,11 @@ userRouter.put(
       try {
         //const  userId  = req.params.userId;
         const userId = req.currentUserId;
-        const {name, email} = req.body;
+        const {name, description} = req.body;
         const updatedUser = await userService.updateUser(
           userId,
           name,
-          email,
+          description,
         );
         res.status(200).json({ updatedUser });
       } catch (error) {
@@ -116,9 +116,8 @@ userRouter.put(
         const withdrawal = req.body.withdrawal??null
         const userId = req.currentUserId
         const id = req.params.id;
-        const idStatus = await userService.userWithdrawal({userId, id, withdrawal})
-        console.log(id);
 
+        const idStatus = await userService.userWithdrawal({userId, id, withdrawal})
         res.status(200).json(idStatus)
 
       } catch (error) {

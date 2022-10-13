@@ -8,10 +8,18 @@ dotenv.config();
 class userService{
     // 1. 회원가입 서비스
     static async addUser({ email, password, confirmPassword, name }) {
+      
+      //이메일이 같은 유저 목록
+      
       const user = await User.findByEmail({ email });
-      if (user) {
-        const errorMessage = "이미 사용중인 email입니다.";
-        return errorMessage;
+      //0회원 1탈퇴
+      if(user.length>1){
+      if (user){//이메일 같은 유저 중
+        if(user[0].withdrawal==0){//false
+          const errorMessage = "이미 사용중인 email입니다.";
+          return errorMessage;
+        }
+      }
       }
       if (password !== confirmPassword) {
         const errorMessage = "비밀번호가 일치하지 않습니다";
@@ -27,7 +35,7 @@ class userService{
       const newUser = { userId, email, password: hashpassword, name };
       const createNewUser = await User.createUser({ userId, newUser });
       createNewUser.errorMessage = null;
-      console.log(createNewUser);
+      
       //  // 토큰 스키마에 유저id추가
       await User.createToken({ userId });
       // await Login.createLiked({ userId, likedId });
@@ -37,22 +45,25 @@ class userService{
   
     // 2. 로그인 서비스
     static async userLogin({ email, password }) {
-      console.log("서비스 2");
-  
-      const user = await User.findByEmail({ email });
-      if (!user) {
-        const errorMessage =
-          "해당 이메일은 가입 내역이 없습니다.다시 한 번 확인해 주세요.";
-        return errorMessage;
+      const data = await User.findByEmail({ email });//이메일이 같은 유저 리스트
+      const user=data[0];
+      //0회원 1탈퇴
+
+      if(data.length>1){
+      if (data){
+        if(user.withdrawal==1){//true
+         const errorMessage =
+            "존재하지 않는 계정입니다.";
+          return errorMessage;
       }
-      console.log("서비스 3");
-      const hashpassword = user.password;
-      const isCorrect = await bcrypt.compare(password, hashpassword);
+    }}
+
+      const haspassword = user.password;
+      const isCorrect = await bcrypt.compare(password, haspassword);
       if (!isCorrect) {
         const errorMessage = "비밀번호가 일치하지 않습니다.";
         return errorMessage;
       }
-      console.log("서비스 4");
   
       // //로그인 정보 검사 후 refresh, access token 발급을 위한 코드>> 프론트에 넘겨줘야한다
       const date = new Date();
@@ -67,10 +78,9 @@ class userService{
       //계속 토큰이 만료된다.??? 만료 관련 이슈 확인하기
       //expiredAt이거 프론트단에 보내얗 한ㄴ다?
       //https://developers.cafe24.com/app/front/develop/oauth/retoken
-      console.log("서비스 5");
-      console.log(accessToken);
-  
+      
       const userId = user.userId;
+
   
       if (refreshToken) {
         await User.tokenUpdate({ userId, refreshToken });
@@ -92,7 +102,9 @@ class userService{
   
     // 3. 유저 한명 정보 가져오기
     static async findCurrentUser({ userId }) {
+   
       const userData = await User.findByUserId({ userId });
+      
       return userData;
     }
   
@@ -114,7 +126,7 @@ class userService{
   }
 
   //5. 유저정보 수정
-  static async updateUser( userId, name, email) {
+  static async updateUser( userId, name, description) {
     const user = await User.findByUserId({ userId });
 
     if (!user) {
@@ -125,7 +137,7 @@ class userService{
     const updateUser = await User.updateUser(
       userId,
       name,
-      email,
+      description,
 
     );
     return updateUser;
@@ -137,10 +149,12 @@ static async userWithdrawal({userId, id, withdrawal}){
       const errorMessage = "UserId가 틀립니다."
       return errorMessage
     }
-    
-    if(withdrawal === true){
-      let user = await User.findById({userId}) 
+   
+    if(withdrawal == 1){
+      let user = await User.findByUserId({userId}) 
       const newValue = withdrawal;
+      //console.log(newValue,"서비스");
+      //console.log(typeof newValue,"서비스");
       user = await User.updateWithdrawal({ userId, newValue });
       //console.log(user)
 

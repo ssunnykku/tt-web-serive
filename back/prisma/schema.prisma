@@ -13,16 +13,17 @@ model point {
 }
 
 model user {
-  userId            String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
-  joinedChallengeId Int?   @unique(map: "joinedChallengeId_UNIQUE")
-  holdChallengeId   Int?   @unique(map: "holdChallengeId_UNIQUE")
-  name              String @db.VarChar(10)
-  email             String @unique(map: "email_UNIQUE") @db.VarChar(30)
-  password          String @db.VarChar(100)
-  withdrawal        Int    @default(0) @db.TinyInt
+  userId            String  @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  joinedChallengeId Int?    @unique(map: "joinedChallengeId_UNIQUE")
+  holdChallengeId   Int?    @unique(map: "holdChallengeId_UNIQUE")
+  name              String  @db.VarChar(10)
+  email             String  @db.VarChar(30)
+  password          String  @db.VarChar(100)
+  withdrawal        Int     @default(0) @db.TinyInt
+  description       String? @db.VarChar(100)
 }
 
-model refreshToken {
+model refreshtoken {
   refreshToken String @db.VarChar(500)
   userId       String @id @db.VarChar(45)
 }

@@ -14,24 +14,29 @@ class User {
           withdrawal: 0,
           joinedChallengeId: null,
           holdChallengeId: null,
+          description:"자기소개를 입력해주세요."
           //img: null,
         },
       });
       return registerUser;
     }
-  
+
+    //같은 이메일 찾기
     static async findByEmail({ email }) {
-      const finduser = await prisma.user.findUnique({
+      const finduser = await prisma.user.findMany({
         where: {
           email: email,
         },
+        orderBy: {
+            withdrawal: 'asc',
+          },
       });
       return finduser;
     }
-  
 
     //유저 찾기
     static async findByUserId({ userId }) {
+
       const users = await prisma.user.findUnique({
         where:{
           userId: userId,
@@ -54,12 +59,12 @@ class User {
     }  
 
     //유저 정보 수정
-    static async updateUser(userId,name, email) {
+    static async updateUser(userId,name, description) {
       const updateuser = await prisma.user.update({
         where: {
           userId: userId,
         },
-        data: { name, email},
+        data: { name, description},
       });
       return updateuser;
     }
@@ -73,6 +78,7 @@ class User {
     }
     // 토큰업데이트
     static async tokenUpdate({ userId, refreshToken }) {
+
       const token = await prisma.refreshToken.update({
         where: {
           userId: userId,
@@ -81,11 +87,11 @@ class User {
           refreshToken: refreshToken,
         },
       });
-      console.log(token);
+      //console.log(token);
       return token;
     }
     static async createPoint({ userId }) {
-      console.log(userId);
+      //console.log(userId);
       await prisma.point.create({
         data: {
           userId: userId,
@@ -95,21 +101,20 @@ class User {
     }
   
   
-      
-    
     //회원탈퇴
-    // static async updateWithdrawal({ userId, newValue }) {
-    //   const updateWithdrawal = await prisma.user.update({
-    //     where: {
-    //       userId : (userId)
-    //     },
-    //     data: {
-    //         withdrawal: newValue,
+    static async updateWithdrawal({ userId, newValue }) {
+      
+      const updateWithdrawal = await prisma.user.update({
+        where: {
+          userId : (userId)
+        },
+        data: {
+            withdrawal: newValue,
   
-    //     }
-    //   });
-    //   return updateWithdrawal;
-    // }
+        }
+      });
+      return updateWithdrawal;
+    }
   
   }
   
