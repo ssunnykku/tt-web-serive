@@ -5,6 +5,9 @@
     justify-content: center;
     
 }
+.forContainer{
+    margin-top: 3%;
+}
 .SearchFormContainer{
     display: flex;
     align-items: center;

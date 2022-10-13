@@ -24,12 +24,12 @@ const Network = () => {
           data={ChallangeList}
           setData={setChallangeList}
         />
-        <SortDropDown originalData={originalData} data={ChallangeList} setData={setChallangeList} />
+        <SortDropDown  originalData={originalData} data={ChallangeList} setData={setChallangeList} />
       </div>
       <div className="challangePostButtonContainer">
       <button className="challangePostButton">+</button>
       </div>
-      <Container>
+      <Container className="forContainer">
         <Row>
           {ChallangeList.slice(0, visible).map((menu) => (
             <Col lg={3}>
