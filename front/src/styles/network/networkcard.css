@@ -1,14 +1,13 @@
 .imageWrap {
     text-align: center;
-    
-}
-.card-body:disabled{
-     background-color: grey;
-     opacity: 50%;
+
 }
 
+
 .cardtext{
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
 }
 .cardSubText{
     color: rgb(179, 176, 176);
@@ -45,7 +44,7 @@
     margin-top: 20px;
     font-size: large;
     font-weight: 500;
-    margin-left: 2%;
+    margin-left: 5%;
 }
 
 .networkButton:disabled{

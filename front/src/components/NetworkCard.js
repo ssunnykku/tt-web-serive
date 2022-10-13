@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "../styles/network/networkcard.css";
 import StyledButton from "../styles/commonstyles/Button";
+import UserLike from "./UserLike";
 const NetworkCard = ({ item }) => {
   var today = new Date();
   var year = today.getFullYear();
@@ -24,7 +25,7 @@ const NetworkCard = ({ item }) => {
           />
 
           <Card.Title>{item?.title}</Card.Title>
-          <div className="cardtext">👨‍👧‍👧 100 ❤️</div>
+          <div className="cardtext">👨‍👧‍👧 100<UserLike/></div>
           <div className="duration">
             <a className="cardSubText">
               {item?.fromDate}-{item?.toDate}

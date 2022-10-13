@@ -60,7 +60,7 @@ const MyPage = () => {
           <div className="btnContainer"></div>
           {showDrop == true ? (
             <Dropdown className="dropdownbtn">
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle className="dropdownToggle" variant="success" id="dropdown-basic">
                 {initialState}
               </Dropdown.Toggle>
               <Dropdown.Menu>
