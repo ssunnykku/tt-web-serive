@@ -75,7 +75,7 @@ function LoginModal({ setLoginModalOpen }) {
           <div className="LoginModal">
             <div className="LoginModalContents">
               <img
-                className="closeBtn"
+                className="LoginCloseBtn"
                 src={Close_round_light}
                 onClick={closeLoginModal}
                 width="32px"

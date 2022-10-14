@@ -69,7 +69,7 @@
     justify-content: center;
     flex-direction: column;
 }
-.closeBtn{
+.LoginCloseBtn{
     position: relative;
     margin-left: 370px;
     margin-top: 10px;
