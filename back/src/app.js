@@ -3,7 +3,6 @@ import express from "express";
 import { userRouter } from "./routers/userRouter";
 import { pointRouter } from "./routers/pointRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
-
 import { challengeRouter } from "./routers/challengeRouter";
 import { userChallengeRouter } from "./routers/userChallengeRouter";
 import { likedRouter } from "./routers/likedRouter";
@@ -21,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/challenges", challengeRouter);
 app.use("/userChallenge", userChallengeRouter);
-app.use("/certification", certificationRouter);
+
 
 app.use(userRouter);
 app.use(pointRouter);

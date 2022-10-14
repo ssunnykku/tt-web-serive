@@ -23,6 +23,7 @@ class User {
 
     //같은 이메일 찾기
     static async findByEmail({ email }) {
+      console.log(email,"모델");
       const finduser = await prisma.user.findMany({
         where: {
           email: email,
@@ -33,6 +34,7 @@ class User {
       });
       return finduser;
     }
+
 
     //유저 찾기
     static async findByUserId({ userId }) {
@@ -116,92 +118,5 @@ class User {
       return updateWithdrawal;
     }
 
-  static async findByEmail({ email }) {
-    const finduser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
-    return finduser;
-  }
-
-  //유저 찾기
-  static async findByUserId({ userId }) {
-    const users = await prisma.user.findUnique({
-      where: {
-        userId: userId,
-      },
-    });
-    return users;
-  }
-
-  //4. 유저 비번 수정
-  static async updatePW({ userId, password }) {
-    const updatePW = await prisma.user.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        password: password,
-      },
-    });
-    return updatePW;
-  }
-
-  //유저 정보 수정
-  static async updateUser(userId, name, email) {
-    const updateuser = await prisma.user.update({
-      where: {
-        userId: userId,
-      },
-      data: { name, email },
-    });
-    return updateuser;
-  }
-  static async createToken({ userId }) {
-    const token = await prisma.refreshToken.create({
-      data: {
-        refreshToken: userId,
-        userId: userId,
-      },
-    });
-  }
-  // 토큰업데이트
-  static async tokenUpdate({ userId, refreshToken }) {
-    const token = await prisma.refreshToken.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        refreshToken: refreshToken,
-      },
-    });
-    console.log(token);
-    return token;
-  }
-  static async createPoint({ userId }) {
-    console.log(userId);
-    await prisma.point.create({
-      data: {
-        userId: userId,
-        point: 100,
-      },
-    });
-  }
-
-  //회원탈퇴
-  // static async updateWithdrawal({ userId, newValue }) {
-  //   const updateWithdrawal = await prisma.user.update({
-  //     where: {
-  //       userId : (userId)
-  //     },
-  //     data: {
-  //         withdrawal: newValue,
-
-  //     }
-  //   });
-  //   return updateWithdrawal;
-  // }
-// }
 }
 export { User };

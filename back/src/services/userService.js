@@ -8,24 +8,26 @@ dotenv.config();
 class userService {
   // 1. 회원가입 서비스
   static async addUser({ email, password, confirmPassword, name }) {
+      
     //이메일이 같은 유저 목록
-
+    
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
-    if (user.length > 1) {
-      if (user) {
-        //이메일 같은 유저 중
-        if (user[0].withdrawal == 0) {
-          //false
-          const errorMessage = "이미 사용중인 email입니다.";
-          return errorMessage;
-        }
+    console.log(email,"버시브");
+    console.log(user,"버시브");
+    if(user.length>1){
+    if (user){//이메일 같은 유저 중
+      if(user[0].withdrawal==0){//false
+        const errorMessage = "이미 사용중인 email입니다.";
+        return errorMessage;
       }
+    }
     }
     if (password !== confirmPassword) {
       const errorMessage = "비밀번호가 일치하지 않습니다";
       return errorMessage;
     }
+
 
     // //비밀번호 해쉬화
     const hashpassword = await bcrypt.hash(password, 10);
