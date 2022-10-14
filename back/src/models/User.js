@@ -203,5 +203,5 @@ class User {
   //   return updateWithdrawal;
   // }
 // }
-
+}
 export { User };
