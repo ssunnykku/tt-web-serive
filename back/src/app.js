@@ -1,5 +1,7 @@
 import cors from "cors";
 import express from "express";
+import { userRouter } from "./routers/userRouter";
+import { pointRouter } from "./routers/pointRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 import { challengeRouter } from "./routers/challengeRouter";
@@ -21,5 +23,7 @@ app.use("/userChallenge", userChallengeRouter);
 app.use("/certification", certificationRouter);
 
 app.use(errorMiddleware);
+
+export { app };
 
 export { app };
