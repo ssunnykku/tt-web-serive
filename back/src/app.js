@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/challenges", challengeRouter);
 app.use("/userChallenge", userChallengeRouter);
+app.use("/certification", certificationRouter);
 
 app.use(errorMiddleware);
 

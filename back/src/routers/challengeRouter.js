@@ -35,20 +35,21 @@ const upload = multer({
       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
   }),
-  limits: { fileSize: 5 * 1024 * 1024 },
+  limits: { fileSize: 30 * 1024 * 1024 },
 });
 // 하나의 이미지 업로드
-challengeRouter.post("img", upload.single("img"), (req, res) => {
+challengeRouter.post("/img", upload.single("img"), (req, res) => {
   console.log(req.file);
   res.json({ url: `/img/${req.file.filename}` });
 });
 
 // create/ post(유저별로 수정할 것)
 const upload2 = multer();
-challengeRouter.post("/add", upload2.single("img"), async (req, res, next) => {
+challengeRouter.post("/add", upload2.none(), async (req, res, next) => {
   console.log(req);
   try {
-    const { title, description, fromDate, toDate, img } = req.body;
+    const { title, description, fromDate, toDate } = req.body;
+    const { img } = req.body.url;
     const newChallenge = await challengeService.addChallenge({
       title,
       description,
