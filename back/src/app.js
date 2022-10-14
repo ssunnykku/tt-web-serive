@@ -6,6 +6,7 @@ import { errorMiddleware } from "./middlewares/errorMiddleware";
 
 import { challengeRouter } from "./routers/challengeRouter";
 import { userChallengeRouter } from "./routers/userChallengeRouter";
+import { likedRouter } from "./routers/likedRouter";
 
 const app = express();
 app.use(cors());
@@ -22,8 +23,9 @@ app.use("/challenges", challengeRouter);
 app.use("/userChallenge", userChallengeRouter);
 app.use("/certification", certificationRouter);
 
+app.use(userRouter);
+app.use(pointRouter);
+app.use(likedRouter);
 app.use(errorMiddleware);
-
-export { app };
 
 export { app };

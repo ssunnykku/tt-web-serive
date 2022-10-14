@@ -11,7 +11,7 @@ function loginRequired(req, res, next) {
     try {
       const secretKey = process.env.JWT_SECRET_KEY;
       const jwtDecoded = jwt.verify(accessToken, secretKey);
-      
+
       const userId = jwtDecoded.userId;
 
       // token에서 추출한 유저의 id를 currentUserId에 할당해서 req보냄
