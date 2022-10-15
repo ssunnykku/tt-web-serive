@@ -4,7 +4,6 @@ import "../../styles/signUpModal.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
-// import Modal from "../../Modals/Modal";
 
 function SignUpModal({ setSignUpModalOpen }) {
   //   const navigate = useNavigate();
@@ -20,6 +19,7 @@ function SignUpModal({ setSignUpModalOpen }) {
   const [checkPwd, setCheckPwd] = useState("");
   //useState로 checkBox 상태를 생성함.
   const [checkBox, setCheckBox] = useState(false);
+  // const [signUpModalOpen, setSignUpModalOpen] = useState(false);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   //email 인증메일로 받는거 해야함, 지금은 이메일 형태인지만 체크하고 있음
@@ -71,10 +71,10 @@ function SignUpModal({ setSignUpModalOpen }) {
     // }
   };
   //모달창 끄기
-  const closeModal = () => {
+  const closeSignUpModal = () => {
     setSignUpModalOpen(false);
   };
-
+  console.log(setSignUpModalOpen);
   return (
     <>
       <div className="modalBackground">
@@ -83,7 +83,7 @@ function SignUpModal({ setSignUpModalOpen }) {
             <img
               className="closeBtn"
               src={Close_round_light}
-              onClick={closeModal}
+              onClick={closeSignUpModal}
               width="32px"
               height="32px"
             ></img>
