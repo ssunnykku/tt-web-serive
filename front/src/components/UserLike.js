@@ -58,8 +58,9 @@ useEffect(()=>{
     <div>
       <div id="userLike" onClick={handleClick} className="likeButton">
         {like ? <img src={likedimg} /> : <img src={likeimg} />}
+        <span className="ms-2">{countLike} Likes</span>
       </div>
-      <span className="ms-2">{countLike} Likes</span>
+      
     </div>
   );
 }
