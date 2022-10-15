@@ -9,7 +9,7 @@
 .cardtext{
     font-size: 1.2rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 .cardSubText{
     color: rgb(179, 176, 176);
