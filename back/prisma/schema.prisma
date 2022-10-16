@@ -18,7 +18,6 @@ model point {
   point  Int?
 }
 
-
 model user {
   userId            String      @id @db.VarChar(50)
   joinedChallengeId Int?        @unique(map: "joinedChallengeId_UNIQUE")
@@ -48,8 +47,7 @@ model challenge {
   endRemainingDate   Int
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
-
-  users user[] @relation("challengToUser")
+  users              user[]   @relation("challengToUser")
 }
 
 model hashTag {

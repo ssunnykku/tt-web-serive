@@ -89,11 +89,9 @@ class User {
           refreshToken: refreshToken,
         },
       });
-      //console.log(token);
       return token;
     }
     static async createPoint({ userId }) {
-      //console.log(userId);
       await prisma.point.create({
         data: {
           userId: userId,

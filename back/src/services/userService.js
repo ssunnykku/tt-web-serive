@@ -13,8 +13,6 @@ class userService {
     
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
-    console.log(email,"버시브");
-    console.log(user,"버시브");
     if(user.length>1){
     if (user){//이메일 같은 유저 중
       if(user[0].withdrawal==0){//false
@@ -148,10 +146,7 @@ class userService {
     if (withdrawal === true) {
       let user = await User.findById({ userId });
       const newValue = withdrawal;
-      //console.log(newValue,"서비스");
-      //console.log(typeof newValue,"서비스");
       user = await User.updateWithdrawal({ userId, newValue });
-      //console.log(user)
     }
   }
 }
