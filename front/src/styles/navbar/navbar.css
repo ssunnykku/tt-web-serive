@@ -76,3 +76,26 @@ a{
 .toggle .line3{
     transform: rotate(45deg) translate(4px, -5px);
 }
+
+.dropdown-menu.show{
+    display: flex;
+    background: none;
+    margin-top: none;
+    border: 2px solid rgb(104, 102, 217);
+    border-radius: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: none;
+}
+.dropdownFont{
+    color: rgb(104, 102, 217);
+    margin: none;
+    font-size: 1.5rem;
+    
+}
+/* .dditem{
+    
+    border-bottom: 1px solid rgb(104, 102, 217);
+} */

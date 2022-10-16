@@ -14,7 +14,15 @@ const MainPage1 = () => {
   const showLoginModal = () => {
     setLoginModalOpen(true);
   };
-
+  // const isLogin= !!userState.user;
+  const isLogin=false;
+   // const logout=()=>{
+  //   sessionStorage.removeItem('accessToken');
+  //   localStorage.removeItem('refreshToken');
+  //   dispatchEvent({type:'LOGOUT'});
+  //   alert('로그아웃 완료')
+  //   navigate('/')
+  // }
   return (
     <>
       <div className="mainPage1">
@@ -29,7 +37,13 @@ const MainPage1 = () => {
             <StyledButton onClick={()=>{
               navigate('/network')
             }}>챌린지</StyledButton>
-            <StyledButton onClick={showLoginModal}>로그인</StyledButton>
+            {
+              isLogin===false?
+              <StyledButton onClick={showLoginModal}>로그인</StyledButton>
+              :
+              <StyledButton >로그아웃</StyledButton>
+            }
+            
             {loginModalOpen && (
               <LoginModal setLoginModalOpen={setLoginModalOpen} />
             )}
