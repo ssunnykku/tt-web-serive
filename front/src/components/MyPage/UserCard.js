@@ -46,7 +46,7 @@ const UserCard = () => {
 
   return (
     <div className="userprofile">
-      <img id="round" src={profileImage} onClick={()=>{
+      <img className="profileImage" src={profileImage} onClick={()=>{
         fileInput.current.click();
       }} />
       <input
