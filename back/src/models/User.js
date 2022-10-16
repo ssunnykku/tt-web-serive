@@ -85,14 +85,6 @@ class User {
     });
     // return updateuser;
   }
-  static async createToken({ userId }) {
-    const token = await prisma.refreshToken.create({
-      data: {
-        refreshToken: userId,
-        userId: userId,
-      },
-    });
-  }
   // 토큰업데이트
   static async tokenUpdate({ userId, refreshToken }) {
     const token = await prisma.refreshToken.update({
@@ -103,11 +95,9 @@ class User {
         refreshToken: refreshToken,
       },
     });
-    //console.log(token);
     return token;
   }
   static async createPoint({ userId }) {
-    //console.log(userId);
     await prisma.point.create({
       data: {
         userId: userId,

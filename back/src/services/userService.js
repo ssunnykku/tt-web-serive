@@ -172,10 +172,7 @@ class userService {
     if (withdrawal === true) {
       let user = await User.findById({ userId });
       const newValue = withdrawal;
-      //console.log(newValue,"서비스");
-      //console.log(typeof newValue,"서비스");
       user = await User.updateWithdrawal({ userId, newValue });
-      //console.log(user)
     }
   }
 }
