@@ -38,23 +38,27 @@ const ChallengeInfo = () => {
   return (
     <>
       <div className="inner">
-        <span>이름</span>
+        <span className="infoSpan">이름</span>
         <input
+          className="infoInput"
           onChange={(e) => setChallengeName(e.target.value)}
           placeholder=" ex) 주 1회 플로깅"
         ></input>
-        <span>인증방법</span>
+        <span className="infoSpan">인증방법</span>
         <input
+          className="infoInput"
           onChange={(e) => setCheckMethod(e.target.value)}
           placeholder=" ex) 쓰레기 봉투 인증"
         ></input>
-        <span>설명</span>
+        <span className="infoSpan">설명</span>
+
         <textarea
           className="description"
           onChange={(e) => setDescription(e.target.value)}
           placeholder=" 조깅을 하면서 쓰레기를 줍는 활동 "
         ></textarea>
-        <span>기간(시작일 ~ 종료일)</span>
+
+        <span className="infoSpan">기간(시작일 ~ 종료일)</span>
         <div className="date">
           <label for="startDate"></label>
           <DatePicker
@@ -65,7 +69,8 @@ const ChallengeInfo = () => {
             locale={ko}
             minDate={new Date()}
           />
-          <p>~</p>
+
+          <p className="dateRange">~</p>
           <label for="endDate"></label>
           <DatePicker
             dateFormat="yyyy-MM-dd"

@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginModal.css";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
 import NaverButton from "../../images/user/NaverLogin.png";
 import KakaoButton from "../../images/user/KakaoLogin.png";
 
+import SignUpModal from "../signUpModal/SignUpModal";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 
@@ -14,6 +16,7 @@ function LoginModal({ setLoginModalOpen }) {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
   //useState로 pwd 상태를 생성함.
@@ -143,9 +146,21 @@ function LoginModal({ setLoginModalOpen }) {
                 </a>
               </div>
 
-              <p>
-                아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
-              </p>
+              <Link
+                to="./signup"
+                state={
+                  signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
+                }
+              >
+                <p>
+                  아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
+                </p>
+              </Link>
+              {/* {signUpModalOpen && (
+                <SignUpModal
+                  setSignUpModalOpen={setSignUpModalOpen}
+                ></SignUpModal>
+              )} */}
             </div>
           </div>
         </div>

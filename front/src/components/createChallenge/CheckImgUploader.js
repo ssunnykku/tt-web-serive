@@ -13,11 +13,10 @@ const CheckImgUploader = () => {
 
   const onChangeGoodImage = (e) => {
     if (e.target.files[0]) {
-      console.log(e.target.file[0]);
       setGoodImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setGoodImage(blankImg);
+      setGoodImage({ blankImg });
       return;
     }
     //화면에 챌린지 사진 표시
@@ -69,9 +68,9 @@ const CheckImgUploader = () => {
             ></img>
             <input
               type="file"
-              style={{ display: "none" }}
+              style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="challengeImg"
+              name="goodImg"
               multiple
               onChange={onChangeGoodImage}
               ref={fileInput}
@@ -90,9 +89,9 @@ const CheckImgUploader = () => {
             ></img>
             <input
               type="file"
-              style={{ display: "none" }}
+              style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="challengeImg"
+              name="badImg"
               multiple
               onChange={onChangeBadImage}
               ref={fileInput}

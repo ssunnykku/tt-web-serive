@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model liked {
+  likedId     String @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
+  userId      String @db.VarChar(45)
+  challengeId Int    @unique(map: "challengeId_UNIQUE")
+}
+
+model point {
+  userId String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
+  point  Int?
+}
+
+model user {
+  userId            String      @id @db.VarChar(50)
+  joinedChallengeId Int?        @unique(map: "joinedChallengeId_UNIQUE")
+  holdChallengeId   Int?        @unique(map: "holdChallengeId_UNIQUE")
+  name              String      @db.VarChar(10)
+  email             String      @db.VarChar(30)
+  password          String      @db.VarChar(100)
+  withdrawal        Int         @default(0) @db.TinyInt
+  img               Bytes?      @db.Blob
+  description       String?     @db.VarChar(100)
+  challenges        challenge[] @relation("challengToUser")
+}
+
+model refreshToken {
+  refreshToken String @db.VarChar(500)
+  userId       String @id @db.VarChar(45)
+}
+
+model challenge {
+  challengeId        Int      @id @unique @default(autoincrement())
+  title              String   @db.VarChar(50)
+  description        String
+  fromDate           String
+  toDate             String
+  img                String   @db.Text
+  startRemainingDate Int
+  endRemainingDate   Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  users              user[]   @relation("challengToUser")
+}
+
+model hashTag {
+  title     String   @unique @db.VarChar(15)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
