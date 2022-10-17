@@ -1,0 +1,26 @@
+// import axios from 'axios';
+// import { response } from 'express';
+// import React from "react";
+// import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
+
+// import * as Api from "../../api";
+
+// {/**api의 response = back이 주는 return 값
+// page의 response = api에서 넘겨주는 값 */}
+
+// function duplicationCheckAPI = async(userid) => {
+//     let return_value;
+//     await axios.post("http://localhost:/signUpModal/duplicationcemail", {
+//         email: email,
+//     })
+//     .then((res) => {
+//         return_value = response.data;
+//     })
+//     .catch(function(err) {
+//         alert('중복된 이메일입니다.');
+//         return_value = true;
+//     })
+
+//     return return_value;
+// }

@@ -7,7 +7,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
-  // const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -17,9 +17,9 @@ const NavBar = () => {
       ? setToggleIcon("nav-toggler toggle")
       : setToggleIcon("nav-toggler");
   };
-  // const showSignUpModal = () => {
-  //   setSignUpModalOpen(true);
-  // };
+  const showSignUpModal = () => {
+    setSignUpModalOpen(true);
+  };
   return (
     <div className="navBar">
       <nav className="nav">
