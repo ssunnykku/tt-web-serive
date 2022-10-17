@@ -23,7 +23,7 @@
 }
 .userprofile img{
     border-radius: 50%;
-    width: 60%;
+    width: 50%;
     height: 30vh;
     margin-top: 10%;
 }
@@ -106,4 +106,10 @@
 }
 .dropdownToggle{
     background-color: #6A71E6;
+}
+.imageForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

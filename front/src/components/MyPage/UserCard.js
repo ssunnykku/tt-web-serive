@@ -46,6 +46,7 @@ const UserCard = () => {
 
   return (
     <div className="userprofile">
+      <form className="imageForm" onSubmit={onSubmit}>
       <img className="profileImage" src={profileImage} onClick={()=>{
         fileInput.current.click();
       }} />
@@ -57,6 +58,7 @@ const UserCard = () => {
       onChange={onChangeImage}
       ref={fileInput}
       ></input>
+      </form>
       <h1>유저이름</h1>
       <StyledButton
         onClick={() => {

@@ -4,6 +4,68 @@ const backendPortNumber = "5001";
 const serverUrl =
   "http://" + window.location.hostname + ":" + backendPortNumber + "/";
 
+
+// async function updateToken(){
+//   if(localStorage.getItem('refreshToken')){
+//     let refreshedAccessTokenResponse=await fetch(serverUrl+'token',{
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         refreshToken: localStorage.getItem('refreshToken'),
+//       }),
+//     });
+
+//     let refreshAccessToken= await refreshedAccessTokenResponse.json();
+//     if(refreshedAccessTokenResponse.Logout){
+//       localStorage.removeItem('refreshToken');
+//       localStorage.removeItem('accessToken');
+//       window.location.reload();
+//     }else{
+//       sessionStorage.setItem('accessToken', refreshAccessToken.accessToken);
+//       localStorage.setItem('refreshToken',refreshAccessToken.refreshToken)
+//     }
+//   }
+// }
+
+// axios.interceptors.response.use(
+//   async function(res){
+//     return res
+//   },
+//   async(error)=>{
+//     if(error.response.status===490){
+//       let refreshedAccessTokenResponse= await fetch(serverUrl+'token',{
+//         method:'POST',
+//         headers:{
+//           'Content-Type':'application/json'
+//         },
+//         body: JSON.stringify({
+//           refreshToken: localStorage.getItem('refreshToken'),
+//         }),
+//       });
+//       let refreshAccessToken= await refreshedAccessTokenResponse.json();
+//       if(refreshAccessToken.logout){
+//         localStorage.removeItem('refreshToken');
+//         sessionStorage.removeItem('accessToken');
+//         window.location.reload();
+//       }else{
+//         await sessionStorage.setItem(
+//           'accessToken',
+//           refreshedAccessToken.accessToken
+//         );
+//         await localStorage.setItem(
+//           'refreshToken',
+//           refreshAccessToken.refreshToken
+//         );
+//         let retryData=error.config;
+//         retryData.headers.Authorization=`Bearer ${refreshAccessToken.accessToken}`;
+//         return await axios.request(retryData)
+//       }
+//       return Promise.reject(error)
+//     }
+//   }
+// )
 async function get(endpoint, params = "") {
   console.log(
     `%cGET 요청 ${serverUrl + endpoint + "/" + params}`,
