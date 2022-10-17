@@ -14,8 +14,8 @@ import { DispatchContext } from "../../App";
 
 function LoginModal({
   setLoginModalOpen,
-  signUpModalOpen,
-  setSignUpModalOpen,
+  // signUpModalOpen,
+  // setSignUpModalOpen,
 }) {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
@@ -55,16 +55,16 @@ function LoginModal({
       });
       // 유저 정보는 response의 data임.
       const user = res.data;
-      // console.log(user);
+      console.log(user);
       // JWT 토큰은 유저 정보의 token임.
       // const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       // sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
+      // dispatch({
+      //   type: "LOGIN_SUCCESS",
+      //   payload: user,
+      // });
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
@@ -78,9 +78,9 @@ function LoginModal({
     setLoginModalOpen(false);
   };
   //회원가입 모달창 노출
-  const showSignUpModal = () => {
-    setSignUpModalOpen(true);
-  };
+  // const showSignUpModal = () => {
+  //   setSignUpModalOpen(true);
+  // };
 
   return (
     <>
@@ -159,7 +159,7 @@ function LoginModal({
               <Link
                 to="/login/signup"
                 onClick={(e) => e.preventDefault}
-                setSignUpModalOpen={setSignUpModalOpen}
+                // setSignUpModalOpen={setSignUpModalOpen}
               >
                 아직 미션체크 계정이 없나요? 가입
               </Link>
