@@ -1,45 +1,68 @@
 import React, { useState, useEffect, useCallback } from "react";
-import * as Api from "../api";
-
-import like from "../images/userLiked/like.png";
-import liked from "../images/userLiked/liked.png";
-const UserLike = () => {
-  // const [like,setLike]= useState(false);
+import { Button, Col } from "react-bootstrap";
+import * as Api from "../../src/api";
+import likeimg from "../images/userLiked/like.png";
+import likedimg from "../images/userLiked/liked.png";
+import "../styles/network/userLike.css";
+function UserLike({ likedId, userId, liked }) {
+  const [like, setLike] = useState(false);
   const [countLike, setCountLike] = useState(0);
-  const [heart, setHeart] = useState(like);
-  // useEffect(()=>{
-  //     Api.get('users',userId).then((res)=>
-  //     setCountLike(res.data.likeCount));
-  // },[userId])
+  const myId = 1;
+  const [likeId,setLikeId] = useState(1);
 
-  // useEffect(()=>{
-  //     Api.get('like',userId).then((res)=>
-  //     setLike(res.data.userStatus));
-  // },[userId])
+useEffect(()=>{
+  liked.forEach(x=>{
+    x.userId === myId && setLike(true)
+  })
+},[])
 
-  // const handleClick=useCallback(
-  //     async(e)=>{
-  //         e.preventDefault();
+  // useEffect(() => {
+    // Api.get("users", likedId).then((res) =>
+    //   setCountLike(res.data.likeCount)
+    // );
+  // }, [likedId]);
 
-  //         const res= await Api.put(`like/${user}`,{
-  //             otherUserId: userId,
-  //         });
-  //         setCountLike(res.data.likeCount);
-  //         setLike(res.data.status);
-  //     },
-  //     [userId, user]
+
+  // useEffect(() => {
+  //   Api.get("like", likedId).then((res) =>
+  //     setLike(res.data.userStatus)
+  //   );
+  // }, [likedId]);
+
+  // const handleClick = useCallback(
+  //   async (e) => {
+  //     e.preventDefault();
+
+  //     const res = await Api.put(`liked/${userId}`, {
+  //       otherUserId: likedId,
+  //     });
+  //     setCountLike(res.data.likeCount);
+  //     setLike(res.data.status);
+  //   },
+  //   [likedId, userId]
   // );
+  const onDelete = () =>{
+    console.log("del")
+  }
+  const onLike = () =>{
+    console.log("like")
+    let res = {lId:1, uId:1}
+    setLikeId(res.lId)
+  }
+  const handleClick = () => {
+    like? onDelete() : onLike()
+    setLike(!like)
+  };
+  
   return (
     <div>
-      <img
-        onClick={() => {
-          heart == like ? setHeart(liked) : setHeart(like);
-        }}
-        src={heart}
-      />
-      <span>{countLike}</span>
+      <div id="userLike" onClick={handleClick} className="likeButton">
+        {like ? <img src={likedimg} /> : <img src={likeimg} />}
+        <span className="ms-2">{countLike} Likes</span>
+      </div>
+      
     </div>
   );
-};
+}
 
 export default UserLike;

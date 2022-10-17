@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NetworkCard from "../NetworkCard";
 
 import { Col, Container, Row } from "react-bootstrap";
@@ -9,17 +9,33 @@ const LikedContent = ({ ChallengeList }) => {
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
   };
+  const myId = 1;
+  const [likedList, setLikedList] = useState([]);
+
+  useEffect(() => {
+    let newArr = [];
+    ChallengeList.forEach((x) => {
+      x.liked.forEach((y) => {
+        if (y.userId === myId) {
+          newArr.push(x);
+        }
+      });
+    });
+    setLikedList(newArr);
+  }, [ChallengeList]);
+
   return (
     <Container>
-      <Row>
-        {ChallengeList.slice(0, visible).map((menu) => (
-          <Col lg={3}
-          key={menu.challangeId}>
-            <NetworkCard item={menu} />
-          </Col>
-        ))}
-      </Row>
-      {visible < ChallengeList.length ? (
+      {likedList.length && (
+        <Row>
+          {likedList.slice(0, visible).map((menu) => (
+            <Col lg={3} key={menu.challangeId}>
+              <NetworkCard item={menu} />
+            </Col>
+          ))}
+        </Row>
+      )}
+      {visible < likedList.length ? (
         <StyledButton
           id="showMore-btn"
           className="mt-3 mb-5"

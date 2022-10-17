@@ -8,7 +8,7 @@ import Close_round_light from "../../images/Close_round_light.png";
 // import dubplicationCheckAPI from "./dubplicationCheckAPI";
 import * as Api from "../../api";
 
-function SignUpModal({ setSignUpModalOpen }) {
+function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const navigate = useNavigate();
 
   // useState로 name 상태를 생성함.
@@ -20,7 +20,7 @@ function SignUpModal({ setSignUpModalOpen }) {
   //useState로 pwd 상태를 생성함.
   const [password, setPassword] = useState("");
   //useState로 checkPwd 상태를 생성함.
-  const [checkPassword, setCheckPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 checkBox 상태를 생성함.
   const [checkBox, setCheckBox] = useState(false);
 
@@ -60,7 +60,7 @@ function SignUpModal({ setSignUpModalOpen }) {
   // 비밀번호가 4글자 이상인지 여부를 확인함.
   const isPwdValid = validatePwd(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
-  const isPwdSame = password === checkPassword;
+  const isPwdSame = password === confirmPassword;
   // 이름이 2글자 이상인지 여부를 확인함.
   const isNameValid = name.length >= 2;
 
@@ -74,21 +74,29 @@ function SignUpModal({ setSignUpModalOpen }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    let res = {};
+    let user = {};
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("register", {
+      res = await Api.post("register", {
         name,
         email,
         password,
+        confirmPassword,
       });
+      user = res.data;
+      console.log("회원가입에 성공하셨습니다.");
+      console.log(res);
+      console.log(res.data);
+      // console.log(res.email);
+      // console.log(res.data.password);
 
       // 로그인 페이지로 이동함.
-      console.log("회원가입에 성공하셨습니다.");
-      navigate("/login");
+      // navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
     }
+    // console.log(user);
   };
   //모달창 끄기
   const closeSignUpModal = () => {
@@ -149,7 +157,7 @@ function SignUpModal({ setSignUpModalOpen }) {
                 type="password"
                 placeholder="비밀번호를 다시 한번 입력해 주세요."
                 onChange={(e) => {
-                  setCheckPassword(e.target.value);
+                  setConfirmPassword(e.target.value);
                 }}
               ></input>
               {!isPwdSame && <alert>비밀번호가 일치하지 않습니다.</alert>}

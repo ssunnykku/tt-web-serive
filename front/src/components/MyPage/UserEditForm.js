@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/mypage/userEditForm.css";
 const UserEditForm = () => {
-  const [email, setEmail] = useState("");
   const [name,setName]=useState('');
   const [description,setDescription]=useState('')
 

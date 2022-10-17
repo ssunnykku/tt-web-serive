@@ -4,6 +4,68 @@ const backendPortNumber = "5001";
 const serverUrl =
   "http://" + window.location.hostname + ":" + backendPortNumber + "/";
 
+
+// async function updateToken(){
+//   if(localStorage.getItem('refreshToken')){
+//     let refreshedAccessTokenResponse=await fetch(serverUrl+'token',{
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({
+//         refreshToken: localStorage.getItem('refreshToken'),
+//       }),
+//     });
+
+//     let refreshAccessToken= await refreshedAccessTokenResponse.json();
+//     if(refreshedAccessTokenResponse.Logout){
+//       localStorage.removeItem('refreshToken');
+//       localStorage.removeItem('accessToken');
+//       window.location.reload();
+//     }else{
+//       sessionStorage.setItem('accessToken', refreshAccessToken.accessToken);
+//       localStorage.setItem('refreshToken',refreshAccessToken.refreshToken)
+//     }
+//   }
+// }
+
+// axios.interceptors.response.use(
+//   async function(res){
+//     return res
+//   },
+//   async(error)=>{
+//     if(error.response.status===490){
+//       let refreshedAccessTokenResponse= await fetch(serverUrl+'token',{
+//         method:'POST',
+//         headers:{
+//           'Content-Type':'application/json'
+//         },
+//         body: JSON.stringify({
+//           refreshToken: localStorage.getItem('refreshToken'),
+//         }),
+//       });
+//       let refreshAccessToken= await refreshedAccessTokenResponse.json();
+//       if(refreshAccessToken.logout){
+//         localStorage.removeItem('refreshToken');
+//         sessionStorage.removeItem('accessToken');
+//         window.location.reload();
+//       }else{
+//         await sessionStorage.setItem(
+//           'accessToken',
+//           refreshedAccessToken.accessToken
+//         );
+//         await localStorage.setItem(
+//           'refreshToken',
+//           refreshAccessToken.refreshToken
+//         );
+//         let retryData=error.config;
+//         retryData.headers.Authorization=`Bearer ${refreshAccessToken.accessToken}`;
+//         return await axios.request(retryData)
+//       }
+//       return Promise.reject(error)
+//     }
+//   }
+// )
 async function get(endpoint, params = "") {
   console.log(
     `%cGET 요청 ${serverUrl + endpoint + "/" + params}`,
@@ -14,7 +76,7 @@ async function get(endpoint, params = "") {
     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+    },//getItem('accessToken')으로 바꿔줘야함
   });
 }
 
@@ -29,7 +91,7 @@ async function post(endpoint, data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+    },//getItem('accessToken')으로 바꿔줘야함
   });
 }
 
@@ -44,7 +106,7 @@ async function put(endpoint, data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+    },//getItem('accessToken')으로 바꿔줘야함
   });
 }
 
@@ -55,10 +117,11 @@ async function del(endpoint, params = "") {
   return axios.delete(serverUrl + endpoint + "/" + params, {
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("userToken")}`,
-    },
+    }, //getItem('accessToken')으로 바꿔줘야함
   });
 }
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.post 로 쓸 수 있음.
 export { get, post, put, del as delete };
+//updateToken delete 옆 추가

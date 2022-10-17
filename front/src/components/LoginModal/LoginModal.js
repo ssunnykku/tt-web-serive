@@ -12,14 +12,20 @@ import SignUpModal from "../signUpModal/SignUpModal";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 
-function LoginModal({ setLoginModalOpen }) {
+function LoginModal({
+  setLoginModalOpen,
+  signUpModalOpen,
+  setSignUpModalOpen,
+}) {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+
+  // const [signUpModalOpen, setSignUpModalOpesn] = useState(false);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 password 상태를 생성함.
+  //useState로 pwd 상태를 생성함.
   const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -40,7 +46,7 @@ function LoginModal({ setLoginModalOpen }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+
     try {
       // "login" 엔드포인트로 post요청함.
       const res = await Api.post("login", {
@@ -70,6 +76,10 @@ function LoginModal({ setLoginModalOpen }) {
   //모달창 끄기
   const closeLoginModal = () => {
     setLoginModalOpen(false);
+  };
+  //회원가입 모달창 노출
+  const showSignUpModal = () => {
+    setSignUpModalOpen(true);
   };
 
   return (
@@ -145,20 +155,19 @@ function LoginModal({ setLoginModalOpen }) {
                   ></img>
                 </a>
               </div>
-
+              {/* {signUpModalOpen && ( */}
               <Link
                 to="/login/signup"
-                state={
-                  signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
-                }
+                onClick={(e) => e.preventDefault}
+                setSignUpModalOpen={setSignUpModalOpen}
               >
                 아직 미션체크 계정이 없나요? 가입
               </Link>
-              {/* {signUpModalOpen && (
-                <SignUpModal
-                  setSignUpModalOpen={setSignUpModalOpen}
-                ></SignUpModal>
-              )} */}
+              {/* )} */}
+
+              {/* <SignUpModal
+                setSignUpModalOpen={setSignUpModalOpen}
+              ></SignUpModal> */}
             </div>
           </div>
         </div>

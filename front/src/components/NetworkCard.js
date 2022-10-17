@@ -34,7 +34,7 @@ const NetworkCard = ({ item }) => {
 
           <div className="cardtext">
             👨‍👧‍👧 100
-            <UserLike />
+            <UserLike liked={item.liked} />
           </div>
           <div className="duration">
             <a className="cardSubText">
