@@ -12,6 +12,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
+
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const userState=useContext(UserStateContext)
@@ -27,6 +28,7 @@ const NavBar = () => {
       ? setToggleIcon("nav-toggler toggle")
       : setToggleIcon("nav-toggler");
   };
+
   const showSignUpModal = () => {
     setSignUpModalOpen(true);
   };

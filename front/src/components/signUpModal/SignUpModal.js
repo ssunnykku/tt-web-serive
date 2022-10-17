@@ -4,12 +4,14 @@ import "../../styles/signUpModal.css";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
+
 // import dubplicationCheckAPI from "./dubplicationCheckAPI";
 import * as Api from "../../api";
 import Swal from "sweetalert2";
 
 function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const navigate = useNavigate();
+
   // useState로 name 상태를 생성함.
   const [name, setName] = useState("");
   //useState로 email 상태를 생성함.
@@ -22,6 +24,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 checkBox 상태를 생성함.
   const [checkBox, setCheckBox] = useState(false);
+
   // const [signUpModalOpen, setSignUpModalOpen] = useState(false);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
@@ -33,26 +36,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
       );
   };
-  // const duplicationCheckEmail = (e) =>{
-  //   e.preventDefault();
-  //   setEmail(e.target.value)
-  //   fetch("", {
-  //     method:"POST",
-  //     headers: {
-  //       "Content-Type" : "appliaction/json"
-  //     },
-  //     // body: JSON.stringify({user_id: this.state.user_id})
-  //     body: JSON.stringify({email: email})
-  //   })
-  //   // res.status === 200 확인필요!!!!!
-  //   .then(res => {if(res.status === 200){
-  //     alert('사용 가능한 아이디 입니다.');
-  //   }else if(res.status === 409){
-  //     alert('이미 사용중인 아이디 입니다.')
-  //   }else{//그 외에 사용 불가능한 아이디
-  //     alert('사용 불가능한 아이디 입니다.')
-  //   }})
-  // }
+
   const validatePwd = (password) => {
     // 비밀번호 : 숫자+영문자+특수문자 조합으로 8자리 이상 입력
     return password

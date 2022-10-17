@@ -10,10 +10,16 @@ const NetworkCard = ({ item }) => {
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
   return (
-
-    <Card 
-       className="mb-3 ms-3 mr-5 card-body" style={{ width: "16rem", background: new Date(item.fromDate) <= new Date(dateString)? 'rgb(179, 176, 176, 0.6)':'none'}} 
-       >
+    <Card
+      className="mb-3 ms-3 mr-5 card-body"
+      style={{
+        width: "16rem",
+        background:
+          new Date(item.fromDate) <= new Date(dateString)
+            ? "rgb(179, 176, 176, 0.6)"
+            : "none",
+      }}
+    >
       <Card.Body>
         <div className="imageWrap">
           <Card.Img
@@ -23,6 +29,7 @@ const NetworkCard = ({ item }) => {
           />
 
           <Card.Title>{item?.title}</Card.Title>
+
           <div className="cardtext">
             👨‍👧‍👧 100
             <UserLike liked={item.liked} />

@@ -51,11 +51,13 @@ const ChallengeInfo = () => {
           placeholder=" ex) 쓰레기 봉투 인증"
         ></input>
         <span className="infoSpan">설명</span>
+
         <textarea
           className="description"
           onChange={(e) => setDescription(e.target.value)}
           placeholder=" 조깅을 하면서 쓰레기를 줍는 활동 "
         ></textarea>
+
         <span className="infoSpan">기간(시작일 ~ 종료일)</span>
         <div className="date">
           <label for="startDate"></label>
@@ -67,6 +69,7 @@ const ChallengeInfo = () => {
             locale={ko}
             minDate={new Date()}
           />
+
           <p className="dateRange">~</p>
           <label for="endDate"></label>
           <DatePicker
