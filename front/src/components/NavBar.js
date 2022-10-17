@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../styles/navbar/navbar.css";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import SignUpModal from "../components/signUpModal/SignUpModal";
@@ -6,6 +6,7 @@ import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import LoginModal from "./LoginModal/LoginModal";
+import { DispatchContext, UserStateContext } from "../App";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -13,6 +14,10 @@ const NavBar = () => {
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const userState=useContext(UserStateContext)
+  const dispatch=useContext(DispatchContext)
+  console.log(userState)
+  const isLogin=false;
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -29,8 +34,8 @@ const NavBar = () => {
   const showLoginModal = () => {
     setLoginModalOpen(true);
   };
-  // const isLogin= !!userState.user;
-  const isLogin = false;
+  // const isLogin= false;
+ 
   // const logout=()=>{
   //   sessionStorage.removeItem('accessToken');
   //   localStorage.removeItem('refreshToken');

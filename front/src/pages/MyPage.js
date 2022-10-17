@@ -19,6 +19,7 @@ const MyPage = () => {
   const [initialState, setInitialState] = useState("골라서 보기");
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
+  
   return (
     <div className="myPage">
       <NavBar />

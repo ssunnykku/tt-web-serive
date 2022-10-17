@@ -82,7 +82,7 @@ a{
 
 .dropdown-menu.show{
     display: flex;
-    background: none;
+    background: white;
     margin-top: none;
     border: 2px solid rgb(104, 102, 217);
     border-radius: none;
@@ -98,8 +98,5 @@ a{
     font-size: 1.5rem;
     
 }
-/* .dditem{
-    
-    border-bottom: 1px solid rgb(104, 102, 217);
-} */
+
 

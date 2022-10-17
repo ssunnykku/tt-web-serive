@@ -25,6 +25,9 @@
   align-items: center;
   height: 15vh;
 }
+.buttonContainer button{
+  margin-left: 2%;
+}
 
   
   
