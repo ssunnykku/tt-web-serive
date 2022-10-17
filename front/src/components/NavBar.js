@@ -33,6 +33,7 @@ const NavBar = () => {
   // }
   return (
     <div className="navBar">
+
      <nav className="nav">
       <a onClick={()=>{
         navigate('/')

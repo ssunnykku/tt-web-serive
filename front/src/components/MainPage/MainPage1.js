@@ -9,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 const MainPage1 = () => {
   //열기, 닫기를 부모로부터 받아옴
   const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const navigate=useNavigate();
+
+  const navigate = useNavigate();
   //로그인 모달창 노출
   const showLoginModal = () => {
     setLoginModalOpen(true);
   };
+
   // const isLogin= !!userState.user;
   const isLogin=false;
    // const logout=()=>{
@@ -23,6 +25,10 @@ const MainPage1 = () => {
   //   alert('로그아웃 완료')
   //   navigate('/')
   // }
+
+
+  console.log("setLoginModalOpen", loginModalOpen);
+
   return (
     <>
       <div className="mainPage1">
@@ -34,6 +40,7 @@ const MainPage1 = () => {
             <a>에서 쉽고 빠르게</a>
           </div>
           <div className="buttonContainer">
+
             <StyledButton onClick={()=>{
               navigate('/network')
             }}>챌린지</StyledButton>
@@ -44,6 +51,7 @@ const MainPage1 = () => {
               <StyledButton >로그아웃</StyledButton>
             }
             
+
             {loginModalOpen && (
               <LoginModal setLoginModalOpen={setLoginModalOpen} />
             )}
