@@ -141,7 +141,12 @@ function LoginModal({ setLoginModalOpen }) {
                   ></img>
                 </a>
               </div>
-              <Link to="./signup" state={signUpModalOpen && setSignUpModalOpen}>
+              <Link
+                to="./signup"
+                state={
+                  signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
+                }
+              >
                 <p>
                   아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
                 </p>
