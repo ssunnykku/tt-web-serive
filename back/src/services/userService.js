@@ -154,9 +154,21 @@ class userService {
     if (!user) {
       const errorMessage =
         "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
-      return errorMessage;
+      return { errorMessage };
     }
     const updateimg = await User.updateUserImg({ userId, img });
+    return updateimg;
+  }
+  // user img delete
+  static async removeUserImg({ userId }) {
+    const user = await User.findByUserId({ userId });
+
+    if (!user) {
+      const errorMessage =
+        "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
+      return { errorMessage };
+    }
+    const updateimg = await User.deleteUserImg({ userId });
     return updateimg;
   }
 

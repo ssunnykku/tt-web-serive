@@ -13,7 +13,7 @@ const upload = multer({
     fileSize: 2000000,
   },
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpeg|png)$/)) {
+    if (!file.originalname.match(/\.(jpg|png)$/)) {
       return cb(new Error(" please upload a Jpeg or png"));
     }
     cb(undefined, true);
@@ -139,6 +139,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
+    res.set("Content-Type", "image/png");
     res.status(200).send(getImg);
   } catch (error) {
     next(error);
@@ -179,11 +180,9 @@ userRouter.put(
   upload.single("image"),
   async (req, res, next) => {
     try {
-      // console.log(req.file);
-      // const img = req.file.buffer;
-      const img = 1;
-      console.log("imgupdaterouter: ", img);
+      const img = req.file.buffer;
       const userId = req.currentUserId;
+
       const updateImg = await userService.updateUserImg({
         img,
         userId,
@@ -200,7 +199,7 @@ userRouter.put(
 );
 
 // delete profile img
-userRouter.delete("/userImg", loginRequired, async (req, res, next) => {
+userRouter.put("/userImg/delete", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const deleteImg = await userService.removeUserImg({
@@ -209,6 +208,7 @@ userRouter.delete("/userImg", loginRequired, async (req, res, next) => {
     if (deleteImg.errorMessage) {
       throw new Error(deleteImg.errorMessage);
     }
+    res.status(204).send("Image delete successfully!");
   } catch (error) {
     next(error);
   }

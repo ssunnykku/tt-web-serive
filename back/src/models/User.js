@@ -87,13 +87,30 @@ class User {
   }
   //img 수정,
   static async updateUserImg({ userId, img }) {
-    const updateuser = await prisma.user.update({
+    console.log("이미지모델:", img);
+    console.log("userId:", userId);
+
+    const updateimg = await prisma.user.update({
       where: {
         userId: userId,
       },
       data: { img },
     });
-    // return updateuser;
+    console.log("updateimg:", updateimg);
+    return updateimg;
+  }
+  //img 삭제,
+  static async deleteUserImg({ userId }) {
+    console.log("userId:", userId);
+
+    const updateimg = await prisma.user.update({
+      where: {
+        userId: userId,
+      },
+      data: { img: null },
+    });
+    console.log("updateimg:", updateimg.img);
+    return updateimg;
   }
   // 토큰업데이트
   static async tokenUpdate({ userId, refreshToken }) {
