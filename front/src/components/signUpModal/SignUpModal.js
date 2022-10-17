@@ -8,17 +8,17 @@ import Close_round_light from "../../images/Close_round_light.png";
 import * as Api from "../../api";
 
 function SignUpModal({ setSignUpModalOpen }) {
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
   //useState로 checkEmail 상태를 생성함.
   const [checkEmail, setCheckEmail] = useState("");
-  //useState로 pwd 상태를 생성함.
-  const [pwd, setPwd] = useState("");
-  //useState로 checkPwd 상태를 생성함.
-  const [checkPwd, setCheckPwd] = useState("");
+  //useState로 password 상태를 생성함.
+  const [password, setPassword] = useState("");
+  //useState로 checkPassword 상태를 생성함.
+  const [checkPassword, setCheckPassword] = useState("");
   //useState로 checkBox 상태를 생성함.
   const [checkBox, setCheckBox] = useState(false);
 
@@ -33,18 +33,18 @@ function SignUpModal({ setSignUpModalOpen }) {
         /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
       );
   };
-  const validatePwd = (pwd) => {
+  const validatePwd = (Password) => {
     // 비밀번호 : 숫자+영문자+특수문자 조합으로 8자리 이상 입력
-    return pwd
-      .toLowerCase()
-      .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/);
+    return Password.toLowerCase().match(
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    );
   };
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPwdValid = validatePwd(pwd);
+  const isPwdValid = validatePwd(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
-  const isPwdSame = pwd === checkPwd;
+  const isPwdSame = password === checkPassword;
   // 이름이 2글자 이상인지 여부를 확인함.
   const isNameValid = name.length >= 2;
 
@@ -119,7 +119,7 @@ function SignUpModal({ setSignUpModalOpen }) {
                 type="password"
                 placeholder="비밀번호를 입력해 주세요."
                 onChange={(e) => {
-                  setPwd(e.target.value);
+                  setPassword(e.target.value);
                 }}
               ></input>
               {!isPwdValid && (
@@ -132,7 +132,7 @@ function SignUpModal({ setSignUpModalOpen }) {
                 type="password"
                 placeholder="비밀번호를 다시 한번 입력해 주세요."
                 onChange={(e) => {
-                  setCheckPwd(e.target.value);
+                  setCheckPassword(e.target.value);
                 }}
               ></input>
               {!isPwdSame && <alert>비밀번호가 일치하지 않습니다.</alert>}

@@ -19,8 +19,8 @@ function LoginModal({ setLoginModalOpen }) {
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 pwd 상태를 생성함.
-  const [pwd, setPwd] = useState("");
+  //useState로 password 상태를 생성함.
+  const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -34,7 +34,7 @@ function LoginModal({ setLoginModalOpen }) {
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPwdValid = pwd.length >= 4;
+  const isPwdValid = password.length >= 4;
   // 위 2개 조건이 모두 동시에 만족되는지 여부를 확인함.
   const isFormValid = isEmailValid && isPwdValid;
 
@@ -42,10 +42,10 @@ function LoginModal({ setLoginModalOpen }) {
     e.preventDefault();
 
     try {
-      // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      // "login" 엔드포인트로 post요청함.
+      const res = await Api.post("login", {
         email,
-        pwd,
+        password,
       });
       // 유저 정보는 response의 data임.
       const user = res.data;
@@ -73,7 +73,7 @@ function LoginModal({ setLoginModalOpen }) {
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="modalBackground">
           <div className="LoginModal">
             <div className="LoginModalContents">
@@ -83,6 +83,7 @@ function LoginModal({ setLoginModalOpen }) {
                 onClick={closeLoginModal}
                 width="32px"
                 height="32px"
+                alt=""
               ></img>
 
               <span className="title">로그인</span>
@@ -96,24 +97,20 @@ function LoginModal({ setLoginModalOpen }) {
                   }}
                 ></input>
               </div>
-              {!isEmailValid && <alert>이메일 형식이 올바르지 않습니다.</alert>}
 
               <div className="pwdBox">
                 <input
                   type="password"
                   placeholder="비밀번호를 입력하세요."
                   onChange={(e) => {
-                    setPwd(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 ></input>
               </div>
-              {!isPwdValid && (
-                <alert>비밀번호는 4글자 이상으로 설정해 주세요.</alert>
-              )}
 
               <button
                 className="LoginBtn"
-                type="submit"
+                type="button"
                 disabled={!isFormValid}
               >
                 로그인
@@ -135,6 +132,7 @@ function LoginModal({ setLoginModalOpen }) {
                     className="NaverBtn"
                     src={NaverButton}
                     onClick={NaverButton}
+                    alt=""
                   ></img>
                 </a>
                 <a href="https://www.kakaocorp.com">
@@ -142,6 +140,7 @@ function LoginModal({ setLoginModalOpen }) {
                     className="KakaoBtn"
                     src={KakaoButton}
                     onClick={KakaoButton}
+                    alt=""
                   ></img>
                 </a>
               </div>
@@ -152,9 +151,7 @@ function LoginModal({ setLoginModalOpen }) {
                   signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
                 }
               >
-                <p>
-                  아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
-                </p>
+                아직 미션체크 계정이 없나요? 가입
               </Link>
               {/* {signUpModalOpen && (
                 <SignUpModal

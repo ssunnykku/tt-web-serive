@@ -56,7 +56,6 @@
     background: #fff;
     background-color: var(--color-white);
     border-radius: 6px;
-    box-shadow: 12px 12px 20px gray;
 }
 .LoginModalContents{
     margin: 0 auto;
@@ -119,7 +118,7 @@ p{
 }
 
 .LoginBtn{
-    border: 2px solid #CDCCCC;
+    border: 0;
     outline: none;
     background-color:#6A71E6;
     border-radius: 6px;
@@ -132,7 +131,7 @@ p{
 }
 
 .LoginBtn:disabled{
-    border: 2px solid #CDCCCC;
+    border: 0;
     outline: none;
     background-color: #7c7979;
     border-radius: 6px;
@@ -142,9 +141,4 @@ p{
     margin-top: 20px;
     font-size: large;
     font-weight: 500;
-}
-.LoginBtn:hover{
-    background: white;
-    border: 2px solid;
-    color: gray;
 }
