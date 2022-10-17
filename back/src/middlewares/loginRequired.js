@@ -58,6 +58,9 @@ function loginRequired(req, res, next) {
         const errorMessage = "refresh token이 유효하지 않습니다.";
         return errorMessage;
       }
+      res
+        .status(200)
+        .send("refresh token검증완료. access token을 발급해주세요");
 
       //이부분은 삭제예정
       /*
