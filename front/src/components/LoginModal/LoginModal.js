@@ -1,13 +1,11 @@
 import React from "react";
 import { useState, useContext } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/LoginModal.css";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
 import NaverButton from "../../images/user/NaverLogin.png";
 import KakaoButton from "../../images/user/KakaoLogin.png";
-
 import SignUpModal from "../signUpModal/SignUpModal";
 import * as Api from "../../api";
 import Swal from "sweetalert2";
@@ -16,14 +14,11 @@ import { DispatchContext } from "../../App";
 
 function LoginModal({
   setLoginModalOpen,
-  // signUpModalOpen,
-  // setSignUpModalOpen,
+  signUpModalOpen,
+  setSignUpModalOpen,
 }) {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-
-  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
-
   // const [signUpModalOpen, setSignUpModalOpesn] = useState(false);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
@@ -31,26 +26,27 @@ function LoginModal({
   const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  // const validateEmail = (email) => {
-  //   return email
-  //     .toLowerCase()
-  //     .match(
-  //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //     );
-  // };
-
+  const validateEmail = (email) => {
+    return email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
-  // const isEmailValid = validateEmail(email);
+  const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  // const isPwdValid = password.length >= 4;
+  const isPwdValid = password.length >= 4;
   // 위 2개 조건이 모두 동시에 만족되는지 여부를 확인함.
-  // const isFormValid = isEmailValid && isPwdValid;
+  const isFormValid = isEmailValid && isPwdValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(email);
+    console.log(password);
+    console.log(typeof password);
     try {
-      // "login" 엔드포인트로 post요청함.
+      // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post("login", {
         email,
         password,
@@ -66,13 +62,16 @@ function LoginModal({
       });
       console.log(res.data);
       // 유저 정보는 response의 data임.
-      const user = res.data;
-      console.log(user);
+      // const user = res.data;
       // JWT 토큰은 유저 정보의 token임.
       // const jwtToken = user.token;
+      // const refreshToken = user.refreshToken;
+      // localStorage.setItem("refreshToken", refreshToken);
+      // // sessionStorage에 "accessToken"이라는 키로 JWT 토큰을 저장함.
+      // sessionStorage.setItem("accessToken", jwtToken);
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       // sessionStorage.setItem("userToken", jwtToken);
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      // // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       // dispatch({
       //   type: "LOGIN_SUCCESS",
       //   payload: user,
@@ -89,9 +88,9 @@ function LoginModal({
     setLoginModalOpen(false);
   };
   //회원가입 모달창 노출
-  // const showSignUpModal = () => {
-  //   setSignUpModalOpen(true);
-  // };
+  const showSignUpModal = () => {
+    setSignUpModalOpen(true);
+  };
 
   return (
     <>
@@ -105,7 +104,6 @@ function LoginModal({
                 onClick={closeLoginModal}
                 width="32px"
                 height="32px"
-                alt=""
               ></img>
 
               <span className="title">로그인</span>
@@ -119,6 +117,7 @@ function LoginModal({
                   }}
                 ></input>
               </div>
+              {!isEmailValid && <alert>이메일 형식이 올바르지 않습니다.</alert>}
 
               <div className="pwdBox">
                 <input
@@ -129,11 +128,14 @@ function LoginModal({
                   }}
                 ></input>
               </div>
+              {!isPwdValid && (
+                <alert>비밀번호는 4글자 이상으로 설정해 주세요.</alert>
+              )}
 
               <button
                 className="LoginBtn"
-                // type="submit"
-                // disabled={!isFormValid}
+                type="submit"
+                disabled={!isFormValid}
               >
                 로그인
               </button>
@@ -154,7 +156,6 @@ function LoginModal({
                     className="NaverBtn"
                     src={NaverButton}
                     onClick={NaverButton}
-                    alt=""
                   ></img>
                 </a>
                 <a href="https://www.kakaocorp.com">
@@ -162,7 +163,6 @@ function LoginModal({
                     className="KakaoBtn"
                     src={KakaoButton}
                     onClick={KakaoButton}
-                    alt=""
                   ></img>
                 </a>
               </div>
@@ -170,9 +170,11 @@ function LoginModal({
               <Link
                 to="/login/signup"
                 onClick={(e) => e.preventDefault}
-                // setSignUpModalOpen={setSignUpModalOpen}
+                setSignUpModalOpen={setSignUpModalOpen}
               >
-                아직 미션체크 계정이 없나요? 가입
+                <p>
+                  아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
+                </p>
               </Link>
               {/* )} */}
 

@@ -72,7 +72,7 @@ function App() {
         <Route path="/" exact element={<MainPage />} />
         <Route path="/network" exact element={<Network />} />
         <Route path="/login" element={<LoginModal />} />
-        <Route path="/signup" element={<SignUpModal />} />
+        <Route path="/login/signup" element={<SignUpModal />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route
           path="/network/pages/CreateChallengePage"
