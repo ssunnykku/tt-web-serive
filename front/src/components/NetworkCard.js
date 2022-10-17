@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import data from "./network/data";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "../styles/network/networkcard.css";
-import StyledButton from "../styles/commonstyles/Button";
+
 import UserLike from "./UserLike";
 const NetworkCard = ({ item }) => {
   var today = new Date();

@@ -19,16 +19,15 @@ model point {
 }
 
 model user {
-  userId            String      @id @db.VarChar(50)
-  joinedChallengeId Int?        @unique(map: "joinedChallengeId_UNIQUE")
-  holdChallengeId   Int?        @unique(map: "holdChallengeId_UNIQUE")
-  name              String      @db.VarChar(10)
-  email             String      @db.VarChar(30)
-  password          String      @db.VarChar(100)
-  withdrawal        Int         @default(0) @db.TinyInt
-  img               Bytes?      @db.Blob
-  description       String?     @db.VarChar(100)
-  challenges        challenge[] @relation("challengToUser")
+  userId            String  @id @db.VarChar(50)
+  joinedChallengeId Int?    @unique(map: "joinedChallengeId_UNIQUE")
+  holdChallengeId   Int?    @unique(map: "holdChallengeId_UNIQUE")
+  name              String  @db.VarChar(10)
+  email             String  @db.VarChar(30)
+  password          String  @db.VarChar(100)
+  withdrawal        Int     @default(0) @db.TinyInt
+  img               Bytes?  @db.Blob
+  description       String? @db.VarChar(100)
 }
 
 model refreshToken {
@@ -47,7 +46,6 @@ model challenge {
   endRemainingDate   Int
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
-  users              user[]   @relation("challengToUser")
 }
 
 model hashTag {
