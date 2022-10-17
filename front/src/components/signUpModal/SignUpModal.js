@@ -7,6 +7,7 @@ import Close_round_light from "../../images/Close_round_light.png";
 
 // import dubplicationCheckAPI from "./dubplicationCheckAPI";
 import * as Api from "../../api";
+import Swal from "sweetalert2";
 
 function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const navigate = useNavigate();
@@ -84,15 +85,9 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         password,
         confirmPassword,
       });
-      user = res.data;
-      console.log("회원가입에 성공하셨습니다.");
-      console.log(res);
-      console.log(res.data);
-      // console.log(res.email);
-      // console.log(res.data.password);
 
-      // 로그인 페이지로 이동함.
-      // navigate("/login");
+      alert("회원가입 성공, 로그인 해주세요");
+      navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
     }

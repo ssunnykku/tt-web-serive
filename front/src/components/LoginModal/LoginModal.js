@@ -10,6 +10,8 @@ import KakaoButton from "../../images/user/KakaoLogin.png";
 
 import SignUpModal from "../signUpModal/SignUpModal";
 import * as Api from "../../api";
+import Swal from "sweetalert2";
+
 import { DispatchContext } from "../../App";
 
 function LoginModal({
@@ -53,6 +55,13 @@ function LoginModal({
         email,
         password,
       });
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "로그인 성공",
+      }).then(function () {});
+      console.log(res.data);
       // 유저 정보는 response의 data임.
       const user = res.data;
       console.log(user);
