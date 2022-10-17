@@ -5,19 +5,21 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
 
+// import dubplicationCheckAPI from "./dubplicationCheckAPI";
 import * as Api from "../../api";
 
 function SignUpModal({ setSignUpModalOpen }) {
   const navigate = useNavigate();
-  //useState로 name 상태를 생성함.
+
+  // useState로 name 상태를 생성함.
   const [name, setName] = useState("");
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
-  //useState로 checkEmail 상태를 생성함.
-  const [checkEmail, setCheckEmail] = useState("");
-  //useState로 password 상태를 생성함.
+  //useState로 checkEmail 상태를 생성함 -> email 중복확인
+  const [checkEmail, setCheckEmail] = useState(false);
+  //useState로 pwd 상태를 생성함.
   const [password, setPassword] = useState("");
-  //useState로 checkPassword 상태를 생성함.
+  //useState로 checkPwd 상태를 생성함.
   const [checkPassword, setCheckPassword] = useState("");
   //useState로 checkBox 상태를 생성함.
   const [checkBox, setCheckBox] = useState(false);
@@ -33,14 +35,28 @@ function SignUpModal({ setSignUpModalOpen }) {
         /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
       );
   };
-  const validatePwd = (Password) => {
+
+  const validatePwd = (password) => {
     // 비밀번호 : 숫자+영문자+특수문자 조합으로 8자리 이상 입력
-    return Password.toLowerCase().match(
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
-    );
+    return password
+      .toLowerCase()
+      .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/);
   };
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
+  //이메일 중복 확인
+  // const duplicationcemail = () => {
+  //   dubplicationCheckAPI(email).then((res) => {
+  //     if (res === false) {
+  //       alert("사용 가능한 이메일입니다.");
+  //       setEmail(res);
+  //     } else {
+  //       alert("중복된 이메일입니다. 다시 시도해주세요.");
+  //       // setUsableEmail(res);
+  //       setEmail("");
+  //     }
+  //   });
+  // };
   // 비밀번호가 4글자 이상인지 여부를 확인함.
   const isPwdValid = validatePwd(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
@@ -61,13 +77,14 @@ function SignUpModal({ setSignUpModalOpen }) {
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      await Api.post("user/register", {
+      await Api.post("register", {
         name,
         email,
         password,
       });
 
       // 로그인 페이지로 이동함.
+      console.log("회원가입에 성공하셨습니다.");
       navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
@@ -77,7 +94,7 @@ function SignUpModal({ setSignUpModalOpen }) {
   const closeSignUpModal = () => {
     setSignUpModalOpen(false);
   };
-  console.log(setSignUpModalOpen);
+  // console.log(setSignUpModalOpen);
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -108,7 +125,7 @@ function SignUpModal({ setSignUpModalOpen }) {
                   className="emailInputBox"
                   placeholder="(예시) mission123@gmail.com"
                   onChange={(e) => {
-                    setCheckEmail(e.target.value);
+                    setEmail(e.target.value);
                   }}
                 ></input>
                 <button className="emailCheck">이메일 중복확인</button>
@@ -144,11 +161,7 @@ function SignUpModal({ setSignUpModalOpen }) {
                 ></input>
                 <span>개인정보 수집 및 이용 동의(필수)</span>
               </div>
-              <button
-                className="signUpBtn"
-                type="submit"
-                disabled={!isFormValid}
-              >
+              <button className="signUpBtn" disabled={!isFormValid}>
                 회원가입하기
               </button>
             </div>
