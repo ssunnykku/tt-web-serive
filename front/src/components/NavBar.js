@@ -5,10 +5,13 @@ import SignUpModal from "../components/signUpModal/SignUpModal";
 import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import LoginModal from "./LoginModal/LoginModal";
+
 const NavBar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const navToggle = () => {
     active === "nav-menu"
@@ -22,8 +25,12 @@ const NavBar = () => {
   const showSignUpModal = () => {
     setSignUpModalOpen(true);
   };
-// const isLogin= !!userState.user;
-    const isLogin=false;
+  //로그인 모달창 노출
+  const showLoginModal = () => {
+    setLoginModalOpen(true);
+  };
+  // const isLogin= !!userState.user;
+  const isLogin = false;
   // const logout=()=>{
   //   sessionStorage.removeItem('accessToken');
   //   localStorage.removeItem('refreshToken');
@@ -33,53 +40,84 @@ const NavBar = () => {
   // }
   return (
     <div className="navBar">
-
-     <nav className="nav">
-      <a onClick={()=>{
-        navigate('/')
-      }} className="nav-brand">✓미션체크</a>
-      <ul className={active}>
-        <li className="nav-item"><a onClick={()=>{
-          navigate('/')
-        }} className="nav-link">Home</a></li>
-        <li className="nav-item"><a onClick={()=>{
-          navigate('/mypage')
-        }} href="#" className="nav-link">MyPage</a></li>
-        <li className="nav-item"><a onClick={()=>{
-          navigate('/network')
-        }} className="nav-link">Challenge</a></li>
-        {/* <li className="nav-item"><a href="#" className="nav-link">Login/Join</a></li> */}
-        {
-          isLogin===true?(
+      <nav className="nav">
+        <a
+          onClick={() => {
+            navigate("/");
+          }}
+          className="nav-brand"
+        >
+          ✓미션체크
+        </a>
+        <ul className={active}>
+          <li className="nav-item">
+            <a
+              onClick={() => {
+                navigate("/");
+              }}
+              className="nav-link"
+            >
+              Home
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              onClick={() => {
+                navigate("/mypage");
+              }}
+              href="#"
+              className="nav-link"
+            >
+              MyPage
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              onClick={() => {
+                navigate("/network");
+              }}
+              className="nav-link"
+            >
+              Challenge
+            </a>
+          </li>
+          {/* <li className="nav-item"><a href="#" className="nav-link">Login/Join</a></li> */}
+          {isLogin === true ? (
             <>
-             <NavDropdown
-          className="navdropdown"
-          title={<FontAwesomeIcon icon={faUser}/>}
-          id='basicNavDropdown'
-          >
-          <NavDropdown.Item className="dditem" href="#action/3.4">
-                    <div className="dropdownFont">회원탈퇴</div>
-                  </NavDropdown.Item>
-                  <NavDropdown.Item href="#action/3.4">
-                    <div className="dropdownFont">로그아웃</div>
-                  </NavDropdown.Item>  
-          </NavDropdown>
+              <NavDropdown
+                className="navdropdown"
+                title={<FontAwesomeIcon icon={faUser} />}
+                id="basicNavDropdown"
+              >
+                <NavDropdown.Item className="dditem" href="#action/3.4">
+                  <div className="dropdownFont">회원탈퇴</div>
+                </NavDropdown.Item>
+                <NavDropdown.Item href="#action/3.4">
+                  <div className="dropdownFont">로그아웃</div>
+                </NavDropdown.Item>
+              </NavDropdown>
             </>
-          ):
-          <>
-          <NavDropdown
-       className="navdropdown"
-       title={<FontAwesomeIcon icon={faUser}/>}
-       id='basicNavDropdown'
-       >
-       <NavDropdown.Item className="dditem" href="#action/3.4">
-                 <div id='downFont' className="dropdownFont">로그인</div>
-               </NavDropdown.Item>
-               <NavDropdown.Item href="#action/3.4">
-                 <div id='downFont' className="dropdownFont" >회원가입</div>
-               </NavDropdown.Item>  
-       </NavDropdown>
-         </>
+          ) : (
+            <>
+              <NavDropdown
+                className="navdropdown"
+                title={<FontAwesomeIcon icon={faUser} />}
+                id="basicNavDropdown"
+              >
+                {/* href="#action/3.4" */}
+
+                <NavDropdown.Item className="dditem" onClick={showLoginModal}>
+                  <div className="dropdownFont">로그인</div>
+                </NavDropdown.Item>
+
+                <NavDropdown.Item>
+                  <div className="dropdownFont" onClick={showSignUpModal}>
+                    회원가입
+                  </div>
+                </NavDropdown.Item>
+              </NavDropdown>
+            </>
+          )
           
         }
         
@@ -90,6 +128,7 @@ const NavBar = () => {
         <div className="line3"></div>
       </div>
      </nav>
+
     </div>
   );
 };

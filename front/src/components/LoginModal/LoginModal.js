@@ -10,14 +10,18 @@ import SignUpModal from "../signUpModal/SignUpModal";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
 
-function LoginModal({ setLoginModalOpen }) {
+function LoginModal({
+  setLoginModalOpen,
+  signUpModalOpen,
+  setSignUpModalOpen,
+}) {
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
-  const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  // const [signUpModalOpen, setSignUpModalOpesn] = useState(false);
   //useState로 email 상태를 생성함.
   const [email, setEmail] = useState("");
   //useState로 pwd 상태를 생성함.
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -30,34 +34,36 @@ function LoginModal({ setLoginModalOpen }) {
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
   const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPwdValid = pwd.length >= 4;
+  const isPwdValid = password.length >= 4;
   // 위 2개 조건이 모두 동시에 만족되는지 여부를 확인함.
   const isFormValid = isEmailValid && isPwdValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(email);
+    console.log(password);
+    console.log(typeof password);
     try {
       // "user/login" 엔드포인트로 post요청함.
-      const res = await Api.post("user/login", {
+      const res = await Api.post("login", {
         email,
-        pwd,
+        password,
       });
       // 유저 정보는 response의 data임.
-      const user = res.data;
+      // const user = res.data;
       // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = user.token;
+      // const jwtToken = user.token;
       // const refreshToken = user.refreshToken;
       // localStorage.setItem("refreshToken", refreshToken);
       // // sessionStorage에 "accessToken"이라는 키로 JWT 토큰을 저장함.
       // sessionStorage.setItem("accessToken", jwtToken);
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken);
-      // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      dispatch({
-        type: "LOGIN_SUCCESS",
-        payload: user,
-      });
+      // sessionStorage.setItem("userToken", jwtToken);
+      // // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
+      // dispatch({
+      //   type: "LOGIN_SUCCESS",
+      //   payload: user,
+      // });
 
       // 기본 페이지로 이동함.
       navigate("/", { replace: true });
@@ -70,10 +76,14 @@ function LoginModal({ setLoginModalOpen }) {
   const closeLoginModal = () => {
     setLoginModalOpen(false);
   };
+  //회원가입 모달창 노출
+  const showSignUpModal = () => {
+    setSignUpModalOpen(true);
+  };
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="modalBackground">
           <div className="LoginModal">
             <div className="LoginModalContents">
@@ -103,7 +113,7 @@ function LoginModal({ setLoginModalOpen }) {
                   type="password"
                   placeholder="비밀번호를 입력하세요."
                   onChange={(e) => {
-                    setPwd(e.target.value);
+                    setPassword(e.target.value);
                   }}
                 ></input>
               </div>
@@ -145,21 +155,21 @@ function LoginModal({ setLoginModalOpen }) {
                   ></img>
                 </a>
               </div>
+              {/* {signUpModalOpen && ( */}
               <Link
-                to="./signup"
-                state={
-                  signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
-                }
+                to="/login/signup"
+                onClick={(e) => e.preventDefault}
+                setSignUpModalOpen={setSignUpModalOpen}
               >
                 <p>
                   아직 미션체크 계정이 없나요?<a href="/signup"> 가입</a>
                 </p>
               </Link>
-              {/* {signUpModalOpen && (
-                <SignUpModal
-                  setSignUpModalOpen={setSignUpModalOpen}
-                ></SignUpModal>
-              )} */}
+              {/* )} */}
+
+              {/* <SignUpModal
+                setSignUpModalOpen={setSignUpModalOpen}
+              ></SignUpModal> */}
             </div>
           </div>
         </div>
