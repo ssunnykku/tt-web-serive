@@ -10,11 +10,11 @@ function UserLike({ likedId, userId, liked }) {
   const myId = 1;
   const [likeId,setLikeId] = useState(1);
 
-useEffect(()=>{
-  liked.forEach(x=>{
-    x.userId === myId && setLike(true)
-  })
-},[])
+// useEffect(()=>{
+//   liked.forEach(x=>{
+//     x.userId === myId && setLike(true)
+//   })
+// },[])
 
   // useEffect(() => {
     // Api.get("users", likedId).then((res) =>

@@ -8,7 +8,7 @@ const serverUrl =
 // async function updateToken(){
 //   if(localStorage.getItem('refreshToken')){
 //     let refreshedAccessTokenResponse=await fetch(serverUrl+'token',{
-//       method: 'POST',
+//       method: 'PUT',
 //       headers: {
 //         'Content-Type': 'application/json'
 //       },

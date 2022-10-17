@@ -73,10 +73,10 @@ const NavBar = () => {
        id='basicNavDropdown'
        >
        <NavDropdown.Item className="dditem" href="#action/3.4">
-                 <div className="dropdownFont">로그인</div>
+                 <div id='downFont' className="dropdownFont">로그인</div>
                </NavDropdown.Item>
                <NavDropdown.Item href="#action/3.4">
-                 <div className="dropdownFont" >회원가입</div>
+                 <div id='downFont' className="dropdownFont" >회원가입</div>
                </NavDropdown.Item>  
        </NavDropdown>
          </>

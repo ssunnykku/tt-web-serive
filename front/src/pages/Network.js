@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import data from "../components/network/data";
 import SearchForm from "../components/network/SearchForm";
@@ -9,12 +9,14 @@ import "../styles/network/network.css";
 import StyledButton from "../styles/commonstyles/Button";
 import CreateChallengePage from "./CreateChallengePage";
 import { useNavigate } from "react-router-dom";
-
+import * as Api from '../api'
 
 const Network = () => {
+  const [challengeData,setChallengeData]=useState([]);
+  const [originalData,setOriginalData]=useState([]);
   const navigate=useNavigate()
-  const originalData = data;
-  const [ChallangeList, setChallangeList] = useState(data);
+  
+  
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
@@ -22,20 +24,25 @@ const Network = () => {
   const click = () => {
     document.location.href("/CreateChallengePage");
   };
-
+  useEffect(()=>{
+    Api.get('challenges').then((res)=> setChallengeData(res.data.result))
+    Api.get('challenges').then((res)=> setOriginalData(res.data.result))
+    
+  },[])
+  
   return (
     <div className="NetworkContainer">
       <NavBar />
       <div className="SearchFormContainer">
         <SearchForm
           originalData={originalData}
-          data={ChallangeList}
-          setData={setChallangeList}
+          data={challengeData}
+          setData={setChallengeData}
         />
         <SortDropDown
           originalData={originalData}
-          data={ChallangeList}
-          setData={setChallangeList}
+          data={challengeData}
+          setData={setChallengeData}
         />
       </div>
       <div className="challangePostButtonContainer">
@@ -48,13 +55,13 @@ const Network = () => {
       </div>
       <Container className="forContainer">
         <Row>
-          {ChallangeList.slice(0, visible).map((menu) => (
+          {challengeData.slice(0, visible).map((menu) => (
             <Col lg={3}>
               <NetworkCard item={menu} />
             </Col>
           ))}
         </Row>
-        {visible < ChallangeList.length ? (
+        {visible < challengeData.length ? (
           <StyledButton
             id="showMore-btn"
             className="mt-3 mb-5"
