@@ -46,7 +46,7 @@ const NavBar = () => {
         }} href="#" className="nav-link">MyPage</a></li>
         <li className="nav-item"><a onClick={()=>{
           navigate('/network')
-        }} className="nav-link">Challenges</a></li>
+        }} className="nav-link">Challenge</a></li>
         {/* <li className="nav-item"><a href="#" className="nav-link">Login/Join</a></li> */}
         {
           isLogin===true?(

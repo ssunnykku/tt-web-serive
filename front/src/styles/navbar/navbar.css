@@ -13,24 +13,27 @@ a{
 .nav{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content:space-between;
     height: 8vh;
     background: none;
-    opacity: 100%;
+
 }
 .nav-link{
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    color: #98108D;
 }
 .nav-brand{
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 1.5rem;
+    font-size: 2rem;
+    margin-left: 3%;
 }
 .nav-menu{
     display: flex;
     align-items: center;
     justify-content: space-around;
     gap: 3rem;
+    margin-right: 3%;
 }
 .nav-toggler div{
     width: 3rem;

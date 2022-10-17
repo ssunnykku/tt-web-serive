@@ -59,7 +59,7 @@ const UserCard = () => {
       ref={fileInput}
       ></input>
       </form>
-      <h1>유저이름</h1>
+      <h2>근혁</h2>
       <StyledButton
         onClick={() => {
           showForm == true ? setShowForm(false) : setShowForm(true);
