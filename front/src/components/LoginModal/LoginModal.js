@@ -23,24 +23,24 @@ function LoginModal({ setLoginModalOpen }) {
   const [password, setPassword] = useState("");
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
-  const validateEmail = (email) => {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
+  // const validateEmail = (email) => {
+  //   return email
+  //     .toLowerCase()
+  //     .match(
+  //       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //     );
+  // };
 
   //위 validateEmail 함수를 통해 이메일 형태 적합 여부를 확인함.
-  const isEmailValid = validateEmail(email);
+  // const isEmailValid = validateEmail(email);
   // 비밀번호가 4글자 이상인지 여부를 확인함.
-  const isPwdValid = password.length >= 4;
+  // const isPwdValid = password.length >= 4;
   // 위 2개 조건이 모두 동시에 만족되는지 여부를 확인함.
-  const isFormValid = isEmailValid && isPwdValid;
+  // const isFormValid = isEmailValid && isPwdValid;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(email, password);
     try {
       // "login" 엔드포인트로 post요청함.
       const res = await Api.post("login", {
@@ -49,10 +49,11 @@ function LoginModal({ setLoginModalOpen }) {
       });
       // 유저 정보는 response의 data임.
       const user = res.data;
+      // console.log(user);
       // JWT 토큰은 유저 정보의 token임.
-      const jwtToken = user.token;
+      // const jwtToken = user.token;
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
-      sessionStorage.setItem("userToken", jwtToken);
+      // sessionStorage.setItem("userToken", jwtToken);
       // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -110,8 +111,8 @@ function LoginModal({ setLoginModalOpen }) {
 
               <button
                 className="LoginBtn"
-                type="button"
-                disabled={!isFormValid}
+                // type="submit"
+                // disabled={!isFormValid}
               >
                 로그인
               </button>
@@ -146,7 +147,7 @@ function LoginModal({ setLoginModalOpen }) {
               </div>
 
               <Link
-                to="./signup"
+                to="/login/signup"
                 state={
                   signUpModalOpen && { setSignUpModalOpen: setSignUpModalOpen }
                 }
