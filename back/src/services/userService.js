@@ -137,16 +137,14 @@ class userService {
     const updateUser = await User.updateUser(userId, name, email);
     return updateUser;
   }
-  // user img add
-  static async addUserImg({ img, userId }) {
-    const user = await User.findByUserId({ userId });
+  // user img get
+  static async getCurrentImg({ userId }) {
+    const newImg = await User.getUserImg({ userId });
 
-    if (!user) {
-      const errorMessage =
-        "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
+    if (!newImg) {
+      const errorMessage = "no iamge";
       return errorMessage;
     }
-    const newImg = await User.addUserImg({ userId, img });
     return newImg;
   }
   // user img update

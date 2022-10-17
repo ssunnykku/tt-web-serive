@@ -14,7 +14,6 @@ class User {
         joinedChallengeId: null,
         holdChallengeId: null,
         description: "자기소개를 입력해주세요.",
-        //img: null,
       },
     });
     return registerUser;
@@ -75,7 +74,18 @@ class User {
       },
     });
   }
-  //img 수정
+  //get img
+  static async getUserImg({ userId }) {
+    console.log("userId:", userId);
+    const img = await prisma.user.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+    console.log("img:", img.img);
+    return img.img;
+  }
+  //img 수정,
   static async updateUserImg({ userId, img }) {
     const updateuser = await prisma.user.update({
       where: {

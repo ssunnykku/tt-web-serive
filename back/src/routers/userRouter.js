@@ -134,16 +134,17 @@ userRouter.put(
   }
 );
 
-// get 이미지
+// get 이미지 // null일 때 error반환!!...프론트에 해당내용 공유드리기
 userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    const getImg = await userService.findCurrentUser({ userId });
+    const getImg = await userService.getCurrentImg({ userId });
     res.status(200).send(getImg);
   } catch (error) {
     next(error);
   }
 });
+/*
 //add img
 userRouter.post(
   "/userImg",
@@ -170,7 +171,7 @@ userRouter.post(
     }
   }
 );
-
+*/
 //img update
 userRouter.put(
   "/userImg",
