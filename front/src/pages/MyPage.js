@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import ChallengeContent from "../components/MyPage/ChallengeContent";
 import LikedContent from "../components/MyPage/LikedContent";
@@ -8,18 +8,28 @@ import NavBar from "../components/NavBar";
 import StyledButton from "../styles/commonstyles/Button";
 import "../styles/mypage/mypage.css";
 import data from "../components/network/data";
+import { DispatchContext, UserStateContext } from "../App";
+import * as Api from '../api'
 const MyPage = () => {
+  const userState=useContext(UserStateContext)
+  const dispatch=useContext(DispatchContext)
   var today = new Date();
   var year = today.getFullYear();
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
   const originalData = data;
+  const [myPoint,setMyPoint]=useState(0)
   const [ChallengeList, setChallengeList] = useState(data);
   const [initialState, setInitialState] = useState("골라서 보기");
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
-  
+  const userId=userState.user.userId
+  useEffect(()=>{
+    Api.get(`point/:${userId}`).then((res)=>setMyPoint(res.data))
+  },[])
+  console.log(myPoint)
+  console.log(userId)
   return (
     <div className="myPage">
       <NavBar />

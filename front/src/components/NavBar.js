@@ -17,8 +17,8 @@ const NavBar = () => {
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const userState=useContext(UserStateContext)
   const dispatch=useContext(DispatchContext)
-  console.log(userState)
-  const isLogin=false;
+  
+  
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -36,8 +36,8 @@ const NavBar = () => {
   const showLoginModal = () => {
     setLoginModalOpen(true);
   };
-  // const isLogin= false;
- 
+  const isLogin = !!userState.user;
+  console.log(userState.user)
   // const logout=()=>{
   //   sessionStorage.removeItem('accessToken');
   //   localStorage.removeItem('refreshToken');

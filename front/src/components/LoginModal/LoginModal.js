@@ -45,6 +45,7 @@ function LoginModal({
     console.log(email);
     console.log(password);
     console.log(typeof password);
+    
     try {
       // "user/login" 엔드포인트로 post요청함.
       const res = await Api.post("login", {
@@ -62,20 +63,20 @@ function LoginModal({
       });
       console.log(res.data);
       // 유저 정보는 response의 data임.
-      // const user = res.data;
+      const user = res.data;
       // JWT 토큰은 유저 정보의 token임.
-      // const jwtToken = user.token;
-      // const refreshToken = user.refreshToken;
-      // localStorage.setItem("refreshToken", refreshToken);
+      const jwtToken = user.accessToken;
+      const refreshToken = user.refreshToken;
+      localStorage.setItem("refreshToken", refreshToken);
       // // sessionStorage에 "accessToken"이라는 키로 JWT 토큰을 저장함.
-      // sessionStorage.setItem("accessToken", jwtToken);
+      sessionStorage.setItem("accessToken", jwtToken);
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       // sessionStorage.setItem("userToken", jwtToken);
       // // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      // dispatch({
-      //   type: "LOGIN_SUCCESS",
-      //   payload: user,
-      // });
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: user,
+      });
 
       // 기본 페이지로 이동함.
     } catch (err) {
