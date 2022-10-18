@@ -58,7 +58,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   //     }
   //   });
   // };
-  // 비밀번호가 4글자 이상인지 여부를 확인함.
+  // 비밀번호가 숫자+영문자+특수문자 조합으로 8자리 이상 입력 이상인지 여부를 확인함.
   const isPwdValid = validatePwd(password);
   // 비밀번호와 확인용 비밀번호가 일치하는지 여부를 확인함.
   const isPwdSame = password === confirmPassword;
@@ -66,7 +66,8 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const isNameValid = name.length >= 2;
 
   // 위 4개 조건이 모두 동시에 만족되는지 여부를 확인함.
-  const isFormValid = isEmailValid && isPwdValid && isPwdSame && isNameValid;
+  const isFormValid =
+    isEmailValid && isPwdValid && isPwdSame && isNameValid && checkBox;
 
   //   checkBox 체크
   const clickCheckedBox = () => {
@@ -85,13 +86,19 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         password,
         confirmPassword,
       });
-
-      alert("회원가입 성공, 로그인 해주세요");
-      navigate("/login");
+      console.log(res);
+      console.log(res.data);
+      setSignUpModalOpen(false);
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "회원가입 성공, 로그인 해주세요",
+      }).then(function () {
+        navigate("/", { replace: true });
+      });
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
     }
-    // console.log(user);
   };
   //모달창 끄기
   const closeSignUpModal = () => {
@@ -107,6 +114,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
               <img
                 className="closeBtn"
                 src={Close_round_light}
+                setSignUpModalOpen={setSignUpModalOpen}
                 onClick={closeSignUpModal}
                 width="32px"
                 height="32px"

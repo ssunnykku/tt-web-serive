@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import "../styles/navbar/navbar.css";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import SignUpModal from "../components/signUpModal/SignUpModal";
+import LoginModal from "./LoginModal/LoginModal";
 import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import LoginModal from "./LoginModal/LoginModal";
 import { DispatchContext, UserStateContext } from "../App";
 
 const NavBar = () => {
@@ -15,10 +15,13 @@ const NavBar = () => {
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+
   const userState=useContext(UserStateContext)
   const dispatch=useContext(DispatchContext)
+  const isLogin = !!userState.user;
+  console.log(userState.user)
   
-  
+
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -31,13 +34,14 @@ const NavBar = () => {
 
   const showSignUpModal = () => {
     setSignUpModalOpen(true);
+    setLoginModalOpen(false);
   };
   //로그인 모달창 노출
   const showLoginModal = () => {
+    setSignUpModalOpen(false);
     setLoginModalOpen(true);
   };
-  const isLogin = !!userState.user;
-  console.log(userState.user)
+
   // const logout=()=>{
   //   sessionStorage.removeItem('accessToken');
   //   localStorage.removeItem('refreshToken');
@@ -124,18 +128,20 @@ const NavBar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </>
-          )
-          
-        }
-        
-      </ul>
-      <div onClick={navToggle} className={toggleIcon}>
-        <div className="line1"></div>
-        <div className="line2"></div>
-        <div className="line3"></div>
-      </div>
-     </nav>
-
+          )}
+          {loginModalOpen && (
+            <LoginModal setLoginModalOpen={setLoginModalOpen} />
+          )}
+          {signUpModalOpen && (
+            <SignUpModal setSignUpModalOpen={setSignUpModalOpen} />
+          )}
+        </ul>
+        <div onClick={navToggle} className={toggleIcon}>
+          <div className="line1"></div>
+          <div className="line2"></div>
+          <div className="line3"></div>
+        </div>
+      </nav>
     </div>
   );
 };
