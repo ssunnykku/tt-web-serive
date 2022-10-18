@@ -59,7 +59,9 @@ const MainPage1 = () => {
             {isLogin === false ? (
               <StyledButton onClick={showLoginModal}>로그인</StyledButton>
             ) : (
-              <StyledButton>로그아웃</StyledButton>
+              <StyledButton onClick={()=>{
+                navigate('/mypage')
+              }}>마이페이지</StyledButton>
             )}
 
             {loginModalOpen && (
