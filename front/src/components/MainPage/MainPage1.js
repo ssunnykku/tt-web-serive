@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import LoginModal from "../LoginModal/LoginModal";
 import SignUpModal from "../signUpModal/SignUpModal";
@@ -6,8 +6,11 @@ import "../../styles/mainpage/mainpage1.css";
 import StyledButton from "../../styles/commonstyles/Button";
 import NavBar from "../NavBar";
 import { useNavigate } from "react-router-dom";
+import { DispatchContext, UserStateContext } from "../../App";
 
 const MainPage1 = () => {
+  const userState=useContext(UserStateContext)
+  const dispatch=useContext(DispatchContext)
   //열기, 닫기를 부모로부터 받아옴
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
@@ -24,7 +27,7 @@ const MainPage1 = () => {
   //   };
 
   // const isLogin= !!userState.user;
-  const isLogin = false;
+  const isLogin = !!userState.user;
   // const logout=()=>{
   //   sessionStorage.removeItem('accessToken');
   //   localStorage.removeItem('refreshToken');
