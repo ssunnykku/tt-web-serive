@@ -1,7 +1,9 @@
 *,*::after, *::before{
     margin: 0;
     box-sizing: border-box;
+   
 }
+
 li{
     list-style: none;
 }
@@ -14,8 +16,10 @@ a{
     display: flex;
     align-items: center;
     justify-content:space-between;
-    height: 8vh;
-    background: none;
+    height: 8.5vh;
+    background: #FFFFFF;
+    font-family: 'Nanum Gothic';
+    /* background-color: ; */
 
 }
 .nav-link{
@@ -25,7 +29,9 @@ a{
 .nav-brand{
     text-transform: uppercase;
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.5rem;
+    
+    padding-bottom: 0.6rem;
     margin-left: 3%;
 }
 .nav-menu{
@@ -34,6 +40,7 @@ a{
     justify-content: space-around;
     gap: 3rem;
     margin-right: 3%;
+   
 }
 .nav-toggler div{
     width: 3rem;

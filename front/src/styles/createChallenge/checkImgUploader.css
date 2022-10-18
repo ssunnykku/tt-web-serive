@@ -1,6 +1,8 @@
 .checkImgInner{
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     /* text-align: center; */
 }
 .checkImgTitle{
@@ -19,6 +21,7 @@
     display: flex;
     text-align: center;
     justify-content: center;
+    /* margin: 50px auto; */
     margin: 10px;
 }
 .goodImg{
@@ -26,7 +29,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
 }
 .badImg{
     display: flex;
@@ -34,7 +36,6 @@
     justify-content: center;
     align-items: center;
 }
-
 .icon{
     width: 20px;
     height: 20px;

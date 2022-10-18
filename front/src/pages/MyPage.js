@@ -8,21 +8,22 @@ import NavBar from "../components/NavBar";
 import StyledButton from "../styles/commonstyles/Button";
 import "../styles/mypage/mypage.css";
 import { DispatchContext, UserStateContext } from "../App";
-import * as Api from '../api'
+import * as Api from "../api";
 const MyPage = () => {
-  const userState=useContext(UserStateContext)
-  const dispatch=useContext(DispatchContext)
+  const userState = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
   var today = new Date();
   var year = today.getFullYear();
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
-  
-  const [myPoint,setMyPoint]=useState(0)
-  
+
+  const [myPoint, setMyPoint] = useState(0);
+
   const [initialState, setInitialState] = useState("골라서 보기");
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
+
   
   const [challengeData,setChallengeData]=useState([]);
   const [originalData,setOriginalData]=useState([]);
@@ -33,8 +34,9 @@ const MyPage = () => {
   },[])
   
   console.log(myPoint)
+
   // console.log(userId)
-  
+
   return (
     <div className="myPage">
       <NavBar />
@@ -76,7 +78,11 @@ const MyPage = () => {
           <div className="btnContainer"></div>
           {showDrop == true ? (
             <Dropdown className="dropdownbtn">
-              <Dropdown.Toggle className="dropdownToggle" variant="success" id="dropdown-basic">
+              <Dropdown.Toggle
+                className="dropdownToggle"
+                variant="success"
+                id="dropdown-basic"
+              >
                 {initialState}
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -116,10 +122,12 @@ const MyPage = () => {
           ) : null}
 
           <div className="contents">
-            {contents===1&& <PointContent/>}
-            {contents===2&& <ChallengeContent ChallengeList={challengeData}/>}
-            {contents===3&& <LikedContent ChallengeList={challengeData}/>}
-            </div>
+            {contents === 1 && <PointContent />}
+            {contents === 2 && (
+              <ChallengeContent ChallengeList={challengeData} />
+            )}
+            {contents === 3 && <LikedContent ChallengeList={challengeData} />}
+          </div>
         </div>
       </div>
     </div>

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NavBar from "../components/NavBar";
 import CheckImgUploader from "../components/createChallenge/CheckImgUploader";
 import ChallengeInfo from "../components/createChallenge/ChallengeInfo";
 import MainImgUpoloader from "../components/createChallenge/MainImgUploader";
 // import StyledButton from "../styles/commonstyles/Button";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { UserStateContext } from "../App";
+// import { DispatchContext, UserStateContext } from "../../App";
+// import Api from "..api";
 
 {
   /**챌린지 개설하기 스타일 설정 */
@@ -46,6 +50,11 @@ const CreateFont = styled.h2`
   padding: 0.2em 2em;
 `;
 const CreateChallenge = () => {
+  const navigate = useNavigate();
+  const userState = useContext(UserStateContext);
+  const [user, setUsers] = useState([]);
+  // // const dispatch = useContext(DispatchContext);
+
   return (
     <>
       <NavBar />
@@ -56,7 +65,9 @@ const CreateChallenge = () => {
         <MainImgUpoloader></MainImgUpoloader>
         <ChallengeInfo></ChallengeInfo>
       </Inner>
+
       <CheckImgUploader></CheckImgUploader>
+
       <StyledButton>
         <CreateFont>챌린지 생성하기</CreateFont>
       </StyledButton>
