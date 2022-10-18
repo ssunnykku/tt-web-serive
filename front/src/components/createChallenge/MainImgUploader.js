@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from "react";
 import blankImg from "../../images/createChallengePage/blankImg.png";
 import MainImgUploader from "../../styles/createChallenge/MainImgUploader.css";
