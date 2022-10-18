@@ -7,19 +7,22 @@ import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { DispatchContext, UserStateContext } from "../App";
-
+import * as Api from '../api'
 const NavBar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
-
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
-
   const userState=useContext(UserStateContext)
   const dispatch=useContext(DispatchContext)
   const isLogin = !!userState.user;
   console.log(userState.user)
+  // const userId=userState.user.userId;
+  // const handleDelete=async(e)=>{
+  //   e.preventDefault();
+  //   await Api.delete
+  // }
   
 
   const navToggle = () => {
@@ -42,13 +45,13 @@ const NavBar = () => {
     setLoginModalOpen(true);
   };
 
-  // const logout=()=>{
-  //   sessionStorage.removeItem('accessToken');
-  //   localStorage.removeItem('refreshToken');
-  //   dispatchEvent({type:'LOGOUT'});
-  //   alert('로그아웃 완료')
-  //   navigate('/')
-  // }
+  const logout=()=>{
+    sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    dispatch({type:'LOGOUT'});
+    alert('로그아웃 완료')
+    navigate('/')
+  }
   return (
     <div className="navBar">
       <nav className="nav">
@@ -104,7 +107,7 @@ const NavBar = () => {
                   <div className="dropdownFont">회원탈퇴</div>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4">
-                  <div className="dropdownFont">로그아웃</div>
+                  <div onClick={logout} className="dropdownFont">로그아웃</div>
                 </NavDropdown.Item>
               </NavDropdown>
             </>
