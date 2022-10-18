@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import NavBar from "../NavBar";
 import "../../styles/mainpage/mainpage2.css";
 import StyledButton from "../../styles/commonstyles/Button";
+import Gas from "../Charts/chart";
+import Disasters from "../Charts/Disasters";
 const MainPage2 = () => {
   const [showGraph, setShowGraph] = useState(1);
   return (
@@ -35,16 +37,12 @@ const MainPage2 = () => {
           </div>
           {showGraph == 1 ? (
             <div className="ex2GraphContainer">
-              <h1>이미지1</h1>
-              <h1>이미지1</h1>
-              <h1>이미지1</h1>
+              <Gas/>
             </div>
           ) : null}
           {showGraph == 2 ? (
             <div className="ex2GraphContainer">
-              <h1>이미지2</h1>
-              <h1>이미지2</h1>
-              <h1>이미지2</h1>
+              <Disasters/>
             </div>
           ) : null}
           {showGraph == 3 ? (
