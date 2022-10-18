@@ -17,6 +17,7 @@ const MainPage1 = () => {
     setLoginModalOpen(true);
     setSignUpModalOpen(false);
   };
+
   // //회원가입 모달창 노출
   //   const showSignUpModal = () => {
   //     setSignUpModalOpen(true);
@@ -59,7 +60,11 @@ const MainPage1 = () => {
             )}
 
             {loginModalOpen && (
-              <LoginModal setLoginModalOpen={setLoginModalOpen} />
+              <LoginModal
+                setLoginModalOpen={setLoginModalOpen}
+                signUpModalOpen={signUpModalOpen}
+                setSignUpModalOpen={setSignUpModalOpen}
+              />
             )}
             {signUpModalOpen && (
               <SignUpModal

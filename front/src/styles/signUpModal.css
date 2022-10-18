@@ -48,10 +48,10 @@
 .signUpModal {
     /* background-color: #FFFCFC; */
     width: 460px;
-    height: 620px;
+    height: 600px;
     position: relative;
     box-sizing: border-box;
-    margin:50px auto;
+    margin:5% auto;
     background: #fff;
     background-color: var(--color-white);
     border-radius: 6px;
@@ -135,7 +135,7 @@ alert{
     /* height: ; */
     color: #fff;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 38px;
     font-size: large;
     font-weight: 500;
 }
