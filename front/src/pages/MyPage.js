@@ -7,7 +7,6 @@ import UserCard from "../components/MyPage/UserCard";
 import NavBar from "../components/NavBar";
 import StyledButton from "../styles/commonstyles/Button";
 import "../styles/mypage/mypage.css";
-import data from "../components/network/data";
 import { DispatchContext, UserStateContext } from "../App";
 import * as Api from '../api'
 const MyPage = () => {
@@ -18,18 +17,24 @@ const MyPage = () => {
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
-  const originalData = data;
+  
   const [myPoint,setMyPoint]=useState(0)
-  const [ChallengeList, setChallengeList] = useState(data);
+  
   const [initialState, setInitialState] = useState("골라서 보기");
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
   const userId=userState.user.userId
+  const [challengeData,setChallengeData]=useState([]);
+  const [originalData,setOriginalData]=useState([]);
   useEffect(()=>{
-    Api.get(`point/:${userId}`).then((res)=>setMyPoint(res.data))
+    Api.get('challenges').then((res)=> setChallengeData(res.data.result))
+    Api.get('challenges').then((res)=> setOriginalData(res.data.result))
+    Api.get(`point`).then((res)=>setMyPoint(res.data.toString()))
   },[])
+  
   console.log(myPoint)
-  console.log(userId)
+  // console.log(userId)
+  
   return (
     <div className="myPage">
       <NavBar />
@@ -45,7 +50,7 @@ const MyPage = () => {
               className="point"
             >
               <h2>My Point</h2>
-              <h1>500P</h1>
+              <h1>{myPoint}</h1>
             </div>
             <div
               onClick={() => {
@@ -82,7 +87,7 @@ const MyPage = () => {
                       (item) => new Date(item.toDate) >= new Date(dateString)
                     );
                     console.log(results);
-                    setChallengeList(results);
+                    setChallengeData(results);
                   }}
                 >
                   진행중
@@ -94,7 +99,7 @@ const MyPage = () => {
                       (item) => new Date(item.toDate) <= new Date(dateString)
                     );
                     console.log(results);
-                    setChallengeList(results);
+                    setChallengeData(results);
                   }}
                 >
                   완료
@@ -112,8 +117,8 @@ const MyPage = () => {
 
           <div className="contents">
             {contents===1&& <PointContent/>}
-            {contents===2&& <ChallengeContent ChallengeList={ChallengeList}/>}
-            {contents===3&& <LikedContent ChallengeList={ChallengeList}/>}
+            {contents===2&& <ChallengeContent ChallengeList={challengeData}/>}
+            {contents===3&& <LikedContent ChallengeList={challengeData}/>}
             </div>
         </div>
       </div>
