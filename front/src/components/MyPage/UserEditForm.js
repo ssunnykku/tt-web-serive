@@ -2,9 +2,21 @@ import React, { useEffect, useState } from "react";
 import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/mypage/userEditForm.css";
 import * as Api from '../../api'
+import { Form } from "react-bootstrap";
 const UserEditForm = ({name, setName, description, setDescription}) => {
-
+const handleSubmit=async(e)=>{
+  e.preventDefault();
+  try{
+    await Api.put('userUpdate', {
+      name: name,
+      description: description,
+    });
+  } catch(e){
+    console.error(e)
+  }
+}
   return (
+    <form onSubmit={handleSubmit}>
     <div className="userEditForm">
      
       <h5>닉네임</h5>
@@ -27,9 +39,10 @@ const UserEditForm = ({name, setName, description, setDescription}) => {
         />
       </div>
       <div className="btnContainer">
-        <StyledButton>수정하기</StyledButton>
+        <StyledButton onClick={handleSubmit}>수정하기</StyledButton>
       </div>
     </div>
+    </form>
   );
 };
 
