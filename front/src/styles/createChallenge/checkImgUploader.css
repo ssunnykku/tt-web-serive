@@ -24,13 +24,15 @@
 .goodImg{
     display: flex;
     flex-direction: column;
-    margin-right: 30px;
+    justify-content: center;
+    align-items: center;
 
 }
 .badImg{
     display: flex;
     flex-direction: column;
-    margin-left: 30px;
+    justify-content: center;
+    align-items: center;
 }
 
 .icon{

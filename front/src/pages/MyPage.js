@@ -23,7 +23,7 @@ const MyPage = () => {
   const [initialState, setInitialState] = useState("골라서 보기");
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
-  const userId=userState.user.userId
+  
   const [challengeData,setChallengeData]=useState([]);
   const [originalData,setOriginalData]=useState([]);
   useEffect(()=>{

@@ -1,9 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Card, Row, Button, Col } from "react-bootstrap";
 import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/mypage/mypage.css";
 import UserEditForm from "./UserEditForm";
+import * as Api from '../../api'
 const UserCard = () => {
+  const [name,setName]=useState('');
+  const [description,setDescription]=useState('')
+  useEffect(()=>{
+    Api.get('currentUser').then((res)=>setName(res.data.name))
+  },[])
   const [showForm, setShowForm] = useState(false);
   const [showContent, setShowContent] = useState("정보수정");
   const [profileImage, setProfileImage] = useState(
@@ -59,7 +65,7 @@ const UserCard = () => {
       ref={fileInput}
       ></input>
       </form>
-      <h2>근혁</h2>
+      <h2>{name}</h2>
       <StyledButton
         onClick={() => {
           showForm == true ? setShowForm(false) : setShowForm(true);
@@ -70,7 +76,7 @@ const UserCard = () => {
       >
         {showContent}
       </StyledButton>
-      {showForm == true ? <UserEditForm /> : null}
+      {showForm == true ? <UserEditForm name={name} setName={setName} description={description} setDescription={setDescription}/> : null}
     </div>
   );
 };

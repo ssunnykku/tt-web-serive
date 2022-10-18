@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../styles/navbar/navbar.css";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import SignUpModal from "../components/signUpModal/SignUpModal";
@@ -16,13 +16,20 @@ const NavBar = () => {
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
   const userState=useContext(UserStateContext)
   const dispatch=useContext(DispatchContext)
+  const [currentUserId,setCurrentUserId]=useState('')
   const isLogin = !!userState.user;
-  console.log(userState.user)
-  // const userId=userState.user.userId;
-  // const handleDelete=async(e)=>{
-  //   e.preventDefault();
-  //   await Api.delete
-  // }
+  
+  console.log(currentUserId)
+  const handleDelete=async(e)=>{
+    e.preventDefault();
+    await Api.put(`withdrawl/${currentUserId}`,{
+      withdrawl: 1,
+    });
+  sessionStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+    dispatch({ type: "LOGOUT " });
+    navigate("/");
+  }
   
 
   const navToggle = () => {
@@ -52,6 +59,9 @@ const NavBar = () => {
     alert('로그아웃 완료')
     navigate('/')
   }
+  useEffect(()=>{
+    Api.get('currentUser').then((res)=>setCurrentUserId(res.data.userId))
+  },[])
   return (
     <div className="navBar">
       <nav className="nav">
@@ -104,9 +114,9 @@ const NavBar = () => {
                 id="basicNavDropdown"
               >
                 <NavDropdown.Item className="dditem" href="#action/3.4">
-                  <div className="dropdownFont">회원탈퇴</div>
+                  <div onClick={handleDelete} className="dropdownFont">회원탈퇴</div>
                 </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.4">
+                <NavDropdown.Item href="/">
                   <div onClick={logout} className="dropdownFont">로그아웃</div>
                 </NavDropdown.Item>
               </NavDropdown>
@@ -125,7 +135,7 @@ const NavBar = () => {
                 </NavDropdown.Item>
 
                 <NavDropdown.Item>
-                  <div className="dropdownFont" onClick={showSignUpModal}>
+                  <div  className="dropdownFont" onClick={showSignUpModal}>
                     회원가입
                   </div>
                 </NavDropdown.Item>

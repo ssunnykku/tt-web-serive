@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/mypage/userEditForm.css";
-const UserEditForm = () => {
-  const [name,setName]=useState('');
-  const [description,setDescription]=useState('')
+import * as Api from '../../api'
+const UserEditForm = ({name, setName, description, setDescription}) => {
 
   return (
     <div className="userEditForm">
