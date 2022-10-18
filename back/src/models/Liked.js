@@ -19,8 +19,11 @@ class Liked {
     });
   }
   static async getLikedList({ userId }) {
-    const likedList = await prisma.liked.findMany({
+    const likedList = await prisma.user.findUnique({
       where: { userId: userId },
+      include: {
+        point: true,
+      },
     });
     return likedList;
   }

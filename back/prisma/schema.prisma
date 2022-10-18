@@ -8,9 +8,11 @@ datasource db {
 }
 
 model liked {
-  likedId     String @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
-  userId      String @db.VarChar(45)
-  challengeId Int    @unique(map: "challengeId_UNIQUE")
+  likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
+  userId      String    @db.VarChar(45)
+  challengeId Int
+  user        user      @relation(fields: [userId], references: [userId])
+  challenge   challenge @relation(fields: [challengeId], references: [challengeId])
 }
 
 model point {
@@ -19,20 +21,21 @@ model point {
 }
 
 model user {
-  userId            String  @id @db.VarChar(50)
-  joinedChallengeId Int?    @unique(map: "joinedChallengeId_UNIQUE")
-  holdChallengeId   Int?    @unique(map: "holdChallengeId_UNIQUE")
-  name              String  @db.VarChar(10)
-  email             String  @db.VarChar(30)
-  password          String  @db.VarChar(100)
-  withdrawal        Int     @default(0) @db.TinyInt
-  img               Bytes?  @db.Blob
-  description       String? @db.VarChar(100)
+  userId       String         @id @db.VarChar(50)
+  name         String         @db.VarChar(10)
+  email        String         @db.VarChar(30)
+  password     String         @db.VarChar(100)
+  withdrawal   Int            @default(0) @db.TinyInt
+  img          Bytes?         @db.Blob
+  description  String?        @db.VarChar(100)
+  refreshToken refreshToken[]
+  liked        liked?
 }
 
 model refreshToken {
+  userId       String @unique(map: "userId_UNIQUE")
   refreshToken String @db.VarChar(500)
-  userId       String @id @db.VarChar(45)
+  user         user   @relation(fields: [userId], references: [userId])
 }
 
 model challenge {
@@ -46,6 +49,7 @@ model challenge {
   endRemainingDate   Int
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
+  liked              liked[]
 }
 
 model hashTag {
