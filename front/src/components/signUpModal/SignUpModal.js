@@ -86,7 +86,8 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         password,
         confirmPassword,
       });
-
+      console.log(res);
+      console.log(res.data);
       setSignUpModalOpen(false);
       Swal.fire({
         position: "top-center",

@@ -31,9 +31,11 @@ const NavBar = () => {
 
   const showSignUpModal = () => {
     setSignUpModalOpen(true);
+    setLoginModalOpen(false);
   };
   //로그인 모달창 노출
   const showLoginModal = () => {
+    setSignUpModalOpen(false);
     setLoginModalOpen(true);
   };
   // const isLogin= false;
