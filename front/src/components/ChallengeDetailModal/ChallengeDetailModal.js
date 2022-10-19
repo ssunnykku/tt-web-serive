@@ -11,9 +11,9 @@ import UserFill from "../../images/challenge/UserFill1x.png";
 import Gift from "../../images/challenge/Gift1x.png";
 import Happy from "../../images/challenge/Happy1x.png";
 import Sad from "../../images/challenge/Sad1x.png";
-import Baemin from "../../images/challenge/Baemin.png";
-import HappyCertificate from "../../images/challenge/HappyCertificate.png";
-import SadCertificate from "../../images/challenge/SadCertificate.png";
+// import Baemin from "../../images/challenge/Baemin.png";
+// import HappyCertificate from "../../images/challenge/HappyCertificate.png";
+// import SadCertificate from "../../images/challenge/SadCertificate.png";
 
 import * as Api from "../../api";
 
@@ -34,27 +34,27 @@ function ChallengeDetailModal({ setModalOpen }) {
   const [goodImage, setGoodImage] = useState("");
   const [badImage, setBadImage] = useState("");
 
-  const challengeShowDetail = async (e) => {
-    const res = await Api.get("challenges", challengeId);
-    const selectedChallenge = res.data;
-    const challengeId = selectedChallenge.challengeId;
-  };
+  // const challengeShowDetail = async (e) => {
+  //   const res = await Api.get("challenges", challengeId);
+  //   const selectedChallenge = res.data;
+  //   const challengeId = selectedChallenge.challengeId;
+  // };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
 
-    try {
-      // "currentUser" 엔드포인트로 post요청함.
-      await Api.post("currentUser", {
-        joinedChallenge: challengeId,
-      });
+  //   try {
+  //     // "currentUser" 엔드포인트로 post요청함.
+  //     await Api.post("currentUser", {
+  //       joinedChallenge: challengeId,
+  //     });
 
-      navigate("/network");
-    } catch (err) {
-      console.log("챌린지 참가에 실패하였습니다.", err);
-    }
-  };
+  //     navigate("/network");
+  //   } catch (err) {
+  //     console.log("챌린지 참가에 실패하였습니다.", err);
+  //   }
+  // };
 
   //모달창 끄기
   const closeModal = () => {
@@ -83,11 +83,11 @@ function ChallengeDetailModal({ setModalOpen }) {
               <div className="challengeTopLeft">
                 <img
                   className="challengeImage"
-                  src={selectedChallenge.img}
+                  // src={selectedChallenge.img}
                   width="310"
                   height="240"
                   margin="0"
-                  alt="해당 챌린지 사진"
+                  alt=""
                 ></img>
                 <p className="chanllegeDday">
                   <img src={TimeLight} alt="시계"></img> 챌린지 시작까지{" "}
@@ -97,16 +97,22 @@ function ChallengeDetailModal({ setModalOpen }) {
               <div className="challengeTopRight">
                 <span>
                   <img src={OfficialChallenge} alt="V체크"></img> 공식 챌린지
-                </span>
-                <a>
                   <img
                     className="FavoriteLight"
                     src={FavoriteLight}
                     style={{ marginLeft: 170 }}
                     alt="하트"
                   ></img>
-                </a>
-                <h4>{selectedChallenge.title}</h4>
+                </span>
+                {/* <a>
+                  <img
+                    className="FavoriteLight"
+                    src={FavoriteLight}
+                    style={{ marginLeft: 170 }}
+                    alt="하트"
+                  ></img>
+                </a> */}
+                <h4>1주일간 배달용기 받지않기</h4>
                 <div
                   className="challengeScroll"
                   style={{
@@ -116,10 +122,10 @@ function ChallengeDetailModal({ setModalOpen }) {
                     height: 170,
                     padding: 10,
                     backgroundColor: "gray",
-                    marginTop: 9,
+                    marginTop: 0,
                   }}
                 >
-                  {selectedChallenge.description}
+                  {/* {selectedChallenge.description} */}
                 </div>
               </div>
             </div>
@@ -158,7 +164,7 @@ function ChallengeDetailModal({ setModalOpen }) {
                     <img src={Happy} alt="웃는 얼굴"></img> 이렇게 찍어주세요!
                   </p>
                   <img
-                    src={selectedChallenge.explainImg}
+                    // src={selectedChallenge.explainImg}
                     style={{ width: 240, height: 180, margin: 0 }}
                     alt=""
                   ></img>
@@ -174,7 +180,7 @@ function ChallengeDetailModal({ setModalOpen }) {
                     <img src={Sad} alt="찡그린 얼굴"></img> 이렇게 하면 안돼요!
                   </p>
                   <img
-                    src={selectedChallenge.explainImg}
+                    // src={selectedChallenge.explainImg}
                     style={{ width: 240, height: 180, margin: 0 }}
                     alt=""
                   ></img>
