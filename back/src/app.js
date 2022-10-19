@@ -6,7 +6,6 @@ import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { challengeRouter } from "./routers/challengeRouter";
 import { joinedChallengeRouter } from "./routers/joinedChallengeRouter";
 
-import { userChallengeRouter } from "./routers/userChallengeRouter";
 import { likedRouter } from "./routers/likedRouter";
 
 const app = express();
@@ -22,7 +21,6 @@ app.get("/", (req, res) => {
 app.use(userRouter);
 
 app.use("/challenges", challengeRouter);
-app.use("/userChallenge", userChallengeRouter);
 app.use("/joinedChallenge", joinedChallengeRouter);
 
 app.use(pointRouter);

@@ -50,6 +50,36 @@ class challengeService {
     }
     return findId;
   }
+  // get (user별 불러오기로 수정해야 함)
+  static async getChallenges() {
+    const challenges = await challengeModel.findMany();
+    return challenges;
+  }
+
+  // id 값을 게시물 1개 선택하기(params 값을 이용)
+  static async findUniqueId(id) {
+    const findId = await challengeModel.findUnique(id);
+    if (!findId) {
+      const error = new Error("invalid id");
+      throw error;
+    }
+    return findId;
+  }
+
+  // Delete
+  static async deleteOne(id) {
+    const deleteChallenge = await challengeModel.delete(id);
+
+    return deleteChallenge;
+  }
+
+  static async addImage(id, addedImage) {
+    const createdChallenge = await challengeModel.create({
+      id,
+      addedImage,
+    });
+    return createdChallenge;
+  }
 }
 
 export { challengeService };
