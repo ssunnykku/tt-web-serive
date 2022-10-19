@@ -141,7 +141,8 @@ class userService {
     if (!newImg) {
       const errorMessage = "no iamge";
       return errorMessage;
-    };''
+    }
+    ("");
     return newImg;
   }
   // user img update
@@ -153,6 +154,7 @@ class userService {
         "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
       return { errorMessage };
     }
+    console.log("서비스");
     const updateimg = await User.updateUserImg({ userId, img });
     return updateimg;
   }

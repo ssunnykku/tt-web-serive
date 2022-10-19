@@ -8,6 +8,7 @@ likedRouter.post("/liked", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const challengeId = req.body.challengeId;
+    console.log(challengeId);
     const liked = await likedService.createLiked({ userId, challengeId });
     res.status(201).send(liked);
   } catch (error) {
