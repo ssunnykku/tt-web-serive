@@ -1,60 +1,66 @@
-import React from "react";
-import { useState } from "react";
+import React, { useRef, useState, useEffect, useNavigate } from "react";
+import { Card, Row, Button, Col } from "react-bootstrap";
+import StyledButton from "../../styles/commonstyles/Button";
 import "../../styles/ChallengeDetailModal.css";
-import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import Close_round_light from "../../images/Close_round_light.png";
-import TimeLight from "../../images/challenge/TimeLight1x.png";
-import OfficialChallenge from "../../images/challenge/OfficialChallenge1x.png";
-import FavoriteLight from "../../images/challenge/FavoriteLight1x.png";
-import UserFill from "../../images/challenge/UserFill1x.png";
-import Gift from "../../images/challenge/Gift1x.png";
-import Happy from "../../images/challenge/Happy1x.png";
-import Sad from "../../images/challenge/Sad1x.png";
-// import Baemin from "../../images/challenge/Baemin.png";
-// import HappyCertificate from "../../images/challenge/HappyCertificate.png";
-// import SadCertificate from "../../images/challenge/SadCertificate.png";
-
+// import UserLike from "./UserLike";
 import * as Api from "../../api";
 
-function ChallengeDetailModal({ setModalOpen }) {
+const ChallengeDetail = () => {
   const navigate = useNavigate();
 
-  //useState로 선택한 챌린지 image 상태를 생성함.
+  //useState로 선택한 챌린지 image URL 상태를 생성함.
   const [challengeImage, setChallengeImage] = useState("");
   //useState로 D-day 상태를 생성함.
-  const [chanllegeDday, setChanllegeDday] = useState("");
-  const [chanllegeTitle, setChanllegeTitle] = useState("");
+  const [challengeDday, setChanllegeDday] = useState("");
+  // 챌린지 제목
+  const [challengeTitle, setChanllegeTitle] = useState("");
+  // 챌린지 세부 내용
   const [challengeDescription, setChallengeDescription] = useState("");
-
-  const [challengeJoinNumber, setChallengeJoinNumber] = useState("");
+  // 해당 챌린지에 참여한 인원수
+  const [challengeJoinedNumber, setChallengeJoinedNumber] = useState("");
+  // 해당 챌린지 완수시 얻을 수 있는 point
   const [challengePoint, setchallengePoint] = useState("");
-
+  // 챌린지 인증 방법 설명
   const [challengeManual, setChallengeManual] = useState("");
+  // Good or Bad 인증사진 URL 상태를 생성함.
   const [goodImage, setGoodImage] = useState("");
   const [badImage, setBadImage] = useState("");
 
-  // const challengeShowDetail = async (e) => {
-  //   const res = await Api.get("challenges", challengeId);
-  //   const selectedChallenge = res.data;
-  //   const challengeId = selectedChallenge.challengeId;
-  // };
+  // useEffect(() => {
+  //   Api.get("challenges", challengeId).then((res) => setTitle(res.data.title));
+  // }, []);
+  // const selectedChallenge = res.data;
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
+  // challengeImage: selectedChallenge.mainImg;
+  // challengeDday: selectedChallenge.endRemainingDate;
+  // challengeTitle: selectedChallenge.title;
+  // challengeDescription: selectedChallenge.description;
+  // challengeJoinedNumber: selectedChallenge.joinedNumber;
+  // challengePoint: selectedChallenge.point;
+  // challengeManual: selectedChallenge.manual;
+  // challengeGoodImage: selectedChallenge.explainImg[0];
+  // challengeBadImage: selectedChallengeexplainImg[1];
 
-  //   try {
-  //     // "currentUser" 엔드포인트로 post요청함.
-  //     await Api.put("currentUser", {
-  //       joinedChallenge: challengeId,
-  //     });
+  const challengeShowDetail = async (e) => {
+    const res = await Api.get("challenges", challengeId);
+    const selectedChallenge = res.data;
+  };
 
-  //     navigate("/network");
-  //   } catch (err) {
-  //     console.log("챌린지 참가에 실패하였습니다.", err);
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      // "currentUser" 엔드포인트로 post요청함.
+      await Api.put("userToChallenge", {
+        hallengeId: ,
+      });
+
+      navigate("/network");
+    } catch (err) {
+      console.log("챌린지 참가에 실패하였습니다.", err);
+    }
+  };
 
   //모달창 끄기
   const closeModal = () => {
@@ -191,7 +197,11 @@ function ChallengeDetailModal({ setModalOpen }) {
               </div>
             </div>
 
-            <button className="challengeJoinBtn" type="submit">
+            <button
+              className="challengeJoinBtn"
+              type="submit"
+              onClick={handleSubmit}
+            >
               참가하기
             </button>
           </div>
@@ -199,6 +209,6 @@ function ChallengeDetailModal({ setModalOpen }) {
       </div>
     </>
   );
-}
+};
 
-export default ChallengeDetailModal;
+export default UserCard;
