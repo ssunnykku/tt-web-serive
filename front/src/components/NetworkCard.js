@@ -38,7 +38,8 @@ const NetworkCard = ({ item }) => {
 
           <div className="cardtext">
             👨‍👧‍👧 100
-            <UserLike liked={item.liked} />
+            <UserLike challengeId={item.challengeId
+} />
           </div>
           <div className="duration">
             <a className="cardSubText">

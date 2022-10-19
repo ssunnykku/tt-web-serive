@@ -4,11 +4,12 @@ import * as Api from "../../src/api";
 import likeimg from "../images/userLiked/like.png";
 import likedimg from "../images/userLiked/liked.png";
 import "../styles/network/userLike.css";
-function UserLike({ likedId, userId }) {
+function UserLike({ challengeId}) {
   const [likeImoticon, setLikeImoticon] = useState(false);
   const [countLike, setCountLike] = useState(0);
   // const myId = 1;
   const [likeId,setLikeId] = useState(1);
+  
   // useEffect(()=>{
   //   Api.post('liked').then((res)=>{
   //     likedId: likedId,
@@ -61,8 +62,13 @@ function UserLike({ likedId, userId }) {
   return (
     <div>
       <div onClick={()=>{
-        setCountLike(countLike+1)
         setLikeImoticon(true)
+        Api.post('liked',{
+          challengeId
+        }).then((res)=>console.log('뭐가오는거임',res.data))
+        Api.get('likedCount').then((res)=>console.log('카운트',res))
+        
+        console.log(countLike)
       }} id="userLike"className="likeButton">
         {likeImoticon ? <img src={likedimg} /> : <img src={likeimg} />}
         <span className="ms-2">{countLike} Likes</span>

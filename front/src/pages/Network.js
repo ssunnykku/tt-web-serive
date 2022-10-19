@@ -28,7 +28,7 @@ const Network = () => {
     Api.get('challenges').then((res)=> setChallengeData(res.data.result.reverse()))
     Api.get('challenges').then((res)=> setOriginalData(res.data.result.reverse()))
   },[])
-  
+  console.log(challengeData)
   return (
     <div className="NetworkContainer">
       <NavBar />
