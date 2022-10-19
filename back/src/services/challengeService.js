@@ -84,6 +84,19 @@ class challengeService {
   //   const findUserId = await challenge.findUniqueUser(userId, id);
   //   return findUserId;
   // }
+
+  //예상 포인트 조회
+  static async expectPoint({challengeId}){
+    
+    const currentChallenge=await challenge.findUnique(challengeId);
+    const currentFromDate=new Date(currentChallenge.fromDate);
+    const currentToDate=new Date(currentChallenge.toDate);
+    const diff = currentToDate - currentFromDate;
+    const currDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+    const diffInt=parseInt(diff/currDay);
+    const expectPoint=diffInt*10;
+    return expectPoint;
+  }
 }
 
 export { challengeService };

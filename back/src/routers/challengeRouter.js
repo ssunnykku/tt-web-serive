@@ -131,6 +131,21 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   }
 });
 
+
+//예상 포인트 계산
+challengeRouter.get(
+  "/expectPoint",
+  async (req, res, next) => {
+    try {
+      const challengeId=req.body.challengeId;
+      const expectPoint=await challengeService.expectPoint({challengeId});
+
+      res.status(200).json(expectPoint);
+    }catch(error) {
+      res.json({ message: error.message });
+    }
+
+  });
 // // get(1개 불러오기/ login 한 유저꺼 불러오기)
 // challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
 //   // const userId = req.currentUserId;
