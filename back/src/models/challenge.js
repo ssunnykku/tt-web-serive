@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-class challengeModel {
+class challenge {
   // create/ post(유저별로 수정할 것)
   static async create({ newChallenge }) {
     const createdChallenge = await prisma.challenge.create({
@@ -45,5 +45,37 @@ class challengeModel {
     });
     return challenge;
   }
+  static async findMany() {
+    const challenges = await prisma.challenge.findMany();
+    return challenges;
+  }
+
+  // (params 값) 게시물 1개 선택
+  static async findUnique(id) {
+    const challenge = await prisma.challenge.findUnique({
+      where: {
+        challengeId: Number(id),
+      },
+    });
+    return challenge;
+  }
+  // Delete
+  static async delete(id) {
+    const challenge = await prisma.challenge.delete({
+      where: {
+        challengeId: Number(id),
+      },
+    });
+    return challenge;
+  }
+  // 해당 유저아이디를 가진 챌린지 하나 가져오기
+  // static async findUniqueUser(userId, id) {
+  //   const challenge = await prisma.userToChallenge.findUnique({
+  //     where: {
+  //       And: [{ userId: userId }, { challengeId: id }],
+  //     },
+  //   });
+  //   return challenge;
+  // }
 }
-export { challengeModel };
+export { challenge };

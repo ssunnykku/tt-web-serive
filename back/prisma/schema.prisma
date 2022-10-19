@@ -29,15 +29,16 @@ model point {
 }
 
 model user {
-  userId          String            @id @db.VarChar(50)
-  name            String            @db.VarChar(10)
-  email           String            @db.VarChar(30)
-  password        String            @db.VarChar(100)
-  withdrawal      Int               @default(0) @db.TinyInt
-  img             Bytes?            @db.Blob
-  refreshToken    refreshToken[]
-  liked           liked[]
-  userToChallenge userToChallenge[]
+  userId           String            @id @db.VarChar(50)
+  name             String            @db.VarChar(10)
+  email            String            @db.VarChar(30)
+  password         String            @db.VarChar(100)
+  withdrawal       Int               @default(0) @db.TinyInt
+  img              Bytes?            @db.Blob
+  refreshToken     refreshToken[]
+  liked            liked[]
+  userToChallenge  userToChallenge[]
+  joinedChallenges joinedChallenge[]
 }
 
 model refreshToken {
@@ -65,11 +66,15 @@ model challenge {
 }
 
 model joinedChallenge {
-  joinedId    Int       @id @unique @default(autoincrement())
+  joinedId Int @id @unique @default(autoincrement())
+
+  countUpload Int
   addedImage  String    @db.Text
+  description String
+  user        user?     @relation(fields: [userId], references: [userId])
+  userId      String?   @db.VarChar(50)
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
-  countUpload Int
 }
 
 // model hashTag {

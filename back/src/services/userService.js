@@ -39,7 +39,7 @@ class userService {
     createNewUser.errorMessage = null;
 
     //  // 토큰 스키마에 유저id추가
-    await User.createToken({ userId });
+    // await User.createToken({ userId });
     await User.createPoint({ userId });
     return createNewUser;
   }
@@ -84,9 +84,9 @@ class userService {
     // const hashrefreshToken = await bcrypt.hash(password, 10);
     const userId = user.userId;
 
-    if (refreshToken) {
-      await User.tokenUpdate({ userId, refreshToken });
-    }
+    // if (refreshToken) {
+    //   await User.tokenUpdate({ userId, refreshToken });
+    // }
     //디비에서 유효기간 지난 토큰은  자동으로 verify에서 걸러진다.
 
     const name = user.name;
