@@ -3,6 +3,8 @@ const prisma = new PrismaClient();
 
 class Liked {
   static async createLiked({ likedId, userId, challengeId }) {
+    console.log("뭐가문제지");
+    console.log("userId:", userId);
     const Liked = await prisma.liked.create({
       data: {
         likedId,
@@ -19,9 +21,14 @@ class Liked {
     });
   }
   static async getLikedList({ userId }) {
-    const likedList = await prisma.liked.findMany({
+    console.log("get 모델의 userId:", userId);
+    const likedList = await prisma.user.findUnique({
       where: { userId: userId },
+      include: {
+        challengeId: challengeId,
+      },
     });
+    console.log("get 모델의 return 값:", likedList);
     return likedList;
   }
 }

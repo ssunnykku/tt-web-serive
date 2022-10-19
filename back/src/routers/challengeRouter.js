@@ -1,60 +1,41 @@
 import { Router } from "express";
-import { PrismaClient } from "@prisma/client";
 import { challengeService } from "../services/challengeService";
+import { addImage } from "../middlewares/addImage";
+import { loginRequired } from "../middlewares/loginRequired";
 
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+const upload = addImage("uploads");
+const multiImg = upload.fields([
+  { name: "main", maxCount: 1 },
+  { name: "explain", maxCount: 2 },
+]);
 
-const prisma = new PrismaClient();
 const challengeRouter = Router();
 
-// uploads 폴더 생성
-fs.readdir("uploads", (error) => {
-  if (error) {
-    console.error("uploads 폴더가 없어 uploads 폴더를 생성합니다.");
-    // fs.mkdirSync("uploads");
-  }
-});
-
-// /////// ......얘가문제......///////
-// const upload = multer({
-//   // 이미지 서버 디스크에 저장
-//   storage: multer.diskStorage({
-//     destination(req, file, cb) {
-//       // 폴더 위치?
-//       // 여기서 못 읽어오고 있다.
-//       // console.log("///////////////////////////////");
-//       // console.log(path.join(__dirname, "uploads"));
-//       // cb(null, path.join(__dirname, "uploads"));
-//       cb(null, "uploads/");
-//     },
-//     filename(req, file, cd) {
-//       const ext = path.extname(file.originalname);
-//       // 파일명 + 날짜 + 확장자명
-//       cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
-//     },
-//   }),
-//   limits: { fileSize: 30 * 1024 * 1024 },
-// });
-// // 하나의 이미지 업로드
-// challengeRouter.post("/img", upload.single("img"), (req, res) => {
-//   console.log(req.file);
-//   res.json({ url: `/img/${req.file.filename}` });
-// });
-
-// // create/ post(유저별로 수정할 것)
-// const upload2 = multer();
-challengeRouter.post("/add", async (req, res, next) => {
-  console.log(req);
+challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
+  // console.log(req);
   try {
-    const { title, description, fromDate, toDate, img } = req.body;
+    const holdUserId = req.currentUserId;
+    // console.log();
+    const { title, description, fromDate, toDate } = req.body;
+
+    const image = req.files;
+    const mainImg = image.main[0];
+
+    const explainImg = image.explain;
+    const explainImgPath = explainImg.map((img) => img.path);
+
+    if (image === undefined) {
+      return res.status(400).send("이미지가 존재하지 않습니다.");
+    }
+
     const newChallenge = await challengeService.addChallenge({
+      holdUserId,
       title,
       description,
       fromDate,
       toDate,
-      img,
+      mainImg: `uploads/${mainImg.path}`,
+      explainImg: `uploads/${explainImgPath}`,
     });
     if (newChallenge.errorMessage) {
       throw new Error(newChallenge.errorMessage);
@@ -72,11 +53,11 @@ challengeRouter.get("/", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// // Get (진행중인 챌린지 전체) 보류
-// challengeRouter.get("/ongoing", async (req, res) => {
-//   const result = await challengeService.getOngoing();
-//   res.status(200).json({ result });
-// });
+// Get (진행중인 챌린지 전체) 보류
+challengeRouter.get("/ongoing", async (req, res) => {
+  const result = await challengeService.getOngoing();
+  res.status(200).json({ result });
+});
 
 // Get (선택한 항목 1개)
 challengeRouter.get("/:id", async (req, res) => {
