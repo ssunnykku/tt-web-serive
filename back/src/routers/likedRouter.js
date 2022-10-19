@@ -17,11 +17,11 @@ likedRouter.post("/liked", loginRequired, async (req, res, next) => {
 });
 
 // 유저가 챌린지 좋아요 해제함
-likedRouter.delete("/liked/:likedId", loginRequired, async (req, res, next) => {
+likedRouter.delete("/liked", loginRequired, async (req, res, next) => {
   try {
     const likedId = req.params.likedId;
     const delLiked = await likedService.deleteLiked({ likedId });
-    res.status(204).send("✨");
+    res.status(204).send("success delete");
   } catch (error) {
     next(error);
   }
@@ -33,6 +33,17 @@ likedRouter.get("/liked", loginRequired, async (req, res, next) => {
     const userId = req.currentUserId;
     const likedList = await likedService.getLiked({ userId });
     res.status(200).send(likedList);
+  } catch (error) {
+    next(error);
+  }
+});
+likedRouter.get("/likedCount", loginRequired, async (req, res, next) => {
+  try {
+    const userId = req.currentUserId;
+    const liked = await likedService.getLikedCount({ userId });
+    const count = liked;
+
+    res.status(200).send(count);
   } catch (error) {
     next(error);
   }

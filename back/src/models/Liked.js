@@ -2,9 +2,17 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class Liked {
+  static async filterLiked({ userId, challengeId }) {
+    const filter = await prisma.liked.findMany({
+      where: {
+        userId: userId,
+        challengeId: challengeId,
+      },
+    });
+    console.log("filter:", filter[0]);
+    return filter;
+  }
   static async createLiked({ likedId, userId, challengeId }) {
-    console.log("😉살려주세요❤️🙏🔥");
-    console.log("userId:", userId);
     const Liked = await prisma.liked.create({
       data: {
         likedId,
@@ -20,19 +28,28 @@ class Liked {
   }
 
   static async removeLiked({ likedId }) {
-    await prisma.liked.delete({
-      where: { likedId: likedId },
+    const liked = await prisma.liked.delete({
+      where: {
+        likedId: likedId,
+      },
     });
+    console.log("liked?? delete 왜안됨:", liked);
+    return;
   }
   static async getLikedList({ userId }) {
-    console.log("get 모델의 userId:", userId);
     const likedList = await prisma.liked.findMany({
       where: { userId: userId },
       select: {
         challenge: true,
       },
     });
-    console.log("get 모델의 return 값:", likedList[0].challenge.mainImg);
+    return likedList;
+  }
+  //likedCount
+  static async getLikedCount({ userId }) {
+    const likedList = await prisma.liked.count({
+      where: { userId: userId },
+    });
     return likedList;
   }
 }

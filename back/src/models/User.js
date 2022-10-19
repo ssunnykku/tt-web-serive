@@ -67,11 +67,14 @@ class User {
     });
     return updateuser;
   }
+  //토큰 생성
   static async createToken({ userId }) {
     const token = await prisma.refreshToken.create({
       data: {
-        refreshToken: userId,
-        userId: userId,
+        refreshToken: "refresh",
+        user: {
+          connect: { userId: userId },
+        },
       },
     });
   }
@@ -113,7 +116,7 @@ class User {
     console.log("updateimg:", updateimg.img);
     return updateimg;
   }
-  토큰업데이트;
+  // 토큰업데이트;
   static async tokenUpdate({ userId, refreshToken }) {
     const token = await prisma.refreshToken.update({
       where: {

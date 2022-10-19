@@ -13,7 +13,7 @@ class userService {
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
 
-    if (user.length > 1) {
+    if (user.length) {
       if (user) {
         //이메일 같은 유저 중
         if (user[0].withdrawal == 0) {
@@ -80,6 +80,8 @@ class userService {
     //expiredAt이거 프론트단에 보내얗 한ㄴ다?
     //https://developers.cafe24.com/app/front/develop/oauth/retoken
 
+    //이거 적용 해야함
+    // const hashrefreshToken = await bcrypt.hash(password, 10);
     const userId = user.userId;
 
     if (refreshToken) {
