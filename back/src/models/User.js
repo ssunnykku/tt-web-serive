@@ -11,9 +11,6 @@ class User {
         password: newUser.password,
         name: newUser.name,
         withdrawal: 0,
-        joinedChallengeId: null,
-        holdChallengeId: null,
-        description: "자기소개를 입력해주세요.",
       },
     });
     return registerUser;

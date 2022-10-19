@@ -12,8 +12,7 @@ class userService {
 
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
-    console.log(email, "버시브");
-    console.log(user, "버시브");
+
     if (user.length > 1) {
       if (user) {
         //이메일 같은 유저 중

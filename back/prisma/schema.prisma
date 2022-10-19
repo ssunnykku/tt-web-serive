@@ -27,9 +27,8 @@ model user {
   password     String         @db.VarChar(100)
   withdrawal   Int            @default(0) @db.TinyInt
   img          Bytes?         @db.Blob
-  description  String?        @db.VarChar(100)
   refreshToken refreshToken[]
-  liked        liked?
+  liked        liked[]
 }
 
 model refreshToken {
