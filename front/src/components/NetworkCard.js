@@ -11,9 +11,15 @@ const NetworkCard = ({ item }) => {
   var dateString = year + "-" + month + "-" + day;
   return (
     <Card
+      id="cardBody"
       className="mb-3 ms-3 mr-5 card-body"
       style={{
         width: "16rem",
+        borderRadius: '3%',
+        border: 
+        new Date(item.fromDate) <= new Date(dateString)
+          ? "none "
+          : '2px solid #6A71E6',
         background:
           new Date(item.fromDate) <= new Date(dateString)
             ? "rgb(179, 176, 176, 0.6)"

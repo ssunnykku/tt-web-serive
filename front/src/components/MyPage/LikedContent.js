@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
 import NetworkCard from "../NetworkCard";
-
+import * as Api from '../../api'
 import { Col, Container, Row } from "react-bootstrap";
 import StyledButton from "../../styles/commonstyles/Button";
 
-const LikedContent = ({ ChallengeList }) => {
+const LikedContent = ({ likedList }) => {
+  
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
   };
-  const myId = 1;
-  const [likedList, setLikedList] = useState([]);
+  // const myId = 1;
+  // const [likedList, setLikedList] = useState([]);
 
-  useEffect(() => {
-    let newArr = [];
-    ChallengeList.forEach((x) => {
-      x.liked.forEach((y) => {
-        if (y.userId === myId) {
-          newArr.push(x);
-        }
-      });
-    });
-    setLikedList(newArr);
-  }, [ChallengeList]);
+  // useEffect(() => {
+  //   let newArr = [];
+  //   ChallengeList.forEach((x) => {
+  //     x.liked.forEach((y) => {
+  //       if (y.userId === myId) {
+  //         newArr.push(x);
+  //       }
+  //     });
+  //   });
+  //   setLikedList(newArr);
+  // }, [ChallengeList]);
 
   return (
     <Container>

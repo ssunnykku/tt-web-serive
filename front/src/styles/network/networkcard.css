@@ -6,6 +6,7 @@
 
 .card-body{
     margin: none;
+    
 }
 .cardtext{
     font-size: 1.2rem;
@@ -37,7 +38,7 @@
     margin-left: 2%;
 }
 .networkButton{
-    border: 0;
+    border: 0 ;
     outline: none;
     background-color:#6A71E6;
     border-radius: 6px;
