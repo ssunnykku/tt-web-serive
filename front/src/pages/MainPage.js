@@ -7,16 +7,21 @@ import styled from "styled-components";
 import MainPage4 from "../components/MainPage/MainPage4";
 import MainPage5 from "../components/MainPage/MainPage5";
 
+const marginTop = styled.div`
+  margin-top: 4rem;
+`;
 function MainPage() {
   return (
     <FullpageContainer>
-      <div className="container1">
-        <MainPage1/>
-        <MainPage2/>
-        <MainPage5/>
-        <MainPage3/>
-        <MainPage4/>
-      </div>
+      <marginTop>
+        <div className="container1">
+          <MainPage1 />
+          <MainPage2 />
+          <MainPage5 />
+          <MainPage3 />
+          <MainPage4 />
+        </div>
+      </marginTop>
     </FullpageContainer>
   );
 }

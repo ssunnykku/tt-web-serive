@@ -76,10 +76,10 @@ const Gas = () => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
-        <YAxis dataKey="gasSum" fill="#2A1ABF" ticks={[500000, 550000, 600000, 650000, 700000, 750000,800000]} domain={[500000, 800000]}/>
+        <YAxis dataKey="gasSum" fill="#30F06E" ticks={[500000, 550000, 600000, 650000, 700000, 750000,800000]} domain={[500000, 800000]}/>
         <Tooltip />
         <Legend />
-        <Bar dataKey="gasSum" fill="#2A1ABF" ticks={[500000, 550000, 600000, 650000, 700000, 750000,800000]} domain={[500000, 800000]} />
+        <Bar dataKey="gasSum" fill="#30F06E" ticks={[500000, 550000, 600000, 650000, 700000, 750000,800000]} domain={[500000, 800000]} />
         
       </BarChart>
     </ResponsiveContainer>
@@ -97,10 +97,10 @@ const Gas = () => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
-        <YAxis dataKey="energySum" fill="#6A71E6" ticks={[11000, 12000, 13000, 14000, 15000, 16000]} domain={[11000, 16000]} />
+        <YAxis dataKey="energySum" fill="#FFC724" ticks={[11000, 12000, 13000, 14000, 15000, 16000]} domain={[11000, 16000]} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="energySum" fill="#6A71E6" ticks={[11000, 12000, 13000, 14000, 15000, 16000]} domain={[11000, 16000]} />
+        <Bar dataKey="energySum" fill="#FFC724" ticks={[11000, 12000, 13000, 14000, 15000, 16000]} domain={[11000, 16000]} />
         
       </BarChart>
     </ResponsiveContainer>

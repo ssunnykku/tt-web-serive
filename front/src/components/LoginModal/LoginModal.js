@@ -78,6 +78,16 @@ function LoginModal({
 
       // 기본 페이지로 이동함.
     } catch (err) {
+      setLoginModalOpen(false);
+      Swal.fire({
+        position: "top-center",
+        icon: "fail",
+        text: "아이디 혹은 비밀번호가 일치하지 않습니다.",
+      }).then(function () {
+        e.preventDefault();
+        navigate("/", { replace: true });
+      });
+
       console.log("로그인에 실패하였습니다.\n", err);
     }
   };

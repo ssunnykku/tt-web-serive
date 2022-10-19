@@ -66,10 +66,10 @@ const Disasters = () => {
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="year" />
-        <YAxis dataKey="재난피해자수" fill="#2A1ABF" />
+        <YAxis dataKey="재난피해자수" fill="##FF6635" />
         <Tooltip />
         <Legend />
-        <Bar dataKey="재난피해자수" fill="#2A1ABF" />
+        <Bar dataKey="재난피해자수" fill="#FF6635" />
         
       </BarChart>
     </ResponsiveContainer>

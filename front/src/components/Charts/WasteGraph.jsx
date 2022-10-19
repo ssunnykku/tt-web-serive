@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
 
@@ -68,8 +68,8 @@ const Waste = () => {
         <XAxis dataKey="년도" />
         <YAxis />
         <Tooltip />
-        
-        <Area type='number' dataKey="발생 및 처리(총계)" fill='rgb(49, 130, 189)' stroke='rgb(17, 17, 234)' />
+        <Legend />
+        <Area type='number' dataKey="발생 및 처리(총계)" fill='#e777e0' stroke='#FD11F0' />
         
        
         
@@ -91,9 +91,9 @@ const Waste = () => {
         <XAxis dataKey="년도" />
         <YAxis />
         <Tooltip />
+        <Legend />
         
-        
-        <Area type='monotone' dataKey="1인당 발생량(kg/일)" fill='rgb(49, 130, 189)' stroke='rgb(17, 17, 234)' />
+        <Area type='monotone' dataKey="1인당 발생량(kg/일)" fill='#f38a6b' stroke='#FF6133' />
        
         
       </AreaChart>
