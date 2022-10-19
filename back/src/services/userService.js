@@ -13,7 +13,7 @@ class userService {
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
 
-    if (user.length > 1) {
+    if (user.length) {
       if (user) {
         //이메일 같은 유저 중
         if (user[0].withdrawal == 0) {
