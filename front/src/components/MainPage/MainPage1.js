@@ -87,7 +87,7 @@ const MainPage1 = () => {
           </div>
         </div>
         <div className="scroll">
-          <span className="titleScroll">스크롤</span>
+          <span className="titleScroll">WHY 미션체크?</span>
           <img src={scroll} className="scrollLogo"></img>
         </div>
       </div>

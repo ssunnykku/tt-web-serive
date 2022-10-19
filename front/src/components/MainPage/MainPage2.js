@@ -17,7 +17,7 @@ const MainPage2 = () => {
       <div className="mainPage2">
         <NavBar />
         <div className="mainpage2Container">
-          <h1>환경오염 현황</h1>
+          <h1 className="main2Title">환경오염 현황</h1>
           <div className="mainpage2ButtonContainer">
             <StyledButton
               onClick={(e) => {
