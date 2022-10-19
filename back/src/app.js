@@ -4,6 +4,8 @@ import { userRouter } from "./routers/userRouter";
 import { pointRouter } from "./routers/pointRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { challengeRouter } from "./routers/challengeRouter";
+import { joinedChallengeRouter } from "./routers/joinedChallengeRouter";
+
 import { userChallengeRouter } from "./routers/userChallengeRouter";
 import { likedRouter } from "./routers/likedRouter";
 
@@ -17,12 +19,12 @@ app.get("/", (req, res) => {
   console.log(req.body);
   res.send("data project root api");
 });
+app.use(userRouter);
 
 app.use("/challenges", challengeRouter);
 app.use("/userChallenge", userChallengeRouter);
+app.use("/joinedChallenge", joinedChallengeRouter);
 
-
-app.use(userRouter);
 app.use(pointRouter);
 app.use(likedRouter);
 app.use(errorMiddleware);

@@ -38,21 +38,31 @@ model refreshToken {
 }
 
 model challenge {
-  challengeId        Int      @id @unique @default(autoincrement())
-  title              String   @db.VarChar(50)
+  challengeId        Int               @id @unique @default(autoincrement())
+  title              String            @db.VarChar(50)
   description        String
   fromDate           String
   toDate             String
-  img                String   @db.Text
+  mainImg            String            @db.Text
+  explainImg         String            @db.Text
   startRemainingDate Int
   endRemainingDate   Int
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
   liked              liked[]
+  joinedChallenges   joinedChallenge[]
 }
 
-model hashTag {
-  title     String   @unique @db.VarChar(15)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model joinedChallenge {
+  joinedId    Int       @id @unique @default(autoincrement())
+  addedImage  String    @db.Text
+  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
+  chalngId    Int
+  countUpload Int
 }
+
+// model hashTag {
+//   title     String   @unique @db.VarChar(15)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }

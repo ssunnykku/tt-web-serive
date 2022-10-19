@@ -1,20 +1,22 @@
 const { PrismaClient } = require("@prisma/client");
-import { remainingDateMiddleware } from "../middlewares/remainingDateMiddleware";
+import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 const prisma = new PrismaClient();
 
 class userChallengeModel {
   // create
-  static async create({ newChallenge }) {
-    const createdChallenge = await prisma.challenge.create({
-      data: newChallenge,
-    });
-    return createdChallenge;
-  }
+  // static async create({ newChallenge }) {
+  //   const createdChallenge = await prisma.challenge.create({
+  //     data: newChallenge,
+  //   });
+  //   return createdChallenge;
+  // }
+
   static async findMany() {
     const challenges = await prisma.challenge.findMany();
     return challenges;
   }
+
   // (params 값) 게시물 1개 선택
   static async findUnique(id) {
     const challenge = await prisma.challenge.findUnique({
@@ -24,7 +26,7 @@ class userChallengeModel {
     });
     return challenge;
   }
-  // Delete (유저별로 수정예정)
+  // Delete
   static async delete(id) {
     const challenge = await prisma.challenge.delete({
       where: {
@@ -33,23 +35,32 @@ class userChallengeModel {
     });
     return challenge;
   }
-  // Update (유저별로 수정)
-  static async update(id, title, description, fromDate, toDate, img) {
-    const challenge = await prisma.challenge.update({
-      where: {
-        challengeId: Number(id),
-      },
-      data: {
-        title,
-        description,
-        fromDate,
-        toDate,
-        img,
-        startRemainingDate: remainingDateMiddleware(fromDate),
-        endRemainingDate: remainingDateMiddleware(toDate) * -1,
-      },
-    });
-    return challenge;
-  }
+  // Update
+  // static async update(
+  //   id,
+  //   title,
+  //   description,
+  //   fromDate,
+  //   toDate,
+  //   mainImgPath,
+  //   explainImgs
+  // ) {
+  //   const challenge = await prisma.challenge.update({
+  //     where: {
+  //       challengeId: Number(id),
+  //     },
+  //     data: {
+  //       title,
+  //       description,
+  //       fromDate,
+  //       toDate,
+  //       mainImg: mainImgPath,
+  //       explainImg: explainImgs,
+  //       startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
+  //       endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
+  //     },
+  //   });
+  //   return challenge;
+  // }
 }
 export { userChallengeModel };

@@ -1,17 +1,25 @@
 import { challengeModel } from "../models/challengeModel";
-import { remainingDateMiddleware } from "../middlewares/remainingDateMiddleware";
+import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class challengeService {
   // create/ post(유저별로 수정할 것)
-  static async addChallenge({ title, description, fromDate, toDate, img }) {
+  static async addChallenge({
+    title,
+    description,
+    fromDate,
+    toDate,
+    mainImg,
+    explainImg,
+  }) {
     const newChallenge = {
       title,
       description,
       fromDate,
       toDate,
-      img,
-      startRemainingDate: remainingDateMiddleware(fromDate),
-      endRemainingDate: remainingDateMiddleware(toDate) * -1,
+      startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
+      endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
+      mainImg,
+      explainImg,
     };
     const createdChallenge = await challengeModel.create({
       newChallenge,

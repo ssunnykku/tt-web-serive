@@ -16,7 +16,7 @@ class challengeModel {
     const challenges = await prisma.challenge.findMany();
     return challenges;
   }
-  // 진행중인 챌린지만 불러오기
+  // 진행중인 챌린지만 불러오기 (시작예정인 챌린지 제외되어있음)
   static async findOngoing() {
     const challenges = await prisma.challenge.findMany({
       where: {
