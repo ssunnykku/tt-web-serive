@@ -50,12 +50,6 @@ class challengeService {
     }
     return findId;
   }
-  // get (user별 불러오기로 수정해야 함)
-  static async getChallenges() {
-    const challenges = await challengeModel.findMany();
-    return challenges;
-  }
-
   // id 값을 게시물 1개 선택하기(params 값을 이용)
   static async findUniqueId(id) {
     const findId = await challengeModel.findUnique(id);
@@ -68,6 +62,11 @@ class challengeService {
 
   // Delete
   static async deleteOne(id) {
+    // const findId = await challengeModel.findFromDate(id);
+    // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
+    //   const error = new Error("cannot modify it after the challenge begins.");
+    //   throw error;
+    // }
     const deleteChallenge = await challengeModel.delete(id);
 
     return deleteChallenge;
@@ -80,6 +79,11 @@ class challengeService {
     });
     return createdChallenge;
   }
+
+  // static async findUniqueUser(userId, id) {
+  //   const findUserId = await challengeModel.findUniqueUser(userId, id);
+  //   return findUserId;
+  // }
 }
 
 export { challengeService };
