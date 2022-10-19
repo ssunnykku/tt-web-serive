@@ -8,9 +8,14 @@ datasource db {
 }
 
 model liked {
-  likedId     String @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
-  userId      String @db.VarChar(45)
-  challengeId Int    @unique(map: "challengeId_UNIQUE")
+  likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
+  userId      String    @db.VarChar(45)
+  challengeId Int
+  challenge   challenge @relation(fields: [challengeId], references: [challengeId])
+  user        user      @relation(fields: [userId], references: [userId])
+
+  @@index([challengeId], map: "liked_challengeId_fkey")
+  @@index([userId], map: "liked_userId_fkey")
 }
 
 model point {
@@ -19,37 +24,58 @@ model point {
 }
 
 model user {
-  userId            String  @id @db.VarChar(50)
-  joinedChallengeId Int?    @unique(map: "joinedChallengeId_UNIQUE")
-  holdChallengeId   Int?    @unique(map: "holdChallengeId_UNIQUE")
-  name              String  @db.VarChar(10)
-  email             String  @db.VarChar(30)
-  password          String  @db.VarChar(100)
-  withdrawal        Int     @default(0) @db.TinyInt
-  img               Bytes?  @db.Blob
-  description       String? @db.VarChar(100)
+  userId          String            @id @db.VarChar(50)
+  name            String            @db.VarChar(10)
+  email           String            @db.VarChar(30)
+  password        String            @db.VarChar(100)
+  withdrawal      Int               @default(0) @db.TinyInt
+  img             Bytes?            @db.Blob
+  liked           liked[]
+  refreshToken    refreshToken?
+  userToChallenge userToChallenge[]
 }
 
 model refreshToken {
+  userId       String @unique(map: "userId_UNIQUE")
   refreshToken String @db.VarChar(500)
-  userId       String @id @db.VarChar(45)
+  user         user   @relation(fields: [userId], references: [userId])
 }
 
 model challenge {
-  challengeId        Int      @id @unique @default(autoincrement())
-  title              String   @db.VarChar(50)
+  challengeId        Int               @id @unique @default(autoincrement())
+  title              String            @db.VarChar(50)
+  holdUserId         String            @db.VarChar(50)
   description        String
   fromDate           String
   toDate             String
-  img                String   @db.Text
+  mainImg            String            @db.Text
+  explainImg         String            @db.Text
   startRemainingDate Int
   endRemainingDate   Int
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  joinedChallenge    joinedChallenge[]
+  liked              liked[]
+  userToChallenge    userToChallenge[]
 }
 
-model hashTag {
-  title     String   @unique @db.VarChar(15)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model joinedChallenge {
+  joinedId    Int       @id @unique @default(autoincrement())
+  addedImage  String    @db.Text
+  chalngId    Int
+  countUpload Int
+  challenge   challenge @relation(fields: [chalngId], references: [challengeId])
+
+  @@index([chalngId], map: "joinedChallenge_chalngId_fkey")
+}
+
+model userToChallenge {
+  userToChallengeId Int       @id @unique @default(autoincrement())
+  userId            String    @db.VarChar(45)
+  challengeId       Int
+  challenge         challenge @relation(fields: [challengeId], references: [challengeId])
+  user              user      @relation(fields: [userId], references: [userId])
+
+  @@index([challengeId], map: "userToChallenge_challengeId_fkey")
+  @@index([userId], map: "userToChallenge_userId_fkey")
 }
