@@ -4,7 +4,12 @@ import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
-const upload = addImage("uploads");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+// const upload = addImage("uploads");
+const upload = multer({ dest: "uploads/" });
+
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
