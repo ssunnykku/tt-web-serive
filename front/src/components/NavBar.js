@@ -20,10 +20,9 @@ const NavBar = () => {
   const [currentUserId, setCurrentUserId] = useState("");
   const isLogin = !!userState.user;
 
-  console.log(currentUserId);
   const handleDelete = async (e) => {
     e.preventDefault();
-    await Api.put(`withdrawl/${currentUserId}`, {
+    await Api.put(`withdrawl/${userState.user.userId}`, {
       withdrawl: 1,
     });
     sessionStorage.removeItem("accessToken");
@@ -81,7 +80,7 @@ const NavBar = () => {
               }}
               className="nav-link"
             >
-              Home
+              {currentUserId}
             </a>
           </li>
           <li className="nav-item">

@@ -7,7 +7,7 @@ const serverUrl =
 
 async function updateToken(){
   if(localStorage.getItem('refreshToken')){
-    let refreshedAccessTokenResponse=await fetch(serverUrl+'token',{
+    let refreshedAccessTokenResponse=await fetch(serverUrl+'login',{
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -30,12 +30,12 @@ async function updateToken(){
 }
 
 axios.interceptors.response.use(
-  async function(res){
-    return res
+  async function(response){
+    return response;
   },
   async(error)=>{
     if(error.response.status===490){
-      let refreshedAccessTokenResponse= await fetch(serverUrl+'token',{
+      let refreshedAccessTokenResponse= await fetch(serverUrl+'login',{
         method:'POST',
         headers:{
           'Content-Type':'application/json'
@@ -44,22 +44,22 @@ axios.interceptors.response.use(
           refreshToken: localStorage.getItem('refreshToken'),
         }),
       });
-      let refreshedAccessToken= await refreshedAccessTokenResponse.json();
-      if(refreshedAccessToken.logout){
+      let refreshAccessToken= await refreshedAccessTokenResponse.json();
+      if(refreshAccessToken.logout){
         localStorage.removeItem('refreshToken');
         sessionStorage.removeItem('accessToken');
         window.location.reload();
       }else{
         await sessionStorage.setItem(
           'accessToken',
-          refreshedAccessToken.accessToken
+          refreshAccessToken.accessToken
         );
         await localStorage.setItem(
           'refreshToken',
-          refreshedAccessToken.refreshToken
+          refreshAccessToken.refreshToken
         );
         let retryData=error.config;
-        retryData.headers.Authorization=`Bearer ${refreshedAccessToken.accessToken}`;
+        retryData.headers.Authorization=`Bearer ${refreshAccessToken.accessToken}`;
         return await axios.request(retryData)
       }
       return Promise.reject(error)
@@ -73,10 +73,10 @@ async function get(endpoint, params = "") {
   );
 
   return axios.get(serverUrl + endpoint + "/" + params, {
-    // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
+    // access 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-    },//getItem('accessToken')으로 바꿔줘야함
+    },
   });
 }
 

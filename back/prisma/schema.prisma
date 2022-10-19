@@ -11,11 +11,24 @@ model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)
   challengeId Int
+<<<<<<< HEAD
   challenge   challenge @relation(fields: [challengeId], references: [challengeId])
   user        user      @relation(fields: [userId], references: [userId])
 
   @@index([challengeId], map: "liked_challengeId_fkey")
   @@index([userId], map: "liked_userId_fkey")
+=======
+  user        user      @relation(fields: [userId], references: [userId])
+  challenge   challenge @relation(fields: [challengeId], references: [challengeId])
+}
+
+model userToChallenge {
+  userToChallengeId Int       @id @unique @default(autoincrement())
+  userId            String    @db.VarChar(45)
+  challengeId       Int
+  user              user      @relation(fields: [userId], references: [userId])
+  challenge         challenge @relation(fields: [challengeId], references: [challengeId])
+>>>>>>> 48338d59da2fc61565b8a178704d1294ea6459f9
 }
 
 model point {
@@ -30,8 +43,13 @@ model user {
   password        String            @db.VarChar(100)
   withdrawal      Int               @default(0) @db.TinyInt
   img             Bytes?            @db.Blob
+<<<<<<< HEAD
   liked           liked[]
   refreshToken    refreshToken?
+=======
+  refreshToken    refreshToken[]
+  liked           liked[]
+>>>>>>> 48338d59da2fc61565b8a178704d1294ea6459f9
   userToChallenge userToChallenge[]
 }
 
@@ -42,6 +60,7 @@ model refreshToken {
 }
 
 model challenge {
+<<<<<<< HEAD
   challengeId        Int               @id @unique @default(autoincrement())
   title              String            @db.VarChar(50)
   holdUserId         String            @db.VarChar(50)
@@ -57,11 +76,30 @@ model challenge {
   joinedChallenge    joinedChallenge[]
   liked              liked[]
   userToChallenge    userToChallenge[]
+=======
+  challengeId        Int    @id @unique @default(autoincrement())
+  title              String @db.VarChar(50)
+  holdUserId         String @db.VarChar(50)
+  description        String
+  fromDate           String
+  toDate             String
+  mainImg            String @db.Text
+  explainImg         String @db.Text
+  startRemainingDate Int
+  endRemainingDate   Int
+
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  liked            liked[]
+  joinedChallenges joinedChallenge[]
+  userToChallenge  userToChallenge[]
+>>>>>>> 48338d59da2fc61565b8a178704d1294ea6459f9
 }
 
 model joinedChallenge {
   joinedId    Int       @id @unique @default(autoincrement())
   addedImage  String    @db.Text
+<<<<<<< HEAD
   chalngId    Int
   countUpload Int
   challenge   challenge @relation(fields: [chalngId], references: [challengeId])
@@ -78,4 +116,15 @@ model userToChallenge {
 
   @@index([challengeId], map: "userToChallenge_challengeId_fkey")
   @@index([userId], map: "userToChallenge_userId_fkey")
+=======
+  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
+  chalngId    Int
+  countUpload Int
+>>>>>>> 48338d59da2fc61565b8a178704d1294ea6459f9
 }
+
+// model hashTag {
+//   title     String   @unique @db.VarChar(15)
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }

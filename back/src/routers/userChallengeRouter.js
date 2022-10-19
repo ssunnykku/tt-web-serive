@@ -1,36 +1,30 @@
 import { Router } from "express";
 import { userChallengeService } from "../services/userChallengeService";
+import { loginRequired } from "../middlewares/loginRequired";
+import { addImage } from "../middlewares/addImage";
+import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
+
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 const userChallengeRouter = Router();
+const upload = addImage("uploads");
+const multiImg = upload.fields([
+  { name: "main", maxCount: 1 },
+  { name: "explain", maxCount: 2 },
+]);
 
-userChallengeRouter.post("/add", async (req, res, next) => {
-  try {
-    const { title, description, fromDate, toDate, img } = req.body;
-    const newChallenge = await userChallengeService.addChallenge({
-      title,
-      description,
-      fromDate,
-      toDate,
-      img,
-    });
-    if (newChallenge.errorMessage) {
-      throw new Error(newChallenge.errorMessage);
-    }
-
-    res.status(201).json({ newChallenge });
-  } catch (error) {
-    next(error);
-  }
-});
-
-// get (user별 불러오기로 수정해야 함)
+// get (user별 불러오기로 수정해야 함) => 은령님?
 userChallengeRouter.get("/", async (req, res) => {
   const result = await userChallengeService.getChallenges();
   res.status(200).json({ result });
 });
 
-// Delete (유저별로 수정하기)
+// Delete
+// 2. 날짜 조건 걸기 ㅠㅠ 어려웡
 userChallengeRouter.delete("/:id", async (req, res) => {
+  // const userId = req.currentUserId;
   const { id } = req.params;
   const foundChallenge = await userChallengeService.findUniqueId(id);
 
@@ -38,28 +32,49 @@ userChallengeRouter.delete("/:id", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Update (유저별로 수정하기)
-userChallengeRouter.put("/edit/:id", async (req, res) => {
+userChallengeRouter.put("/:id", multiImg, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { title, description, fromDate, toDate, img } = req.body;
-    const updatedChallenge = await userChallengeService.updateOne(
-      id,
-      title,
-      description,
-      fromDate,
-      toDate,
-      img
-    );
+    const { title, description, fromDate, toDate } = req.body;
+
+    const image = req.files;
+    const mainImg = image.main[0];
+
+    const explainImg = image.explain;
+    const explainImgPath = explainImg.map((img) => img.path);
+
+    if (image === undefined) {
+      return res.status(400).send("이미지가 존재하지 않습니다.");
+    }
+
+    console.log(explainImgPath);
+    const updatedChallenge = await prisma.challenge.update({
+      where: {
+        challengeId: Number(id),
+      },
+      data: {
+        title,
+        description,
+        fromDate,
+        toDate,
+        mainImg: `uploads/${mainImg.path}`,
+        explainImg: `uploads/${explainImgPath}`,
+        startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
+        endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
+      },
+    });
     res.status(200).json({ updatedChallenge });
+    console.log(updatedChallenge);
   } catch (error) {
     res.json({ message: error.message });
   }
 });
 
-// get(1개 불러오기)
-userChallengeRouter.get("/:id", async (req, res) => {
+// get(1개 불러오기/ login 한 유저꺼 불러오기)
+userChallengeRouter.get("/:id", loginRequired, async (req, res) => {
+  const userId = req.currentUserId;
   const { id } = req.params;
+
   const result = await userChallengeService.findUniqueId(id);
 
   res.status(200).json({ result });

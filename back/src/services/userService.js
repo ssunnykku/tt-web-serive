@@ -8,24 +8,25 @@ dotenv.config();
 class userService {
   // 1. 회원가입 서비스
   static async addUser({ email, password, confirmPassword, name }) {
-      
     //이메일이 같은 유저 목록
-    
+
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
-    if(user.length>1){
-    if (user){//이메일 같은 유저 중
-      if(user[0].withdrawal==0){//false
-        const errorMessage = "이미 사용중인 email입니다.";
-        return errorMessage;
+
+    if (user.length > 1) {
+      if (user) {
+        //이메일 같은 유저 중
+        if (user[0].withdrawal == 0) {
+          //false
+          const errorMessage = "이미 사용중인 email입니다.";
+          return errorMessage;
+        }
       }
-    }
     }
     if (password !== confirmPassword) {
       const errorMessage = "비밀번호가 일치하지 않습니다";
       return errorMessage;
     }
-
 
     // //비밀번호 해쉬화
     const hashpassword = await bcrypt.hash(password, 10);
@@ -39,7 +40,6 @@ class userService {
 
     //  // 토큰 스키마에 유저id추가
     await User.createToken({ userId });
-    // await Login.createLiked({ userId, likedId });
     await User.createPoint({ userId });
     return createNewUser;
   }
@@ -49,8 +49,7 @@ class userService {
     const data = await User.findByEmail({ email }); //이메일이 같은 유저 리스트
     const user = data[0];
     //0회원 1탈퇴
-
-    if (data.length > 1) {
+    if (data.length) {
       if (data) {
         if (user.withdrawal == 1) {
           //true
@@ -135,16 +134,50 @@ class userService {
     const updateUser = await User.updateUser(userId, name, email);
     return updateUser;
   }
+  // user img get
+  static async getCurrentImg({ userId }) {
+    const newImg = await User.getUserImg({ userId });
 
-  //6. 회원탈퇴-> 아직 완료 전
+    if (!newImg) {
+      const errorMessage = "no iamge";
+      return errorMessage;
+    };''
+    return newImg;
+  }
+  // user img update
+  static async updateUserImg({ img, userId }) {
+    const user = await User.findByUserId({ userId });
+
+    if (!user) {
+      const errorMessage =
+        "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
+      return { errorMessage };
+    }
+    const updateimg = await User.updateUserImg({ userId, img });
+    return updateimg;
+  }
+  // user img delete
+  static async removeUserImg({ userId }) {
+    const user = await User.findByUserId({ userId });
+
+    if (!user) {
+      const errorMessage =
+        "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
+      return { errorMessage };
+    }
+    const updateimg = await User.deleteUserImg({ userId });
+    return updateimg;
+  }
+
+  //6. 회원탈퇴
   static async userWithdrawal({ userId, id, withdrawal }) {
     if (userId !== id) {
       const errorMessage = "UserId가 틀립니다.";
       return errorMessage;
     }
 
-    if (withdrawal === true) {
-      let user = await User.findById({ userId });
+    if (withdrawal == 1) {
+      let user = await User.findByUserId({ userId });
       const newValue = withdrawal;
       user = await User.updateWithdrawal({ userId, newValue });
     }
