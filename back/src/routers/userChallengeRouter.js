@@ -32,40 +32,6 @@ userChallengeRouter.delete("/:id", async (req, res) => {
   res.status(200).json({ result });
 });
 
-// Update
-//  "message": "Cannot read properties of undefined (reading 'path')"
-// userChallengeRouter.put("/:id", multiImg, async (req, res, next) => {
-//   try {
-//     const image = req.file.path;
-
-//     if (image === undefined) {
-//       return res.status(400).send("이미지가 존재하지 않습니다.");
-//     }
-
-//     const { id } = req.params;
-//     const { title, description, fromDate, toDate } = req.body;
-
-//     const mainImg = image.main[0];
-
-//     const explainImg = image.explain;
-//     const explainImgPath = explainImg.map((img) => img.path);
-
-//     const updatedChallenge = await userChallengeService.updateOne({
-//       id,
-//       title,
-//       description,
-//       fromDate,
-//       toDate,
-//       mainImg: `uploads/${mainImg.path}`,
-//       explainImg: `uploads/${explainImgPath}`,
-//     });
-//     res.status(200).json({ updatedChallenge });
-//     console.log(updatedChallenge);
-//   } catch (error) {
-//     res.json({ message: error.message });
-//   }
-// });
-
 userChallengeRouter.put("/:id", multiImg, async (req, res, next) => {
   try {
     const { id } = req.params;

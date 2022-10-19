@@ -13,8 +13,9 @@ const challengeRouter = Router();
 
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   // console.log(req);
-  const userId = req.currentUserId;
   try {
+    const holdUserId = req.currentUserId;
+    // console.log();
     const { title, description, fromDate, toDate } = req.body;
 
     const image = req.files;
@@ -28,6 +29,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
     }
 
     const newChallenge = await challengeService.addChallenge({
+      holdUserId,
       title,
       description,
       fromDate,

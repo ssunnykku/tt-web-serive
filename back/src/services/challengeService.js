@@ -4,6 +4,7 @@ import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAn
 class challengeService {
   // create/ post(유저별로 수정할 것)
   static async addChallenge({
+    holdUserId,
     title,
     description,
     fromDate,
@@ -12,6 +13,7 @@ class challengeService {
     explainImg,
   }) {
     const newChallenge = {
+      holdUserId,
       title,
       description,
       fromDate,
