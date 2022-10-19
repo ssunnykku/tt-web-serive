@@ -5,17 +5,16 @@ import SeaLevel from "../Charts/SeaLevelGraph";
 import Disasters from "../Charts/Disasters";
 import styled from "styled-components";
 
-const TextColor = styled.div`
-  color: #de3803;
-`;
+// const TextColor = styled.div`
+//   color: #de3803;
+// `;
 
 const MainPage5 = () => {
   return (
     <div className="mainpage5">
       <NavBar />
       <span className="disasterText">
-        지구를 괴롭혔던 <TextColor> 나의 습관 </TextColor> 커다란
-        <TextColor> 재난 </TextColor>으로
+        지구를 괴롭혔던 나의 습관 커다란 재난으로
       </span>
       <div className="graphContainer">
         <div className="graphDescription">
