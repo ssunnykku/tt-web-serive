@@ -18,6 +18,7 @@ class User {
 
   //같은 이메일 찾기
   static async findByEmail({ email }) {
+    console.log(email, "모델");
     const finduser = await prisma.user.findMany({
       where: {
         email: email,
@@ -108,7 +109,7 @@ class User {
     console.log("updateimg:", updateimg.img);
     return updateimg;
   }
-  토큰업데이트
+  // 토큰업데이트
   static async tokenUpdate({ userId, refreshToken }) {
     const token = await prisma.refreshToken.update({
       where: {

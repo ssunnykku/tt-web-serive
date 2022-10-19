@@ -25,9 +25,12 @@ const NavBar = () => {
     await Api.put(`withdrawl/${userState.user.userId}`, {
       withdrawl: 1,
     });
-    sessionStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    dispatch({ type: "LOGOUT " });
+
+  sessionStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  dispatch({type:'LOGOUT'});
+  alert('탈퇴 완료')
+
     navigate("/");
   };
 

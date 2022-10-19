@@ -40,6 +40,7 @@ class userService {
 
     //  // 토큰 스키마에 유저id추가
     await User.createToken({ userId });
+   
     await User.createPoint({ userId });
     return createNewUser;
   }
@@ -49,6 +50,7 @@ class userService {
     const data = await User.findByEmail({ email }); //이메일이 같은 유저 리스트
     const user = data[0];
     //0회원 1탈퇴
+
     if (data.length) {
       if (data) {
         if (user.withdrawal == 1) {
@@ -141,7 +143,7 @@ class userService {
     if (!newImg) {
       const errorMessage = "no iamge";
       return errorMessage;
-    };''
+    }
     return newImg;
   }
   // user img update
