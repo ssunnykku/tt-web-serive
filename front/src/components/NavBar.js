@@ -7,31 +7,32 @@ import { NavDropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { DispatchContext, UserStateContext } from "../App";
-import * as Api from '../api'
+import ok from "../images/Ok.png";
+import * as Api from "../api";
 const NavBar = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("nav-menu");
   const [toggleIcon, setToggleIcon] = useState("nav-toggler");
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
-  const userState=useContext(UserStateContext)
-  const dispatch=useContext(DispatchContext)
-  const [currentUserId,setCurrentUserId]=useState('')
+  const userState = useContext(UserStateContext);
+  const dispatch = useContext(DispatchContext);
+  const [currentUserId, setCurrentUserId] = useState("");
   const isLogin = !!userState.user;
-  
-  
-  const handleDelete=async(e)=>{
+
+  const handleDelete = async (e) => {
     e.preventDefault();
-    await Api.put(`withdrawl/${userState.user.userId}`,{
+    await Api.put(`withdrawl/${userState.user.userId}`, {
       withdrawl: 1,
     });
+
   sessionStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
   dispatch({type:'LOGOUT'});
   alert('탈퇴 완료')
+
     navigate("/");
-  }
-  
+  };
 
   const navToggle = () => {
     active === "nav-menu"
@@ -53,16 +54,16 @@ const NavBar = () => {
     setLoginModalOpen(true);
   };
 
-  const logout=()=>{
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    dispatch({type:'LOGOUT'});
-    alert('로그아웃 완료')
-    navigate('/')
-  }
-  useEffect(()=>{
-    Api.get('currentUser').then((res)=>setCurrentUserId(res.data.userId))
-  },[])
+  const logout = () => {
+    sessionStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    dispatch({ type: "LOGOUT" });
+    alert("로그아웃 완료");
+    navigate("/");
+  };
+  useEffect(() => {
+    Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));
+  }, []);
   return (
     <div className="navBar">
       <nav className="nav">
@@ -72,7 +73,7 @@ const NavBar = () => {
           }}
           className="nav-brand"
         >
-          ✓미션체크
+          <img src={ok} className="logoSmall"></img>미션체크
         </a>
         <ul className={active}>
           <li className="nav-item">
@@ -115,10 +116,14 @@ const NavBar = () => {
                 id="basicNavDropdown"
               >
                 <NavDropdown.Item className="dditem" href="#action/3.4">
-                  <div onClick={handleDelete} className="dropdownFont">회원탈퇴</div>
+                  <div onClick={handleDelete} className="dropdownFont">
+                    회원탈퇴
+                  </div>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/">
-                  <div onClick={logout} className="dropdownFont">로그아웃</div>
+                  <div onClick={logout} className="dropdownFont">
+                    로그아웃
+                  </div>
                 </NavDropdown.Item>
               </NavDropdown>
             </>
@@ -136,7 +141,7 @@ const NavBar = () => {
                 </NavDropdown.Item>
 
                 <NavDropdown.Item>
-                  <div  className="dropdownFont" onClick={showSignUpModal}>
+                  <div className="dropdownFont" onClick={showSignUpModal}>
                     회원가입
                   </div>
                 </NavDropdown.Item>

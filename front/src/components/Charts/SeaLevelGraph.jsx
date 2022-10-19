@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 
 
@@ -152,8 +152,8 @@ const SeaLevel = () => {
         <XAxis dataKey="년도" />
         <YAxis />
         <Tooltip />
-        
-        <Area type='number' dataKey="해수면 높이" fill='rgb(49, 130, 189)' stroke='rgb(17, 17, 234)' />
+        <Legend/>
+        <Area type='number' dataKey="해수면 높이" fill='#8bdeeb' stroke='#06b4cf' />
        
         
       </AreaChart>

@@ -87,7 +87,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         confirmPassword,
       });
       console.log(res);
-      console.log(res.data);
+
       setSignUpModalOpen(false);
       Swal.fire({
         position: "top-center",
@@ -97,6 +97,13 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         navigate("/", { replace: true });
       });
     } catch (err) {
+      Swal.fire({
+        position: "top-center",
+        icon: "fail",
+        text: "회원가입 실패",
+      }).then(function () {
+        navigate("/", { replace: true });
+      });
       console.log("회원가입에 실패하였습니다.", err);
     }
   };

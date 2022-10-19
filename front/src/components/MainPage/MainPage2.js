@@ -8,6 +8,10 @@ import Waste from "../Charts/WasteGraph";
 import SeaLevel from "../Charts/SeaLevelGraph";
 const MainPage2 = () => {
   const [showGraph, setShowGraph] = useState(1);
+  // const [btnColor, setBtnColor] = useState("#CDCCCC");
+  // const handleChangeColor = () => {
+  //   setBtnColor(btnColor === "#6A71E6" ? "#CDCCCC" : "#6A71E6");
+  // };
   return (
     <>
       <div className="mainPage2">
@@ -18,7 +22,7 @@ const MainPage2 = () => {
             <StyledButton
               onClick={(e) => {
                 setShowGraph(1);
-              }} 
+              }}
             >
               온실가스
             </StyledButton>
@@ -39,17 +43,17 @@ const MainPage2 = () => {
           </div>
           {showGraph == 1 ? (
             <div className="ex2GraphContainer">
-              <Gas/>
+              <Gas />
             </div>
           ) : null}
           {showGraph == 2 ? (
             <div className="ex2GraphContainer">
-              <Waste/>
+              <Waste />
             </div>
           ) : null}
           {showGraph == 3 ? (
             <div className="ex2GraphContainer">
-              <SeaLevel/>
+              <SeaLevel />
             </div>
           ) : null}
         </div>

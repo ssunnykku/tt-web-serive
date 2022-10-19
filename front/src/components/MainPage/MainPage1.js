@@ -6,6 +6,8 @@ import "../../styles/mainpage/mainpage1.css";
 import vector from "../../images/mainpage/Vector 10.png";
 import StyledButton from "../../styles/commonstyles/Button";
 import NavBar from "../NavBar";
+import ok from "../../images/Ok.png";
+import scroll from "../../images/scroll.png";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext, UserStateContext } from "../../App";
 
@@ -46,7 +48,7 @@ const MainPage1 = () => {
         <div className="mainPageContainer">
           <a>환경챌린지의 모든 것</a>
           <div className="secondlinetext">
-            <a className="missioncheck">✓미션체크</a>
+            <a className="missioncheck">미션체크</a>
             <a>에서 쉽고 빠르게</a>
           </div>
           <div className="buttonContainer">
@@ -83,6 +85,10 @@ const MainPage1 = () => {
               />
             )}
           </div>
+        </div>
+        <div className="scroll">
+          <span className="titleScroll">스크롤</span>
+          <img src={scroll} className="scrollLogo"></img>
         </div>
       </div>
     </>

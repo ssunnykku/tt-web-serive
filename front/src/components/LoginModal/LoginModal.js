@@ -49,15 +49,7 @@ function LoginModal({
         email,
         password,
       });
-      setLoginModalOpen(false);
 
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        text: "로그인 성공",
-      }).then(function () {
-        navigate("/", { replace: true });
-      });
       // console.log(res.data);
       // 유저 정보는 response의 data임.
       const user = res.data;
@@ -74,9 +66,28 @@ function LoginModal({
         type: "LOGIN_SUCCESS",
         payload: user,
       });
+      setLoginModalOpen(false);
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "로그인 성공",
+      }).then(function () {
+        navigate("/", { replace: true });
+      });
 
       // 기본 페이지로 이동함.
     } catch (err) {
+      setLoginModalOpen(false);
+      Swal.fire({
+        position: "top-center",
+        icon: "fail",
+        text: "아이디 혹은 비밀번호가 일치하지 않습니다.",
+      }).then(function () {
+        e.preventDefault();
+        navigate("/", { replace: true });
+      });
+
       console.log("로그인에 실패하였습니다.\n", err);
     }
   };
