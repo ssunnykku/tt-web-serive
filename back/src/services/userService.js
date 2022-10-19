@@ -171,15 +171,15 @@ class userService {
     return updateimg;
   }
 
-  //6. 회원탈퇴-> 아직 완료 전
+  //6. 회원탈퇴
   static async userWithdrawal({ userId, id, withdrawal }) {
     if (userId !== id) {
       const errorMessage = "UserId가 틀립니다.";
       return errorMessage;
     }
 
-    if (withdrawal === true) {
-      let user = await User.findById({ userId });
+    if (withdrawal == 1) {
+      let user = await User.findByUserId({ userId });
       const newValue = withdrawal;
       user = await User.updateWithdrawal({ userId, newValue });
     }

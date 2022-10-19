@@ -15,20 +15,29 @@ model liked {
   challenge   challenge @relation(fields: [challengeId], references: [challengeId])
 }
 
+model userToChallenge {
+  userToChallengeId Int       @id @unique @default(autoincrement())
+  userId            String    @db.VarChar(45)
+  challengeId       Int
+  user              user      @relation(fields: [userId], references: [userId])
+  challenge         challenge @relation(fields: [challengeId], references: [challengeId])
+}
+
 model point {
   userId String @id @unique(map: "userId_UNIQUE") @db.VarChar(50)
   point  Int?
 }
 
 model user {
-  userId       String         @id @db.VarChar(50)
-  name         String         @db.VarChar(10)
-  email        String         @db.VarChar(30)
-  password     String         @db.VarChar(100)
-  withdrawal   Int            @default(0) @db.TinyInt
-  img          Bytes?         @db.Blob
-  refreshToken refreshToken[]
-  liked        liked[]
+  userId          String            @id @db.VarChar(50)
+  name            String            @db.VarChar(10)
+  email           String            @db.VarChar(30)
+  password        String            @db.VarChar(100)
+  withdrawal      Int               @default(0) @db.TinyInt
+  img             Bytes?            @db.Blob
+  refreshToken    refreshToken[]
+  liked           liked[]
+  userToChallenge userToChallenge[]
 }
 
 model refreshToken {
@@ -40,6 +49,7 @@ model refreshToken {
 model challenge {
   challengeId        Int               @id @unique @default(autoincrement())
   title              String            @db.VarChar(50)
+  holdUserId         String            @db.VarChar(50)
   description        String
   fromDate           String
   toDate             String
@@ -51,6 +61,7 @@ model challenge {
   updatedAt          DateTime          @updatedAt
   liked              liked[]
   joinedChallenges   joinedChallenge[]
+  userToChallenge    userToChallenge[]
 }
 
 model joinedChallenge {
