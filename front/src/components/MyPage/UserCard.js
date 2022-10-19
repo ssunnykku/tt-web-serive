@@ -6,7 +6,7 @@ import UserEditForm from "./UserEditForm";
 import * as Api from '../../api'
 const UserCard = () => {
   const [name,setName]=useState('');
-  const [description,setDescription]=useState('')
+  const [password,setPassword]=useState('')
   useEffect(()=>{
     Api.get('currentUser').then((res)=>setName(res.data.name))
   },[])
@@ -76,7 +76,7 @@ const UserCard = () => {
       >
         {showContent}
       </StyledButton>
-      {showForm == true ? <UserEditForm name={name} setName={setName} description={description} setDescription={setDescription}/> : null}
+      {showForm == true ? <UserEditForm name={name} setName={setName} password={password} setPassword={setPassword}/> : null}
     </div>
   );
 };
