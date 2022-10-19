@@ -24,15 +24,18 @@ const MyPage = () => {
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
   const isLogin = !!userState.user;
-
+  const [likedList,setLikedList]=useState([]);
   const [challengeData, setChallengeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  const [myChallengeList,setMyChallengeList]=useState([]);
   useEffect(() => {
     Api.get("challenges").then((res) => setChallengeData(res.data.result));
     Api.get("challenges").then((res) => setOriginalData(res.data.result));
     Api.get(`point`).then((res) => setMyPoint(res.data.toString()));
+    Api.get('liked').then((res)=>setLikedList(res.data))
+    Api.get('userToChallenge').then((res)=>setMyChallengeList(res.data))
   }, []);
-
+  console.log(likedList.length)
   return (
     <>
       {isLogin === true ? (
@@ -60,7 +63,7 @@ const MyPage = () => {
                   className="challange"
                 >
                   <h2>My Challenge</h2>
-                  <h1>2</h1>
+                  <h1>{myChallengeList.length}</h1>
                 </div>
                 <div
                   onClick={() => {
@@ -70,7 +73,7 @@ const MyPage = () => {
                   className="liked"
                 >
                   <h2>Liked</h2>
-                  <h1>3</h1>
+                  <h1>{likedList.length}</h1>
                 </div>
               </div>
               <div className="btnContainer"></div>
@@ -124,10 +127,10 @@ const MyPage = () => {
               <div className="contents">
                 {contents === 1 && <PointContent />}
                 {contents === 2 && (
-                  <ChallengeContent ChallengeList={challengeData} />
+                  <ChallengeContent myChallengeList={myChallengeList} />
                 )}
                 {contents === 3 && (
-                  <LikedContent ChallengeList={challengeData} />
+                  <LikedContent likedList={likedList} />
                 )}
               </div>
             </div>

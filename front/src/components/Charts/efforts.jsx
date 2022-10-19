@@ -69,7 +69,7 @@ const data = [
 const Efforts = () => {
   return (
     <>
-    <ResponsiveContainer width="9                0%" aspect={3}>
+    <ResponsiveContainer width="80%" aspect={3}>
       <LineChart
         width={500}
         height={300}
