@@ -76,7 +76,7 @@ const UserCard = () => {
       >
         {showContent}
       </StyledButton>
-      {showForm == true ? <UserEditForm name={name} setName={setName} password={password} setPassword={setPassword}/> : null}
+      {showForm == true ? <UserEditForm name={name} setName={setName} password={password} setPassword={setPassword} setShowForm={setShowForm}/> : null}
     </div>
   );
 };
