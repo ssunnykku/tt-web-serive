@@ -15,7 +15,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   // console.log(req);
   try {
     const holdUserId = req.currentUserId;
-    // console.log();
+    console.log(holdUserId);
     const { title, description, fromDate, toDate } = req.body;
 
     const image = req.files;

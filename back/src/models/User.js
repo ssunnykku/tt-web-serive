@@ -62,14 +62,14 @@ class User {
     });
     return updateuser;
   }
-  static async createToken({ userId }) {
-    const token = await prisma.refreshToken.create({
-      data: {
-        refreshToken: userId,
-        userId: userId,
-      },
-    });
-  }
+  // static async createToken({ userId }) {
+  //   const token = await prisma.refreshToken.create({
+  //     data: {
+  //       refreshToken: userId,
+  //       userId: userId,
+  //     },
+  //   });
+  // }
   //get img
   static async getUserImg({ userId }) {
     console.log("userId:", userId);
@@ -108,18 +108,18 @@ class User {
     console.log("updateimg:", updateimg.img);
     return updateimg;
   }
-  토큰업데이트
-  static async tokenUpdate({ userId, refreshToken }) {
-    const token = await prisma.refreshToken.update({
-      where: {
-        userId: userId,
-      },
-      data: {
-        refreshToken: refreshToken,
-      },
-    });
-    return token;
-  }
+  //토큰업데이트
+  // static async tokenUpdate({ userId, refreshToken }) {
+  //   const token = await prisma.refreshToken.update({
+  //     where: {
+  //       userId: userId,
+  //     },
+  //     data: {
+  //       refreshToken: refreshToken,
+  //     },
+  //   });
+  //   return token;
+  // }
   static async createPoint({ userId }) {
     await prisma.point.create({
       data: {
