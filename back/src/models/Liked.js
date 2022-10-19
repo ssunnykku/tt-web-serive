@@ -2,33 +2,54 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class Liked {
+  static async filterLiked({ userId, challengeId }) {
+    const filter = await prisma.liked.findMany({
+      where: {
+        userId: userId,
+        challengeId: challengeId,
+      },
+    });
+    console.log("filter:", filter[0]);
+    return filter;
+  }
   static async createLiked({ likedId, userId, challengeId }) {
-    console.log("뭐가문제지");
-    console.log("userId:", userId);
     const Liked = await prisma.liked.create({
       data: {
         likedId,
-        userId,
-        challengeId,
+        user: {
+          connect: { userId: userId },
+        },
+        challenge: {
+          connect: { challengeId: challengeId },
+        },
       },
     });
     return Liked;
   }
 
   static async removeLiked({ likedId }) {
-    await prisma.liked.delete({
-      where: { likedId: likedId },
-    });
-  }
-  static async getLikedList({ userId }) {
-    console.log("get 모델의 userId:", userId);
-    const likedList = await prisma.user.findUnique({
-      where: { userId: userId },
-      include: {
-        challengeId: challengeId,
+    const liked = await prisma.liked.delete({
+      where: {
+        likedId: likedId,
       },
     });
-    console.log("get 모델의 return 값:", likedList);
+    console.log("liked?? delete 왜안됨:", liked);
+    return;
+  }
+  static async getLikedList({ userId }) {
+    const likedList = await prisma.liked.findMany({
+      where: { userId: userId },
+      select: {
+        challenge: true,
+      },
+    });
+    return likedList;
+  }
+  //likedCount
+  static async getLikedCount({ userId }) {
+    const likedList = await prisma.liked.count({
+      where: { userId: userId },
+    });
     return likedList;
   }
 }

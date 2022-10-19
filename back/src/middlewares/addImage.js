@@ -5,7 +5,7 @@ const fs = require("fs");
 function addImage(imgPath) {
   fs.readdir(imgPath, (error) => {
     if (error) {
-      console.error("uploads 폴더가 없어 uploads 폴더를 생성합니다.");
+      console.error("fail to make uploads folder.");
     }
   });
   const storage = multer.diskStorage({

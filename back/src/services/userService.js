@@ -13,7 +13,7 @@ class userService {
     const user = await User.findByEmail({ email });
     //0회원 1탈퇴
 
-    if (user.length > 1) {
+    if (user.length) {
       if (user) {
         //이메일 같은 유저 중
         if (user[0].withdrawal == 0) {
@@ -40,7 +40,8 @@ class userService {
 
     //  // 토큰 스키마에 유저id추가
     await User.createToken({ userId });
-   
+
+    // await User.createToken({ userId });
     await User.createPoint({ userId });
     return createNewUser;
   }
@@ -82,11 +83,13 @@ class userService {
     //expiredAt이거 프론트단에 보내얗 한ㄴ다?
     //https://developers.cafe24.com/app/front/develop/oauth/retoken
 
+    //이거 적용 해야함
+    // const hashrefreshToken = await bcrypt.hash(password, 10);
     const userId = user.userId;
 
-    if (refreshToken) {
-      await User.tokenUpdate({ userId, refreshToken });
-    }
+    // if (refreshToken) {
+    //   await User.tokenUpdate({ userId, refreshToken });
+    // }
     //디비에서 유효기간 지난 토큰은  자동으로 verify에서 걸러진다.
 
     const name = user.name;
@@ -143,7 +146,8 @@ class userService {
     if (!newImg) {
       const errorMessage = "no iamge";
       return errorMessage;
-    };''
+    }
+    ("");
     return newImg;
   }
   // user img update
@@ -155,6 +159,7 @@ class userService {
         "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
       return { errorMessage };
     }
+    console.log("서비스");
     const updateimg = await User.updateUserImg({ userId, img });
     return updateimg;
   }
