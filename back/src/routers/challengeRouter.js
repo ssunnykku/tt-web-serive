@@ -4,11 +4,7 @@ import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-// const upload = addImage("uploads");
-const upload = multer({ dest: "uploads/" });
+const upload = addImage("uploads");
 
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
@@ -78,14 +74,14 @@ challengeRouter.get("/ongoing", async (req, res) => {
 // Delete
 // 폴더의 파일도 삭제 할 수가 있는지?
 // 시작 전 삭제 막기
-challengeRouter.delete("/:id", loginRequired, async (req, res) => {
-  const userId = req.currentUserId;
-  const { id } = req.params;
-  const foundChallenge = await challengeService.findUniqueId(id);
+// challengeRouter.delete("/:id", loginRequired, async (req, res) => {
+//   const userId = req.currentUserId;
+//   const { id } = req.params;
+//   const foundChallenge = await challengeService.findUniqueId(id);
 
-  const result = await challengeService.deleteOne(id);
-  res.status(200).json({ result });
-});
+//   const result = await challengeService.deleteOne(id);
+//   res.status(200).json({ result });
+// });
 
 // 챌린지 수정
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
@@ -107,7 +103,6 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
       return res.status(400).send("cannot find image.");
     }
 
-    const foundChallenge = await challengeService.getFromDate(id);
     // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
     // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
     if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
