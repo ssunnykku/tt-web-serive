@@ -19,7 +19,7 @@ const NavBar = () => {
   const dispatch = useContext(DispatchContext);
   const [currentUserId, setCurrentUserId] = useState("");
   const isLogin = !!userState.user;
-
+  
   const handleDelete = async (e) => {
     e.preventDefault();
     await Api.put(`withdrawl/${userState.user.userId}`, {
@@ -83,7 +83,7 @@ const NavBar = () => {
               }}
               className="nav-link"
             >
-              {currentUserId}
+              Home
             </a>
           </li>
           <li className="nav-item">

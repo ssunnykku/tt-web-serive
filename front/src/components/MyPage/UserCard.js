@@ -9,6 +9,7 @@ const UserCard = () => {
   const [password,setPassword]=useState('')
   useEffect(()=>{
     Api.get('currentUser').then((res)=>setName(res.data.name))
+    Api.get('userImg').then((res)=>setProfileImage(res.data))
   },[])
   const [showForm, setShowForm] = useState(false);
   const [showContent, setShowContent] = useState("정보수정");
@@ -18,20 +19,20 @@ const UserCard = () => {
   const fileInput=useRef(null);
   const onChangeImage = (e) => {
     if (e.target.files[0]) {
-      setProfileImage(e.target.files[0]);
+      const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        Api.put('userImg',reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+      
     } else {
       setProfileImage(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU"
       );
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setProfileImage(reader.result);
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
   };
   const onSubmit=(e)=>{
      //     e.preventDefault();
@@ -49,7 +50,7 @@ const UserCard = () => {
     //             console.error(err);
     //         });
   }
-
+  
   return (
     <div className="userprofile">
       <form className="imageForm" onSubmit={onSubmit}>

@@ -37,6 +37,7 @@ function App() {
   const fetchCurrentUser = async () => {
     try {
       // 이전에 발급받은 토큰이 있다면, 이를 가지고 유저 정보를 받아옴.
+      console.log('업데이트됌?')
       await Api.updateToken();
       console.log("토큰 업데이트 함");
       const res = await Api.get("currentUser");

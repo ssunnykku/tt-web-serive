@@ -18,7 +18,7 @@ class User {
 
   //같은 이메일 찾기
   static async findByEmail({ email }) {
-    console.log(email, "모델");
+    
     const finduser = await prisma.user.findMany({
       where: {
         email: email,

@@ -143,7 +143,7 @@ class userService {
     if (!newImg) {
       const errorMessage = "no iamge";
       return errorMessage;
-    }
+    };''
     return newImg;
   }
   // user img update
