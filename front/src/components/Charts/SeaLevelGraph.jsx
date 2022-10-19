@@ -136,7 +136,7 @@ const data = [
 const SeaLevel = () => {
   return (
     <>
-    <ResponsiveContainer width="100%" aspect={4}>
+    <ResponsiveContainer width="80%" aspect={4}>
       <AreaChart
         width={500}
         height={300}
