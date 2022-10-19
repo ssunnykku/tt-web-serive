@@ -143,7 +143,7 @@ class userService {
       return errorMessage;
     }
 
-    if (withdrawal === true) {
+    if (withdrawal ===1 ) {
       let user = await User.findById({ userId });
       const newValue = withdrawal;
       user = await User.updateWithdrawal({ userId, newValue });

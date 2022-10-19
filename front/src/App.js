@@ -41,6 +41,7 @@ function App() {
       console.log("토큰 업데이트 함");
       const res = await Api.get("currentUser");
       const currentUser = res.data;
+      console.log(currentUser)
 
       // dispatch 함수를 통해 로그인 성공 상태로 만듦.
       dispatch({
