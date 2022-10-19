@@ -9,6 +9,7 @@
     margin-top: 3%;
 }
 .SearchFormContainer{
+    margin-top: 10%;
     display: flex;
     align-items: center;
     justify-content:flex-end;
