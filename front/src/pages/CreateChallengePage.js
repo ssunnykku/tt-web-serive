@@ -111,20 +111,22 @@ const CreateChallenge = () => {
   const [badImage, setBadImage] = useState(blankImg);
 
   const onSubmit = (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append("img", content);
-    //     axios
-    //         .post("http://localhost:3001/upload", formData)
-    //         .then(res => {
-    //             const { fileName } = res.data;
-    //             console.log(fileName);
-    //             setUploadedImg({ fileName });
-    //             alert("The file is successfully uploaded");
-    //         })
-    //         .catch(err => {
-    //             console.error(err);
-    //         });
+    e.preventDefault();
+    // const formData = new FormData();
+    // formData.append("challengeImage", content);
+    // formData.append("goodImage", content);
+    // formData.append("badImage", content);
+    // axios
+    //   .post("http://localhost:3001/upload", formData)
+    //   .then((res) => {
+    //     const { fileName } = res.data;
+    //     console.log(fileName);
+    //     setUploadedImg({ fileName });
+    //     alert("The file is successfully uploaded");
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   };
 
   return (
