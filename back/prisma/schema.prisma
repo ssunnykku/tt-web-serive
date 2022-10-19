@@ -66,10 +66,11 @@ model challenge {
 
 model joinedChallenge {
   joinedId    Int       @id @unique @default(autoincrement())
-  addedImage  String    @db.Text
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
   countUpload Int
+  addedImage  String    @db.Text
+  description String
 }
 
 // model hashTag {

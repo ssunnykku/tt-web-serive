@@ -31,6 +31,7 @@ joinedChallengeRouter.post(
         data: {
           countUpload: countUploads,
           addedImage: `uploads/${image}`,
+          description: req.body.description,
           challenges: {
             connect: {
               challengeId: Number(id),
@@ -45,73 +46,42 @@ joinedChallengeRouter.post(
     }
   }
 );
-// get (인증 페이지 보여주기)
-// challenge 전체 정보
-joinedChallengeRouter.get("/info/:chalngId", async (req, res) => {
+
+// challenge 정보
+joinedChallengeRouter.get("/info/:challengeId", async (req, res) => {
   try {
-    const { chalngId } = req.params;
+    const { challengeId } = req.params;
 
+    // 해당 챌린지의 인증 정보 전부가져오는 코드
     const showCompletedChallenge = await prisma.joinedChallenge.findMany({
-      where: { chalngId: Number(chalngId) },
+      where: { chalngId: Number(challengeId) },
     });
 
+    // 인증한 사진 관련된 챌린지 정보
     const showChallenge = await prisma.challenge.findUnique({
-      where: { challengeId: Number(chalngId) },
+      where: { challengeId: Number(challengeId) },
     });
 
-    // const ChallengeInfo = await prisma.joinedChallenge
-    //   .findUnique({
-    //     where: { joinedId: Number(joinedId) },
-    //   })
-    //   .challenges();
-
-    res.status(200).json({ showCompletedChallenge, showChallenge });
+    res.status(200).json({ showChallenge });
   } catch (error) {
     res.json({ message: error.message });
   }
 });
 
-// 안된다요....
+// 인증 사진들 전체 보여주기
+joinedChallengeRouter.get("/:challengeId", async (req, res) => {
+  try {
+    const { challengeId } = req.params;
 
-joinedChallengeRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const showCompletedChallenge = await prisma.challenge.findUnique({
-    where: {
-      challengeId: Number(id),
-      // connect 하고싶어.....
-    },
-  });
-  res.json({ showCompletedChallenge });
+    // 해당 챌린지의 인증 정보 전부가져오는 코드
+    const showCompletedChallenge = await prisma.joinedChallenge.findMany({
+      where: { chalngId: Number(challengeId) },
+    });
+
+    res.status(200).json({ showCompletedChallenge });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
 });
-
-// 왜 안되죠..
-// userChallengeRouter.get("joinedChallenge/:chalngId", async (req, res) => {
-//   const { chalngId } = req.params;
-//   const showChallenge = await prisma.challenge.findMany({
-//     where: {
-//       challengeId: Number(chalngId),
-//     },
-//   });
-//   res.json({ showChallenge });
-// });
-
-// count (참여 횟수 번호매기기)
-// joinedChallengeRouter.get(
-//   "/countJoinedChallenge/:chalngId",
-//   async (req, res) => {
-//     try {
-//       const { chalngId } = req.params;
-//       const countUploads = await prisma.joinedChallenge.findMany({
-//         where: {
-//           chalngId: Number(chalngId),
-//         },
-//       });
-
-//       res.status(200).json({ countUploads });
-//     } catch (error) {
-//       res.json({ message: error.message });
-//     }
-//   }
-// );
 
 export { joinedChallengeRouter };
