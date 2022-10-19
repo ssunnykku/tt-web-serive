@@ -53,7 +53,7 @@ const ChallengeDetail = () => {
     try {
       // "currentUser" 엔드포인트로 post요청함.
       await Api.put("userToChallenge", {
-        hallengeId: ,
+        // challengeId: challengeId,
       });
 
       navigate("/network");
@@ -197,11 +197,7 @@ const ChallengeDetail = () => {
               </div>
             </div>
 
-            <button
-              className="challengeJoinBtn"
-              type="submit"
-              onClick={handleSubmit}
-            >
+            <button className="challengeJoinBtn" onClick={handleSubmit}>
               참가하기
             </button>
           </div>
@@ -211,4 +207,4 @@ const ChallengeDetail = () => {
   );
 };
 
-export default UserCard;
+export default ChallengeDetail;
