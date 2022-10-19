@@ -1,3 +1,5 @@
+import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
+
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
@@ -77,5 +79,33 @@ class challenge {
   //   });
   //   return challenge;
   // }
+
+  static async update({
+    id,
+    title,
+    description,
+    fromDate,
+    toDate,
+    titleImg,
+    explainImgs,
+  }) {
+    const renewChallenge = await prisma.challenge.update({
+      where: {
+        challengeId: Number(id),
+      },
+      data: {
+        title: title,
+        description: description,
+        fromDate: fromDate,
+        toDate: toDate,
+        mainImg: titleImg,
+        explainImg: explainImgs,
+        startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
+        endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
+      },
+    });
+
+    return renewChallenge;
+  }
 }
 export { challenge };

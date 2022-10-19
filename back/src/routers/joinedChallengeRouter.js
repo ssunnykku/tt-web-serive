@@ -3,9 +3,6 @@ import { joinedChallengeService } from "../services/joinedChallengeService";
 import { loginRequired } from "../middlewares/loginRequired";
 import { addImage } from "../middlewares/addImage";
 
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
 const joinedChallengeRouter = Router();
 const upload = addImage("uploads");
 
@@ -45,23 +42,29 @@ joinedChallengeRouter.post(
   }
 );
 
-joinedChallengeRouter.get("/info/:challengeId", async (req, res) => {
-  try {
-    const { challengeId } = req.params;
+joinedChallengeRouter.get(
+  "/info/:challengeId",
+  loginRequired,
+  async (req, res) => {
+    try {
+      const userId = req.currentUserId;
+      const { challengeId } = req.params;
 
-    // 인증한 사진 관련된 챌린지 정보
-    const showChallenge = await joinedChallengeService.findChallenge(
-      challengeId
-    );
+      // 인증한 사진 관련된 챌린지 정보
+      const showChallenge = await joinedChallengeService.findChallenge(
+        challengeId
+      );
 
-    res.status(200).json({ showChallenge });
-  } catch (error) {
-    res.json({ message: error.message });
+      res.status(200).json({ showChallenge });
+    } catch (error) {
+      res.json({ message: error.message });
+    }
   }
-});
+);
 
-joinedChallengeRouter.get("/:challengeId", async (req, res) => {
+joinedChallengeRouter.get("/:challengeId", loginRequired, async (req, res) => {
   try {
+    const userId = req.currentUserId;
     const { challengeId } = req.params;
 
     // 해당 챌린지의 인증 정보 전부가져오는 코드

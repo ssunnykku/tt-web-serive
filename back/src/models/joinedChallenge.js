@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class joinedChallenge {
-  // 참여자 수 세기 (joinedChallenge 에서 chalengeId = 1인 코드를 찾아 센다)
+  // 참여자 수 세기 (joinedChallenge 에서 chalngId = 1인 코드를 찾아 센다)
   static async count({ id }) {
     const countJoinedChallenge = await prisma.joinedChallenge.count({
       where: {
