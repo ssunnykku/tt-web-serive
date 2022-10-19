@@ -12,6 +12,11 @@ class User {
         name: newUser.name,
         withdrawal: 0,
       },
+      include: {
+        liked: true,
+        userToChallenge: true,
+        refreshToken: true,
+      },
     });
     return registerUser;
   }
@@ -108,7 +113,7 @@ class User {
     console.log("updateimg:", updateimg.img);
     return updateimg;
   }
-  토큰업데이트
+  토큰업데이트;
   static async tokenUpdate({ userId, refreshToken }) {
     const token = await prisma.refreshToken.update({
       where: {
