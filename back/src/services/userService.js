@@ -40,8 +40,6 @@ class userService {
 
     //  // 토큰 스키마에 유저id추가
     await User.createToken({ userId });
-
-    // await User.createToken({ userId });
     await User.createPoint({ userId });
     return createNewUser;
   }
