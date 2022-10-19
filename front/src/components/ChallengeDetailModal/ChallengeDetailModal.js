@@ -46,7 +46,7 @@ function ChallengeDetailModal({ setModalOpen }) {
 
   //   try {
   //     // "currentUser" 엔드포인트로 post요청함.
-  //     await Api.post("currentUser", {
+  //     await Api.put("currentUser", {
   //       joinedChallenge: challengeId,
   //     });
 
@@ -60,8 +60,6 @@ function ChallengeDetailModal({ setModalOpen }) {
   const closeModal = () => {
     setModalOpen(false);
   };
-
-  const calculateDday = () => {};
 
   const favoriteChallenge = () => {};
 
