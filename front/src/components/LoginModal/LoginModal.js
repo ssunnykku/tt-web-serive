@@ -49,15 +49,7 @@ function LoginModal({
         email,
         password,
       });
-      setLoginModalOpen(false);
 
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        text: "로그인 성공",
-      }).then(function () {
-        navigate("/", { replace: true });
-      });
       // console.log(res.data);
       // 유저 정보는 response의 data임.
       const user = res.data;
@@ -73,6 +65,15 @@ function LoginModal({
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
+      });
+      setLoginModalOpen(false);
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "로그인 성공",
+      }).then(function () {
+        navigate("/", { replace: true });
       });
 
       // 기본 페이지로 이동함.
