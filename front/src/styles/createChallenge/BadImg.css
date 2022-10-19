@@ -2,13 +2,17 @@
     width: 200px;
     height: 200px;
     /* margin-right: 15px; */
+    margin-left: 20%;
+
 }
 .badImg{
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
     justify-items: center;
     text-align: center;
+    width: 120%;
 }
 .icon{
     width: 20px;

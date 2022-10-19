@@ -5,8 +5,6 @@ import LikedContent from "../components/MyPage/LikedContent";
 import PointContent from "../components/MyPage/PointContent";
 import UserCard from "../components/MyPage/UserCard";
 import NavBar from "../components/NavBar";
-import Swal from "sweetalert2";
-import StyledButton from "../styles/commonstyles/Button";
 import "../styles/mypage/mypage.css";
 import { DispatchContext, UserStateContext } from "../App";
 import * as Api from "../api";
@@ -137,6 +135,7 @@ const MyPage = () => {
         </div>
       ) : (
         navigate("/")
+      
       )}
     </>
   );

@@ -59,22 +59,22 @@ const InnerCheckImg = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 const ImgTitle = styled.span`
   font-size: 18px;
   font-weight: bold;
   text-align: center;
-  justify-items: center;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 5px;
   margin-top: 10px;
 `;
 const CheckImg = styled.div`
   display: flex;
   text-align: center;
-  justify-items: center;
-  justify=content: center;
-  /* margin: 50px auto; */
-  margin: 10px;
+  justify-content: center;
+  align-items: center;
 `;
 const CreateChallenge = () => {
   const navigate = useNavigate();
