@@ -27,7 +27,8 @@ const NavBar = () => {
     });
   sessionStorage.removeItem('accessToken');
   localStorage.removeItem('refreshToken');
-    dispatch({ type: "LOGOUT " });
+  dispatch({type:'LOGOUT'});
+  alert('탈퇴 완료')
     navigate("/");
   }
   

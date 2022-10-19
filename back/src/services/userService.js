@@ -40,7 +40,7 @@ class userService {
 
     //  // 토큰 스키마에 유저id추가
     await User.createToken({ userId });
-    // await Login.createLiked({ userId, likedId });
+   
     await User.createPoint({ userId });
     return createNewUser;
   }
@@ -51,7 +51,7 @@ class userService {
     const user = data[0];
     //0회원 1탈퇴
 
-    if (data.length > 1) {
+    if (data.length) {
       if (data) {
         if (user.withdrawal == 1) {
           //true
