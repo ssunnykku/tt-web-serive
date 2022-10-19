@@ -2,7 +2,7 @@ import { challenge } from "../models/challenge";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class challengeService {
-  // create/ post(유저별로 수정할 것)
+  // create/ post
   static async addChallenge({
     holdUserId,
     title,
