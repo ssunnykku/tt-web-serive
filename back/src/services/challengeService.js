@@ -1,4 +1,4 @@
-import { challengeModel } from "../models/challengeModel";
+import { challenge } from "../models/challenge";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class challengeService {
@@ -23,7 +23,7 @@ class challengeService {
       mainImg,
       explainImg,
     };
-    const createdChallenge = await challengeModel.create({
+    const createdChallenge = await challenge.create({
       newChallenge,
     });
     return createdChallenge;
@@ -31,19 +31,19 @@ class challengeService {
 
   // 전체 불러오기 (get)
   static async getChallenges() {
-    const challenges = await challengeModel.findMany();
+    const challenges = await challenge.findMany();
     return challenges;
   }
 
   // Get (진행중인 챌린지 전체)
   static async getOngoing() {
-    const challenges = await challengeModel.findOngoing();
+    const challenges = await challenge.findOngoing();
 
     return challenges;
   }
   // id 값을 게시물 1개 선택하기(params 값을 이용)
   static async findUniqueId(id) {
-    const findId = await challengeModel.findUnique(id);
+    const findId = await challenge.findUnique(id);
     if (!findId) {
       const error = new Error("invalid id");
       throw error;
@@ -52,7 +52,7 @@ class challengeService {
   }
   // id 값을 게시물 1개 선택하기(params 값을 이용)
   static async findUniqueId(id) {
-    const findId = await challengeModel.findUnique(id);
+    const findId = await challenge.findUnique(id);
     if (!findId) {
       const error = new Error("invalid id");
       throw error;
@@ -62,18 +62,18 @@ class challengeService {
 
   // Delete
   static async deleteOne(id) {
-    // const findId = await challengeModel.findFromDate(id);
+    // const findId = await challenge.findFromDate(id);
     // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
     //   const error = new Error("cannot modify it after the challenge begins.");
     //   throw error;
     // }
-    const deleteChallenge = await challengeModel.delete(id);
+    const deleteChallenge = await challenge.delete(id);
 
     return deleteChallenge;
   }
 
   static async addImage(id, addedImage) {
-    const createdChallenge = await challengeModel.create({
+    const createdChallenge = await challenge.create({
       id,
       addedImage,
     });
@@ -81,7 +81,7 @@ class challengeService {
   }
 
   // static async findUniqueUser(userId, id) {
-  //   const findUserId = await challengeModel.findUniqueUser(userId, id);
+  //   const findUserId = await challenge.findUniqueUser(userId, id);
   //   return findUserId;
   // }
 }
