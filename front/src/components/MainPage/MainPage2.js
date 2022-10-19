@@ -4,6 +4,8 @@ import "../../styles/mainpage/mainpage2.css";
 import StyledButton from "../../styles/commonstyles/Button";
 import Gas from "../Charts/chart";
 import Disasters from "../Charts/Disasters";
+import Waste from "../Charts/WasteGraph";
+import SeaLevel from "../Charts/SeaLevelGraph";
 const MainPage2 = () => {
   const [showGraph, setShowGraph] = useState(1);
   return (
@@ -32,7 +34,7 @@ const MainPage2 = () => {
                 setShowGraph(3);
               }}
             >
-              에너지 낭비
+              해수면 변화
             </StyledButton>
           </div>
           {showGraph == 1 ? (
@@ -42,14 +44,12 @@ const MainPage2 = () => {
           ) : null}
           {showGraph == 2 ? (
             <div className="ex2GraphContainer">
-              <Disasters/>
+              <Waste/>
             </div>
           ) : null}
           {showGraph == 3 ? (
             <div className="ex2GraphContainer">
-              <h1>이미지3</h1>
-              <h1>이미지3</h1>
-              <h1>이미지3</h1>
+              <SeaLevel/>
             </div>
           ) : null}
         </div>

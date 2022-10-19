@@ -51,8 +51,8 @@ const data = [
 
 const Disasters = () => {
   return (
-    <>
-    <ResponsiveContainer width="100%" aspect={3}>
+    <>                                              
+    <ResponsiveContainer width="90%" aspect={3}>
       <BarChart
         width={500}
         height={300}
