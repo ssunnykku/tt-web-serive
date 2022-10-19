@@ -1,0 +1,16 @@
+.img{
+    width: 200px;
+    height: 200px;
+    /* margin-right: 15px; */
+}
+.badImg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+}
+.icon{
+    width: 20px;
+    height: 20px;
+}
