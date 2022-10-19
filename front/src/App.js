@@ -8,6 +8,7 @@ import MainPage from "./pages/MainPage";
 import Network from "./pages/Network";
 import LoginModal from "./components/LoginModal/LoginModal";
 import SignUpModal from "./components/signUpModal/SignUpModal";
+import ChallengeDetailModal from "./components/ChallengeDetailModal/ChallengeDetailModal";
 import MyPage from "./pages/MyPage";
 import CreateChallenge from "./pages/CreateChallengePage";
 export const UserStateContext = createContext(null);
@@ -23,7 +24,7 @@ function App() {
     let accessToken = await sessionStorage.getItem("accessToken");
     console.log(accessToken);
     console.log(refreshToken);
-    console.log(userState)
+    console.log(userState);
     if (!refreshToken && !accessToken && userState.user) {
       dispatch({ type: "LOGOUT" });
       console.log("로그아웃함");
@@ -83,6 +84,7 @@ function App() {
               path="/network/pages/CreateChallengePage"
               element={<CreateChallenge />}
             />
+            <Route path="/ChallengeDetail" element={<ChallengeDetailModal />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
