@@ -4,6 +4,9 @@ import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
 import is from "@sindresorhus/is";
 import multer from "multer";
+// import axios from "axios";
+// import assert from "assert";
+import { config } from "dotenv";
 
 const storage = multer.memoryStorage();
 
@@ -51,6 +54,19 @@ userRouter.post("/register", async (req, res, next) => {
     next(error);
   }
 });
+//배포 후 카카오에서 웹 도메인 변경해야 함.
+//1-1 카카오 회원가입 및 로그인
+userRouter.get("/auth/kakao", async (req, res, next) => {
+  const code = req.query.code;
+  try {
+    //토큰 발급
+    let result = await axios.post(config.kakao);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//1-2 네이버 회원가입 및 로그인
 
 // 2. 로그인 라우터
 userRouter.post("/login", async (req, res, next) => {

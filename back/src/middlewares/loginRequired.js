@@ -35,7 +35,7 @@ function loginRequired(req, res, next) {
               res.status(400).return("디비와 토큰이 다른 에러:");
             }
           };
-          const refreshFromDb = token();
+          const callback = token();
 
           const accessToken = jwt.sign({ userId }, secretKey, {
             expiresIn: "1h",
