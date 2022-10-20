@@ -9,7 +9,11 @@ function UserLike({ challengeId}) {
   const [countLike, setCountLike] = useState(0);
   // const myId = 1;
   const [likeId,setLikeId] = useState(1);
-  
+  const [likeStatus,setLikeStatus]=useState(false)
+  const [checkUserId,setCheckUserId]=useState('')
+  useEffect(()=>{
+    
+  },[])
   // useEffect(()=>{
   //   Api.post('liked').then((res)=>{
   //     likedId: likedId,
@@ -62,15 +66,15 @@ function UserLike({ challengeId}) {
   return (
     <div>
       <div onClick={()=>{
-        setLikeImoticon(true)
+        
         Api.post('liked',{
           challengeId
-        }).then((res)=>console.log('뭐가오는거임',res.data))
-        Api.get('likedCount').then((res)=>console.log('카운트',res))
-        
+        }).then((res)=>setCheckUserId(res))
+        Api.get('likedCount',{challengeId}).then((res)=>console.log('카운트',res))
+        console.log(checkUserId)
         console.log(countLike)
       }} id="userLike"className="likeButton">
-        {likeImoticon ? <img src={likedimg} /> : <img src={likeimg} />}
+        {likeStatus ? <img src={likedimg} /> : <img src={likeimg} />}
         <span className="ms-2">{countLike} Likes</span>
       </div>
       

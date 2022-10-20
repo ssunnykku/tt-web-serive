@@ -28,6 +28,7 @@ const MyPage = () => {
   const [challengeData, setChallengeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [myChallengeList,setMyChallengeList]=useState([]);
+  console.log(likedList)
   useEffect(() => {
     Api.get("challenges").then((res) => setChallengeData(res.data.result));
     Api.get("challenges").then((res) => setOriginalData(res.data.result));
@@ -52,8 +53,8 @@ const MyPage = () => {
                   }}
                   className="point"
                 >
-                  <h2>My Point</h2>
-                  <h1>{myPoint}</h1>
+                  <h3>My Point</h3>
+                  <h2>{myPoint}</h2>
                 </div>
                 <div
                   onClick={() => {
@@ -62,8 +63,8 @@ const MyPage = () => {
                   }}
                   className="challange"
                 >
-                  <h2>My Challenge</h2>
-                  <h1>{myChallengeList.length}</h1>
+                  <h3>My Challenge</h3>
+                  <h2>{myChallengeList.length}</h2>
                 </div>
                 <div
                   onClick={() => {
@@ -72,8 +73,8 @@ const MyPage = () => {
                   }}
                   className="liked"
                 >
-                  <h2>Liked</h2>
-                  <h1>{likedList.length}</h1>
+                  <h3>Liked</h3>
+                  <h2>{likedList.length}</h2>
                 </div>
               </div>
               <div className="btnContainer"></div>
