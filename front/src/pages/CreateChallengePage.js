@@ -78,7 +78,7 @@ const CheckImg = styled.div`
   align-items: center;
 `;
 const CreateChallenge = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate("/");
   const userState = useContext(UserStateContext);
   const [user, setUsers] = useState([]);
   const dispatch = useContext(DispatchContext);
@@ -128,7 +128,7 @@ const CreateChallenge = () => {
     e.preventDefault();
     let res = {};
     try {
-      res = await Api.post("network/pages/CreateChallengePage", {
+      res = await Api.post("challenges", {
         title,
         method,
         description,
