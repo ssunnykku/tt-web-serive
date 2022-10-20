@@ -37,16 +37,21 @@ likedRouter.get("/liked", loginRequired, async (req, res, next) => {
     next(error);
   }
 });
-likedRouter.get("/likedCount", loginRequired, async (req, res, next) => {
-  try {
-    const userId = req.currentUserId;
-    const liked = await likedService.getLikedCount({ userId });
-    const count = liked;
+likedRouter.get(
+  "/likedCount/:challengeId",
+  loginRequired,
+  async (req, res, next) => {
+    try {
+      const challengeId = req.params.challengeId;
 
-    res.status(200).send(count);
-  } catch (error) {
-    next(error);
+      const liked = await likedService.getLikedCount({ challengeId });
+      const count = liked;
+
+      res.status(200).send(count);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 export { likedRouter };

@@ -7,14 +7,14 @@ import multer from "multer";
 
 const storage = multer.memoryStorage();
 
-//0. img limit
+//0. img limit 20mb
 const upload = multer({
   limits: {
     fileSize: 2000000,
   },
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|png)$/)) {
-      return cb(new Error(" please upload a Jpeg or png"));
+      return cb(new Error(" please upload a Jpg or png"));
     }
     cb(undefined, true);
   },
@@ -145,34 +145,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
     next(error);
   }
 });
-/*
-//add img
-userRouter.post(
-  "/userImg",
-  loginRequired,
-  upload.single("image"),
-  async (req, res, next) => {
-    try {
-      // console.log(req.file);
-      // const img = req.file.buffer;
-      const img = 1;
-      console.log("imgaddrouter: ", img);
-      const userId = req.currentUserId;
-      const addImg = await userService.addUserImg({
-        img,
-        userId,
-      });
-      if (addImg.errorMessage) {
-        throw new Error(addImg.errorMessage);
-      }
 
-      res.status(201).send(addImg);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-*/
 //img update
 userRouter.put(
   "/userImg",
@@ -180,8 +153,10 @@ userRouter.put(
   upload.single("image"),
   async (req, res, next) => {
     try {
+      console.log(req.file);
       const img = req.file.buffer;
       const userId = req.currentUserId;
+      console.log("1.라우터-", userId, img);
 
       const updateImg = await userService.updateUserImg({
         img,
