@@ -47,8 +47,9 @@ likedRouter.get(
 
       const liked = await likedService.getLikedCount({ challengeId });
       const count = liked;
+      console.log(count.toString());
 
-      res.status(200).send(count);
+      res.status(200).send(count.toString());
     } catch (error) {
       next(error);
     }
