@@ -1,5 +1,4 @@
 import { joinedChallenge } from "../models/joinedChallenge";
-import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class joinedChallengeService {
   static async count({ id }) {

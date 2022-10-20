@@ -11,6 +11,7 @@ class challengeService {
     toDate,
     mainImg,
     explainImg,
+    method,
   }) {
     const newChallenge = {
       holdUserId,
@@ -18,10 +19,9 @@ class challengeService {
       description,
       fromDate,
       toDate,
-      startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
-      endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
       mainImg,
       explainImg,
+      method,
     };
     const createdChallenge = await challenge.create({
       newChallenge,
@@ -35,15 +35,9 @@ class challengeService {
     return challenges;
   }
 
-  // Get (진행중인 챌린지 전체)
-  static async getOngoing() {
-    const challenges = await challenge.findOngoing();
-
-    return challenges;
-  }
   // id 값을 게시물 1개 선택하기(params 값을 이용)
-  static async findUniqueId(id) {
-    const findId = await challenge.findUnique(id);
+  static async findUniqueUser(id) {
+    const findId = await challenge.findUniqueId(id);
     if (!findId) {
       const error = new Error("invalid id");
       throw error;
@@ -78,32 +72,6 @@ class challengeService {
       addedImage,
     });
     return createdChallenge;
-  }
-
-  // static async findUniqueUser(userId, id) {
-  //   const findUserId = await challenge.findUniqueUser(userId, id);
-  //   return findUserId;
-  // }
-
-  static async updateChallenge({
-    id,
-    title,
-    description,
-    fromDate,
-    toDate,
-    titleImg,
-    explainImgs,
-  }) {
-    const updated = await challenge.update({
-      id,
-      title,
-      description,
-      fromDate,
-      toDate,
-      titleImg,
-      explainImgs,
-    });
-    return updated;
   }
 }
 
