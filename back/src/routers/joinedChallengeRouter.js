@@ -6,7 +6,7 @@ import { addImage } from "../middlewares/addImage";
 const joinedChallengeRouter = Router();
 const upload = addImage("uploads");
 
-// 참가한 챌린지 사진 추가하기 // 1개 추가..
+//1. 참가한 챌린지 사진 추가하기
 joinedChallengeRouter.post(
   "/:id",
   loginRequired,

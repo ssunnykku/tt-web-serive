@@ -128,6 +128,7 @@ class userService {
     const updateUser = await User.updateUser(userId, name, email);
     return updateUser;
   }
+
   // user img get
   static async getCurrentImg({ userId }) {
     const newImg = await User.getUserImg({ userId });
@@ -149,21 +150,22 @@ class userService {
       return { errorMessage };
     }
     console.log("서비스");
-    const updateimg = await User.updateUserImg({ userId, img });
+    const updateimg = await User.EditImg({ userId, img });
     return updateimg;
   }
-  // user img delete
-  static async removeUserImg({ userId }) {
-    const user = await User.findByUserId({ userId });
 
-    if (!user) {
-      const errorMessage =
-        "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
-      return { errorMessage };
-    }
-    const updateimg = await User.deleteUserImg({ userId });
-    return updateimg;
-  }
+  // user img delete
+  // static async removeUserImg({ userId }) {
+  //   const user = await User.findByUserId({ userId });
+
+  //   if (!user) {
+  //     const errorMessage =
+  //       "프로필사진 수정 권한이 없습니다. 로그인 후 이용해주세요";
+  //     return { errorMessage };
+  //   }
+  //   const updateimg = await User.deleteUserImg({ userId });
+  //   return updateimg;
+  // }
 
   //6. 회원탈퇴
   static async userWithdrawal({ userId, id, withdrawal }) {
