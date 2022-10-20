@@ -30,6 +30,7 @@ function loginRequired(req, res, next) {
 
           const token = async () => {
             console.log("refresh db 접근할때 사용할 userId:", userId);
+            console.log("여기로 왜 콜백 실행 안됨?:");
             const token = await prisma.refreshToken.findUnique({
               where: {
                 userId: userId,
@@ -37,10 +38,11 @@ function loginRequired(req, res, next) {
             });
             const refreshFromDb = token.refreshToken;
             //두번째 - front에서 준 refresh token과 db의 refresh token 과 동일한지 비교
+
             if (refreshFromDb !== refreshToken) {
               console.log("디비와 토큰이 다른 에러:");
               const errorMessage = "refresh token이 유효하지 않습니다.";
-              res.status(400).return;
+              res.status(400).return("디비와 토큰이 다른 에러:");
             }
             console.log("⭐️db에서 가져온 refresh=", refreshFromDb);
             console.log("🦄req.body-decoded refresh=", refreshFromDb);
@@ -49,6 +51,7 @@ function loginRequired(req, res, next) {
             //   .send("refresh token검증완료. access token을 발급해주세요");
             // // return token.refreshToken;
           };
+          console.log("안녕");
           const refreshFromDb = token();
           console.log(refreshFromDb);
           //이부분은 삭제예정
@@ -61,7 +64,7 @@ function loginRequired(req, res, next) {
         // next();
         */
         } catch (error) {
-          res.status(400).send(error);
+          res.status(400).send("어디로 가는걸까");
           return;
         }
       } else {
