@@ -79,7 +79,7 @@ challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   res.status(200).json({ result });
 });
 
-// 챌린지 시작 전에는 수정 못하는 코드 작성 // 3계층 분리...
+// 챌린지 수정
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
@@ -92,28 +92,30 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     const explainImg = image.explain;
     const explainImgPath = explainImg.map((img) => img.path);
 
+    const titleImg = `uploads/${mainImg.path}`;
+    const explainImgs = `uploads/${explainImgPath}`;
+
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }
+
+    // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
+    // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
     // if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
     //   return res
     //     .status(400)
     //     .send("cannot modify it after the challenge begins.");
     // }
 
-    const updatedChallenge = await prisma.challenge.update({
-      where: {
-        challengeId: Number(id),
-      },
-      data: {
-        title,
-        description,
-        method,
-        fromDate,
-        toDate,
-        mainImg: `uploads/${mainImg.path}`,
-        explainImg: `uploads/${explainImgPath}`,
-      },
+    const updatedChallenge = await challengeService.updateChallenge({
+      id,
+      title,
+      description,
+      method,
+      fromDate,
+      toDate,
+      titleImg,
+      explainImgs,
     });
 
     res.status(200).json({ updatedChallenge });
@@ -121,6 +123,49 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     res.json({ message: error.message });
   }
 });
+
+// 챌린지 시작 전에는 수정 못하는 코드 작성 // 3계층 분리...
+// challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
+//   try {
+//     const userId = req.currentUserId;
+//     const { id } = req.params;
+//     const { title, description, fromDate, toDate, method } = req.body;
+
+//     const image = req.files;
+//     const mainImg = image.main[0];
+
+//     const explainImg = image.explain;
+//     const explainImgPath = explainImg.map((img) => img.path);
+
+//     if (image === undefined) {
+//       return res.status(400).send("cannot find image.");
+//     }
+//     // if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
+//     //   return res
+//     //     .status(400)
+//     //     .send("cannot modify it after the challenge begins.");
+//     // }
+
+//     const updatedChallenge = await prisma.challenge.update({
+//       where: {
+//         challengeId: Number(id),
+//       },
+//       data: {
+//         title,
+//         description,
+//         method,
+//         fromDate,
+//         toDate,
+//         mainImg: `uploads/${mainImg.path}`,
+//         explainImg: `uploads/${explainImgPath}`,
+//       },
+//     });
+
+//     res.status(200).json({ updatedChallenge });
+//   } catch (error) {
+//     res.json({ message: error.message });
+//   }
+// });
 
 // get(1개 불러오기/ login 한 유저꺼 불러오기)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {

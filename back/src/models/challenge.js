@@ -31,6 +31,35 @@ class challenge {
     return challenges;
   }
 
+  // 수정
+  static async update({
+    id,
+    title,
+    description,
+    method,
+    fromDate,
+    toDate,
+    titleImg,
+    explainImgs,
+  }) {
+    const renewChallenge = await prisma.challenge.update({
+      where: {
+        challengeId: Number(id),
+      },
+      data: {
+        title: title,
+        description: description,
+        method: method,
+        fromDate: fromDate,
+        toDate: toDate,
+        mainImg: titleImg,
+        explainImg: explainImgs,
+      },
+    });
+
+    return renewChallenge;
+  }
+
   // (params 값) 게시물 1개 선택
   static async findUniqueId(id) {
     const challenge = await prisma.challenge.findUnique({
