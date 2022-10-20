@@ -1,117 +1,32 @@
-import { challenge } from "../models/challenge";
-import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
+import { joinedChallenge } from "../models/joinedChallenge";
 
-class challengeService {
-  // create/ post
-  static async addChallenge({
-    holdUserId,
-    title,
-    description,
-    fromDate,
-    toDate,
-    mainImg,
-    explainImg,
-  }) {
-    const newChallenge = {
-      holdUserId,
-      title,
+class joinedChallengeService {
+  static async count({ id }) {
+    const countJoinedChallenge = await joinedChallenge.count({
+      id,
+    });
+    return countJoinedChallenge;
+  }
+  static async addChallenge({ id, userId, countUploads, image, description }) {
+    const createdChallenge = await joinedChallenge.create({
+      id,
+      userId,
+      countUploads,
+      image,
       description,
-      fromDate,
-      toDate,
-      startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
-      endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
-      mainImg,
-      explainImg,
-    };
-    const createdChallenge = await challenge.create({
-      newChallenge,
     });
     return createdChallenge;
   }
-
-  // 전체 불러오기 (get)
-  static async getChallenges() {
-    const challenges = await challenge.findMany();
-    return challenges;
+  // 인증한 챌린지의 정보 불러오기
+  static async findChallenge(challengeId) {
+    const challengeInfo = await joinedChallenge.findUnique(challengeId);
+    return challengeInfo;
   }
 
-  // Get (진행중인 챌린지 전체)
-  static async getOngoing() {
-    const challenges = await challenge.findOngoing();
-
-    return challenges;
-  }
-  // id 값을 게시물 1개 선택하기(params 값을 이용)
-  static async findUniqueId(id) {
-    const findId = await challenge.findUnique(id);
-    if (!findId) {
-      const error = new Error("invalid id");
-      throw error;
-    }
-    return findId;
-  }
-
-  // Delete
-  // static async deleteOne(id) {
-  //   // const findId = await challenge.findFromDate(id);
-  //   // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
-  //   //   const error = new Error("cannot modify it after the challenge begins.");
-  //   //   throw error;
-  //   // }
-  //   const deleteChallenge = await challenge.delete(id);
-
-  //   return deleteChallenge;
-  // }
-
-  static async addImage(id, addedImage) {
-    const createdChallenge = await challenge.create({
-      id,
-      addedImage,
-    });
-    return createdChallenge;
-  }
-
-  // static async findUniqueUser(userId, id) {
-  //   const findUserId = await challenge.findUniqueUser(userId, id);
-  //   return findUserId;
-  // }
-
-  static async updateChallenge({
-    id,
-    title,
-    description,
-    fromDate,
-    toDate,
-    titleImg,
-    explainImgs,
-  }) {
-    const updated = await challenge.update({
-      id,
-      title,
-      description,
-      fromDate,
-      toDate,
-      titleImg,
-      explainImgs,
-    });
-    return updated;
-  }
-
-  static async findUniqueChallenge(id) {
-    const findId = await challenge.findUnique(id);
-    return findId;
-  }
-
-  // 전날까지만 수정 가능 (시작 당일 이후로 수정 불가)
-  static async findStartDate(id) {
-    const findUniqueId = await challenge.findUnique(id);
-    const blockUpdate = findUniqueId.startRemainingDate;
-    if (blockUpdate >= 0) {
-      const errorMessage = "cannot modify it after the challenge begins.";
-      return errorMessage;
-    }
-    return blockUpdate;
+  static async findJoinedChallenges(challengeId) {
+    const challengeInfo = await joinedChallenge.findMany(challengeId);
+    return challengeInfo;
   }
 }
 
-export { challengeService };
+export { joinedChallengeService };
