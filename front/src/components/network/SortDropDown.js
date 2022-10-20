@@ -19,12 +19,12 @@ const SortDropDown = ({originalData, data, setData}) => {
           setInitialState('최신순')
           const results=originalData.sort((item)=>
           item.createdAt).reverse()
-          console.log(results)
+        
           setData(results)
         }}>최신순</Dropdown.Item>
         <Dropdown.Item onClick={()=>{
           setInitialState('참여인원순')
-          console.log(dateString)
+          
         }}>참여인원순</Dropdown.Item> 
         <Dropdown.Item onClick={()=>{
           setInitialState('진행중인챌린지')

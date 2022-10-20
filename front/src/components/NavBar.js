@@ -19,7 +19,7 @@ const NavBar = () => {
   const dispatch = useContext(DispatchContext);
   const [currentUserId, setCurrentUserId] = useState("");
   const isLogin = !!userState.user;
-  console.log('아이디맞냐',currentUserId)
+  
   const handleDelete = async (e) => {
     e.preventDefault();
     await Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));

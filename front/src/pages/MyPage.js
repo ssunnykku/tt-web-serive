@@ -28,7 +28,7 @@ const MyPage = () => {
   const [challengeData, setChallengeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const [myChallengeList,setMyChallengeList]=useState([]);
-  console.log(likedList)
+  
   useEffect(() => {
     Api.get("challenges").then((res) => setChallengeData(res.data.result));
     Api.get("challenges").then((res) => setOriginalData(res.data.result));
@@ -36,7 +36,7 @@ const MyPage = () => {
     Api.get('liked').then((res)=>setLikedList(res.data))
     Api.get('userToChallenge').then((res)=>setMyChallengeList(res.data))
   }, []);
-  console.log(likedList.length)
+ 
   return (
     <>
       {isLogin === true ? (
@@ -108,7 +108,7 @@ const MyPage = () => {
                           (item) =>
                             new Date(item.toDate) <= new Date(dateString)
                         );
-                        console.log(results);
+                        
                         setChallengeData(results);
                       }}
                     >
