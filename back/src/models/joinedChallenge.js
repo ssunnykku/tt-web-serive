@@ -48,20 +48,19 @@ class JoinedChallenge {
     });
     return challengeInfo;
   }
-  
-  static async getChallengePointInfoList({userId}){
-    console.log(userId,"모델");
-    const ChallengePointInfoList=await prisma.joinedChallenge.findMany({
-        where: {
-            userId:userId,
-        },
-        select:{
-            challenges:true,
-        }
-    })
+
+  static async getChallengePointInfoList({ userId }) {
+    console.log(userId.userId, "모델");
+    const ChallengePointInfoList = await prisma.joinedChallenge.findMany({
+      where: {
+        userId: userId.userId,
+      },
+      select: {
+        challenges: true,
+      },
+    });
     return ChallengePointInfoList;
   }
 }
-
 
 export { JoinedChallenge };
