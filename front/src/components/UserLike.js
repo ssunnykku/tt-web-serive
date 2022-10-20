@@ -11,7 +11,10 @@ function UserLike({ challengeId }) {
   const [likeId, setLikeId] = useState(1);
   const [likeStatus, setLikeStatus] = useState(false);
   const [checkUserId, setCheckUserId] = useState("");
-  useEffect(() => {}, []);
+  useEffect(()=>{
+    Api.get(`likedCount/${challengeId}`).then((res) =>
+    setCountLike(res.data))
+  },[])
   // useEffect(()=>{
   //   Api.post('liked').then((res)=>{
   //     likedId: likedId,
@@ -68,7 +71,7 @@ function UserLike({ challengeId }) {
             challengeId,
           }).then((res) => setCheckUserId(res));
           Api.get(`likedCount/${challengeId}`).then((res) =>
-            console.log("좋아여개수", res)
+            setCountLike(res.data)
           );
 
           console.log(countLike);
