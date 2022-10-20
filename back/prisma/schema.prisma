@@ -67,6 +67,7 @@ model joinedChallenge {
   countUpload Int
   addedImage  String    @db.Text
   description String
+  // method      String    @db.VarChar(50)
   user        user?     @relation(fields: [userId], references: [userId])
   userId      String?   @db.VarChar(50)
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])

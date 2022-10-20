@@ -60,6 +60,19 @@ challengeRouter.get("/ongoing", async (req, res) => {
   res.status(200).json({ result });
 });
 
+// challengeRouter.get("/test", async (req, res) => {
+//   const { id } = req.params;
+
+//   const newChallenge = await prisma.challenge.findUnique({
+//     where: {
+//       challengeId: Number(id),
+//     },
+//   });
+//   const result = newChallenge.startRemainingDate;
+
+//   res.status(200).json({ result });
+// });
+
 // Get (선택한 항목 1개) : 에러남
 // challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
 //   const userId = req.currentUserId;
@@ -82,6 +95,9 @@ challengeRouter.get("/ongoing", async (req, res) => {
 //   const result = await challengeService.deleteOne(id);
 //   res.status(200).json({ result });
 // });
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 // 챌린지 수정
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
@@ -103,6 +119,17 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
       return res.status(400).send("cannot find image.");
     }
 
+    const startDate = await challengeService.findUniqueChallenge({
+      id,
+    });
+    const blockUpdate = startDate.startRemainingDate;
+
+    if (blockUpdate >= 0) {
+      return res
+        .status(400)
+        .send("cannot modify it after the challenge begins.");
+    }
+
     // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
     // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
     if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
@@ -110,6 +137,13 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
         .status(400)
         .send("cannot modify it after the challenge begins.");
     }
+
+    const newChallenge = await prisma.challenge.findUnique({
+      where: {
+        challengeId: Number(id),
+      },
+    });
+    const result = newChallenge.startRemainingDate;
 
     const updatedChallenge = await challengeService.updateChallenge({
       id,

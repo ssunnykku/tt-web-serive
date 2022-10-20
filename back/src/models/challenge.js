@@ -56,7 +56,7 @@ class challenge {
   static async findUnique(id) {
     const challenge = await prisma.challenge.findUnique({
       where: {
-        challengeId: Number(id),
+        challengeId: 2,
       },
     });
     return challenge;
@@ -80,6 +80,16 @@ class challenge {
   //   return challenge;
   // }
 
+  static async findUniqueChallenge(id) {
+    const challenge = await prisma.challenge.findUniqueChallenge({
+      where: {
+        challengeId: 2,
+      },
+    });
+    return challenge;
+  }
+
+  // Update
   static async update({
     id,
     title,

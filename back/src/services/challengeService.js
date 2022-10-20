@@ -50,27 +50,18 @@ class challengeService {
     }
     return findId;
   }
-  // id 값을 게시물 1개 선택하기(params 값을 이용)
-  static async findUniqueId(id) {
-    const findId = await challenge.findUnique(id);
-    if (!findId) {
-      const error = new Error("invalid id");
-      throw error;
-    }
-    return findId;
-  }
 
   // Delete
-  static async deleteOne(id) {
-    // const findId = await challenge.findFromDate(id);
-    // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
-    //   const error = new Error("cannot modify it after the challenge begins.");
-    //   throw error;
-    // }
-    const deleteChallenge = await challenge.delete(id);
+  // static async deleteOne(id) {
+  //   // const findId = await challenge.findFromDate(id);
+  //   // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
+  //   //   const error = new Error("cannot modify it after the challenge begins.");
+  //   //   throw error;
+  //   // }
+  //   const deleteChallenge = await challenge.delete(id);
 
-    return deleteChallenge;
-  }
+  //   return deleteChallenge;
+  // }
 
   static async addImage(id, addedImage) {
     const createdChallenge = await challenge.create({
@@ -104,6 +95,22 @@ class challengeService {
       explainImgs,
     });
     return updated;
+  }
+
+  static async findUniqueChallenge(id) {
+    const findId = await challenge.findUnique(id);
+    return findId;
+  }
+
+  // 전날까지만 수정 가능 (시작 당일 이후로 수정 불가)
+  static async findStartDate(id) {
+    const findUniqueId = await challenge.findUnique(id);
+    const blockUpdate = findUniqueId.startRemainingDate;
+    if (blockUpdate >= 0) {
+      const errorMessage = "cannot modify it after the challenge begins.";
+      return errorMessage;
+    }
+    return blockUpdate;
   }
 }
 
