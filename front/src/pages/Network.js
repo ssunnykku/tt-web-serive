@@ -9,14 +9,13 @@ import "../styles/network/network.css";
 import StyledButton from "../styles/commonstyles/Button";
 import CreateChallengePage from "./CreateChallengePage";
 import { useNavigate } from "react-router-dom";
-import * as Api from '../api'
+import * as Api from "../api";
 
 const Network = () => {
-  const [challengeData,setChallengeData]=useState([]);
-  const [originalData,setOriginalData]=useState([]);
-  const navigate=useNavigate()
-  
-  
+  const [challengeData, setChallengeData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const navigate = useNavigate();
+
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
@@ -24,11 +23,15 @@ const Network = () => {
   const click = () => {
     document.location.href("/CreateChallengePage");
   };
-  useEffect(()=>{
-    Api.get('challenges').then((res)=> setChallengeData(res.data.result.reverse()))
-    Api.get('challenges').then((res)=> setOriginalData(res.data.result.reverse()))
-  },[])
-  console.log(challengeData)
+  useEffect(() => {
+    Api.get("challenges").then((res) =>
+      setChallengeData(res.data.result.reverse())
+    );
+    Api.get("challenges").then((res) =>
+      setOriginalData(res.data.result.reverse())
+    );
+  }, []);
+
   return (
     <div className="NetworkContainer">
       <NavBar />
@@ -45,12 +48,14 @@ const Network = () => {
         />
       </div>
       <div className="challangePostButtonContainer">
-        
-          <button className="challangePostButton"
-          onClick={()=>{
-            navigate('/network/pages/CreateChallengePage')
-          }}>+</button>
-        
+        <button
+          className="challangePostButton"
+          onClick={() => {
+            navigate("/network/pages/CreateChallengePage");
+          }}
+        >
+          추가
+        </button>
       </div>
       <Container className="forContainer">
         <Row>
