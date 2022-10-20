@@ -124,49 +124,6 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   }
 });
 
-// 챌린지 시작 전에는 수정 못하는 코드 작성 // 3계층 분리...
-// challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
-//   try {
-//     const userId = req.currentUserId;
-//     const { id } = req.params;
-//     const { title, description, fromDate, toDate, method } = req.body;
-
-//     const image = req.files;
-//     const mainImg = image.main[0];
-
-//     const explainImg = image.explain;
-//     const explainImgPath = explainImg.map((img) => img.path);
-
-//     if (image === undefined) {
-//       return res.status(400).send("cannot find image.");
-//     }
-//     // if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
-//     //   return res
-//     //     .status(400)
-//     //     .send("cannot modify it after the challenge begins.");
-//     // }
-
-//     const updatedChallenge = await prisma.challenge.update({
-//       where: {
-//         challengeId: Number(id),
-//       },
-//       data: {
-//         title,
-//         description,
-//         method,
-//         fromDate,
-//         toDate,
-//         mainImg: `uploads/${mainImg.path}`,
-//         explainImg: `uploads/${explainImgPath}`,
-//       },
-//     });
-
-//     res.status(200).json({ updatedChallenge });
-//   } catch (error) {
-//     res.json({ message: error.message });
-//   }
-// });
-
 // get(1개 불러오기/ login 한 유저꺼 불러오기)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   // const userId = req.currentUserId;
