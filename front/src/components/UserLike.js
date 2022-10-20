@@ -8,13 +8,17 @@ function UserLike({ challengeId }) {
   const [likeImoticon, setLikeImoticon] = useState(false);
   const [countLike, setCountLike] = useState("0");
   // const myId = 1;
-  const [likeId, setLikeId] = useState(1);
+  
   const [likeStatus, setLikeStatus] = useState(false);
   const [checkUserId, setCheckUserId] = useState("");
   useEffect(()=>{
     Api.get(`likedCount/${challengeId}`).then((res) =>
     setCountLike(res.data))
   },[])
+  useEffect(()=>{
+    Api.get('liked').then((res)=>setCheckUserId(res.data))
+  },[])
+  console.log('asd',checkUserId);
   // useEffect(()=>{
   //   Api.post('liked').then((res)=>{
   //     likedId: likedId,
@@ -74,7 +78,7 @@ function UserLike({ challengeId }) {
             setCountLike(res.data)
           );
 
-          console.log(countLike);
+          
         }}
         id="userLike"
         className="likeButton"
