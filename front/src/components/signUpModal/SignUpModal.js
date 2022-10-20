@@ -86,7 +86,6 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         password,
         confirmPassword,
       });
-      console.log(res);
 
       setSignUpModalOpen(false);
       Swal.fire({
