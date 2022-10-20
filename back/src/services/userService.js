@@ -2,7 +2,7 @@ import { User } from "../models/User.js";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import dotenv, { config } from "dotenv";
 dotenv.config();
 
 class userService {
@@ -42,6 +42,43 @@ class userService {
     await User.createToken({ userId });
     await User.createPoint({ userId });
     return createNewUser;
+  }
+
+  //1-1 카카오 회원가입
+
+  //1-2 카카오 로그인
+  static async getKakaoUser({ kakaoId }) {
+    const user = await User.findByKakaoId({ kakaoId });
+    if (!user) {
+      const errorMessage = "연동된 카카오 계정이 없습니다.";
+      return errorMessage;
+    }
+
+    const secretKey = process.env.JWT_SECRET_KEY;
+    const token = jwt.sign({ userId: user._id }, secretKey);
+
+    const loginUser = {
+      ...user,
+      token,
+      errorMessage: null,
+    };
+
+    try {
+      delete loginUser["password"];
+    } finally {
+      return loginUser;
+    }
+  }
+
+  //1-3 kakaoId  로 유저 조회
+  static async getUserByKakaoId({ kakaoId }) {
+    const user = await User.findByKakaoId({ kakaoId });
+    if (!user) {
+      const errorMessage = "해당 이메일은 가입 내역이 없습니다.";
+      return errorMessage;
+    }
+
+    return user;
   }
 
   // 2. 로그인 서비스

@@ -4,8 +4,8 @@ import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
 import is from "@sindresorhus/is";
 import multer from "multer";
-// import axios from "axios";
-// import assert from "assert";
+import axios from "axios";
+import assert from "assert";
 import { config } from "dotenv";
 
 const storage = multer.memoryStorage();
@@ -60,7 +60,29 @@ userRouter.get("/auth/kakao", async (req, res, next) => {
   const code = req.query.code;
   try {
     //토큰 발급
-    let result = await axios.post(config.kakao);
+    let result = await axios.post(
+      config.kakao.kakaoAuthUrl,
+      {},
+      {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+        params: {
+          grant_type: "authorization_code",
+          client_id: config.kakao.kakaoClientId,
+          redirect_uri: config.kakao.kakaoRedirectUrl,
+          code: code,
+        },
+      }
+    );
+    const kakaoId = result.data.id;
+
+    let user = await userService.getUserByKakaoId({ kakaoId });
+    if (!user) {
+      user = await userService.addUserByKakaoId;
+    }
+    user = await userService.getKakaoUser({ kakaoId });
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }
