@@ -48,5 +48,36 @@ userToChallengeRouter.get(
     }
     );
 
+//user별 참가한 챌린지별 포인트 조회(마이페이지)
+userToChallengeRouter.get(
+  "/userToChallengePoint",
+  loginRequired,
+  async function (req, res, next){
+      try{
+          const userId=req.currentUserId;
+          const userJoinChallengeList=await userToChallengeService.getUserChallengePoint({userId});
+          res.status(200).send(userJoinChallengeList);
+      }catch(error){
+          next(error);
+      }
+  }
+  );
+
+  //참가취소
+  userToChallengeRouter.put(
+    "/JoinDelete",
+    loginRequired,
+    async function (req, res, next){
+        try{
+            const userId=req.currentUserId;
+            const challengeId = req.body.challengeId;
+            const UserToChallenge=await userToChallengeService.JoinDelete({userId,challengeId});
+            res.status(200).send(UserToChallenge);
+        }catch(error){
+            next(error);
+        }
+    }
+    );
+
 
 export { userToChallengeRouter };

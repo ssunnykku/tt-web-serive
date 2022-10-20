@@ -1,5 +1,5 @@
 import { Point } from "../models/point.js";
-
+import { User } from "../models/User.js";
 class pointService {
 
   //포인트 정보 업데이트하기
@@ -30,6 +30,19 @@ class pointService {
       return { errorMessage };
     }
     return points;
+  }
+
+  //포인트 탑쓰리 조회
+  static async getPoitList(){
+    const pointLIst=await Point.getPoitList();
+    const topPointUser=pointLIst[0];
+    const userId=topPointUser.userId;
+    const top=await User.findByUserId({userId});
+    const topInfo={
+      "name":top.name,
+      "point":topPointUser.point
+    }
+    return topInfo;
   }
 
 }

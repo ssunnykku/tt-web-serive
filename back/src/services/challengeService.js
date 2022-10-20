@@ -66,6 +66,30 @@ class challengeService {
     return deleteChallenge;
   }
 
+  // 수정
+  static async updateChallenge({
+    id,
+    title,
+    description,
+    method,
+    fromDate,
+    toDate,
+    titleImg,
+    explainImgs,
+  }) {
+    const updated = await challenge.update({
+      id,
+      title,
+      description,
+      method,
+      fromDate,
+      toDate,
+      titleImg,
+      explainImgs,
+    });
+    return updated;
+  }
+
   static async addImage(id, addedImage) {
     const createdChallenge = await challenge.create({
       id,

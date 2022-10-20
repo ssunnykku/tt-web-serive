@@ -15,7 +15,15 @@ class UserToChallenge{
         })
         return UserToChallenge;
     }
-    
+    static async deleteJoinUser({id}){
+        const UserToChallenge=await prisma.userToChallenge.delete({
+            where:{
+                userToChallengeId:id,
+            },
+            
+        })
+        return UserToChallenge;
+    }
     static async getJoinUserLIst({challengeId}){
 
         const JoinUserList=await prisma.userToChallenge.findMany({
@@ -35,10 +43,24 @@ class UserToChallenge{
                 userId:userId,
             },
             select:{
+                userToChallengeId:true,
                 challenge:true,
             }
         })
         return JoinChallengeList;
     }
+
+    static async getCallengePointInfoList({userId}){
+        const CallengePointInfoList=await prisma.joinedChallenge.findMany({
+            where:{
+                userId:userId,
+            },
+            select:{
+                challenge:true,
+            }
+        })
+        return CallengePointInfoList;
+    }
+    
 }
 export {UserToChallenge};

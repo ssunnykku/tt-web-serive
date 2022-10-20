@@ -95,25 +95,24 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }
-    // if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
-    //   return res
-    //     .status(400)
-    //     .send("cannot modify it after the challenge begins.");
-    // }
 
-    const updatedChallenge = await prisma.challenge.update({
-      where: {
-        challengeId: Number(id),
-      },
-      data: {
-        title,
-        description,
-        method,
-        fromDate,
-        toDate,
-        mainImg: `uploads/${mainImg.path}`,
-        explainImg: `uploads/${explainImgPath}`,
-      },
+    // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
+    // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
+    if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
+      return res
+        .status(400)
+        .send("cannot modify it after the challenge begins.");
+    }
+
+    const updatedChallenge = await challengeService.updateChallenge({
+      id,
+      title,
+      description,
+      method,
+      fromDate,
+      toDate,
+      titleImg,
+      explainImgs,
     });
 
     res.status(200).json({ updatedChallenge });

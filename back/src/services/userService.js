@@ -68,7 +68,6 @@ class userService {
     }
 
     // //로그인 정보 검사 후 refresh, access token 발급을 위한 코드>> 프론트에 넘겨줘야한다
-    const date = new Date();
     const secretKey = process.env.JWT_SECRET_KEY;
     const accessToken = jwt.sign({ userId: user.userId }, secretKey, {
       expiresIn: "1h",
@@ -76,19 +75,11 @@ class userService {
     const refreshToken = jwt.sign({ userId: user.userId }, secretKey, {
       expiresIn: "14d",
     });
-    // 리프레시 토큰 db update
-    //계속 토큰이 만료된다.??? 만료 관련 이슈 확인하기
-    //expiredAt이거 프론트단에 보내얗 한ㄴ다?
-    //https://developers.cafe24.com/app/front/develop/oauth/retoken
+    const userId = user.userId;
+    await User.tokenUpdate({ userId, refreshToken });
 
     //이거 적용 해야함
     // const hashrefreshToken = await bcrypt.hash(password, 10);
-    const userId = user.userId;
-
-    // if (refreshToken) {
-    //   await User.tokenUpdate({ userId, refreshToken });
-    // }
-    //디비에서 유효기간 지난 토큰은  자동으로 verify에서 걸러진다.
 
     const name = user.name;
     const loginUser = {

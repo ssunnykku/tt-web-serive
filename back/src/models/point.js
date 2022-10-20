@@ -22,6 +22,14 @@ class Point {
     });
     return updatePoint;
   }
+  static async getPoitList(){
+    const pointList=await prisma.point.findMany({
+      orderBy: {
+        point: "desc",
+      },
+    });
+    return pointList;
+  }
 }
 
 export { Point };

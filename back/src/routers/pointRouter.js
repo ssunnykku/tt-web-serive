@@ -68,4 +68,15 @@ pointRouter.get("/point", loginRequired, async function (req, res, next) {
   }
 });
 
+//전체 포인트 리스트 조회
+pointRouter.get("/bestPoint", async function (req, res, next) {
+  try{
+    const pointList=await pointService.getPoitList();
+    res.status(200).send(pointList);
+  }catch(error){
+    next(error);
+  }
+
+})
+
 export { pointRouter };
