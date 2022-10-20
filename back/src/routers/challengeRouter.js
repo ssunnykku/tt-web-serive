@@ -4,11 +4,8 @@ import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
-
 const upload = addImage("uploads");
+
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -126,7 +123,7 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
 
 // get(1개 불러오기/ login 한 유저꺼 불러오기)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
-  // const userId = req.currentUserId;
+  const userId = req.currentUserId;
 
   const { id } = req.params;
 

@@ -12,6 +12,7 @@ const SearchForm = ({ data, setData,originalData }) => {
     const results = originalData.filter((item) =>
       item.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    
     setData(results);
   }, [searchTerm]);
   return (

@@ -9,6 +9,7 @@ let data = [
     toDate: "2022-10-14",
     createdAt: "2022-10-01",
     updatedAt: "만든시간",
+liked: [{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 2,
@@ -20,6 +21,7 @@ let data = [
     toDate: "2022-10-10",
     createdAt: "2022-10-02",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 3,
@@ -31,6 +33,7 @@ let data = [
     toDate: "2022-10-16",
     createdAt: "2022-10-03",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 4,
@@ -42,6 +45,7 @@ let data = [
     toDate: "2022-10-17",
     createdAt: "2022-10-04",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 5,
@@ -53,6 +57,7 @@ let data = [
     toDate: "2022-10-18",
     createdAt: "2022-10-05",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 6,
@@ -64,6 +69,7 @@ let data = [
     toDate: "2022-10-19",
     createdAt: "2022-10-06",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 7,
@@ -75,6 +81,7 @@ let data = [
     toDate: "2022-10-20",
     createdAt: "2022-10-07",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 8,
@@ -86,6 +93,7 @@ let data = [
     toDate: "2022-10-16",
     createdAt: "2022-10-08",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 9,
@@ -97,6 +105,7 @@ let data = [
     toDate: "2022-10-17",
     createdAt: "2022-10-09",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
   {
     challangeId: 10,
@@ -108,6 +117,7 @@ let data = [
     toDate: "2022-10-23",
     createdAt: "2022-10-10",
     updatedAt: "만든시간",
+liked: [{userId:1, likedId:1},{userId:2, likedId:2},{userId:3, likedId:3},]
   },
 ];
 

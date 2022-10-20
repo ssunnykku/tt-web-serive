@@ -49,14 +49,13 @@
 .LoginModal {
     /* background-color: #FFFCFC; */
     width: 460px;
-    height: 620px;
+    height: 350px;
     position: relative;
     box-sizing: border-box;
-    margin:50px auto;
+    margin:150px auto;
     background: #fff;
     background-color: var(--color-white);
     border-radius: 6px;
-    box-shadow: 12px 12px 20px gray;
 }
 .LoginModalContents{
     margin: 0 auto;
@@ -86,9 +85,9 @@ alert{
     color: red;
 }
 
-a{
+/* a{
     margin-top: 20px;
-}
+} */
 
 p{
     margin-top: 30px;
@@ -119,20 +118,20 @@ p{
 }
 
 .LoginBtn{
-    border: 2px solid #CDCCCC;
+    border: 0;
     outline: none;
     background-color:#6A71E6;
     border-radius: 6px;
     /* height: ; */
     color: #fff;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 38px;
     font-size: large;
     font-weight: 500;
 }
 
 .LoginBtn:disabled{
-    border: 2px solid #CDCCCC;
+    border: 0;
     outline: none;
     background-color: #7c7979;
     border-radius: 6px;
@@ -142,9 +141,4 @@ p{
     margin-top: 20px;
     font-size: large;
     font-weight: 500;
-}
-.LoginBtn:hover{
-    background: white;
-    border: 2px solid;
-    color: gray;
 }

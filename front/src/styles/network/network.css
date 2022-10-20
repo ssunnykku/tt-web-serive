@@ -9,12 +9,16 @@
     margin-top: 3%;
 }
 .SearchFormContainer{
+    margin-top: 10%;
     display: flex;
     align-items: center;
     justify-content:flex-end;
     margin-right: 5%;
     width: 100%;
     border-bottom: 2px solid grey;
+    margin-top: 5%;
+    padding-right: 13%;
+    display: flex;
 }
 #showMore-btn{
     display: block;

@@ -5,7 +5,7 @@ import { pointRouter } from "./routers/pointRouter";
 import { errorMiddleware } from "./middlewares/errorMiddleware";
 import { challengeRouter } from "./routers/challengeRouter";
 import { joinedChallengeRouter } from "./routers/joinedChallengeRouter";
-
+import {userToChallengeRouter} from "./routers/userToChallengeRouter"
 import { likedRouter } from "./routers/likedRouter";
 
 const app = express();
@@ -22,7 +22,7 @@ app.use(userRouter);
 
 app.use("/challenges", challengeRouter);
 app.use("/joinedChallenge", joinedChallengeRouter);
-
+app.use(userToChallengeRouter);
 app.use(pointRouter);
 app.use(likedRouter);
 app.use(errorMiddleware);
