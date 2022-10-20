@@ -25,35 +25,31 @@ const serverUrl =
 //   }
 // }
 
-async function updateToken(endpoint) {
+async function updateToken() {
   if (localStorage.getItem("refreshToken")) {
-    
-    let refreshedAccessTokenResponse = await axios.put(serverUrl+ endpoint ,{
-      
-      headers: {
-        "Content-Type": "application/json",
-      },
+    console.log(localStorage.getItem('refreshToken'))
+    console.log(refreshAccessToken)
+    let refreshedAccessTokenResponse = await axios.put(serverUrl + "currentUser", {
+     
       body: JSON.stringify({
         refreshToken: localStorage.getItem("refreshToken"),
       }),
+      headers: {
+        "Content-Type": "application/json",
+      }
     });
-    console.log('보내짐?')
-    console.log('이게잘못댐?',refreshedAccessTokenResponse)
+    
     let refreshAccessToken = await refreshedAccessTokenResponse.json();
-    console.log(refreshedAccessTokenResponse.json())
-    console.log('이게잘못댐?',refreshAccessToken)
+    console.log(refreshAccessToken)
     if (refreshedAccessTokenResponse.Logout) {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
       window.location.reload();
-      console.log('이건뭐고')
     } else {
       sessionStorage.setItem("accessToken", refreshAccessToken.accessToken);
-      console.log('세션에토큰박기')
     }
   }
 }
-
 
 axios.interceptors.response.use(
   async function (response) {
