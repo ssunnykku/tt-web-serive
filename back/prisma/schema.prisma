@@ -7,16 +7,22 @@ model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)
   challengeId Int
-  user        user      @relation(fields: [userId], references: [userId])
   challenge   challenge @relation(fields: [challengeId], references: [challengeId])
+  user        user      @relation(fields: [userId], references: [userId])
+
+  @@index([challengeId], map: "liked_challengeId_fkey")
+  @@index([userId], map: "liked_userId_fkey")
 }
 
 model userToChallenge {
   userToChallengeId Int       @id @unique @default(autoincrement())
   userId            String    @db.VarChar(45)
   challengeId       Int
-  user              user      @relation(fields: [userId], references: [userId])
   challenge         challenge @relation(fields: [challengeId], references: [challengeId])
+  user              user      @relation(fields: [userId], references: [userId])
+
+  @@index([challengeId], map: "userToChallenge_challengeId_fkey")
+  @@index([userId], map: "userToChallenge_userId_fkey")
 }
 
 model point {
@@ -31,10 +37,10 @@ model user {
   password         String            @db.VarChar(100)
   withdrawal       Int               @default(0) @db.TinyInt
   img              Bytes?            @db.Blob
-  refreshToken     refreshToken[]
-  liked            liked[]
-  userToChallenge  userToChallenge[]
   joinedChallenges joinedChallenge[]
+  liked            liked[]
+  refreshToken     refreshToken?
+  userToChallenge  userToChallenge[]
 }
 
 model refreshToken {
@@ -48,6 +54,7 @@ model challenge {
   title              String            @db.VarChar(50)
   holdUserId         String            @db.VarChar(50)
   description        String
+  method             String            @db.VarChar(50)
   fromDate           String
   toDate             String
   mainImg            String            @db.Text
@@ -56,26 +63,21 @@ model challenge {
   endRemainingDate   Int
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
-  liked              liked[]
   joinedChallenges   joinedChallenge[]
+  liked              liked[]
   userToChallenge    userToChallenge[]
 }
 
 model joinedChallenge {
-  joinedId Int @id @unique @default(autoincrement())
-
+  joinedId    Int       @id @unique @default(autoincrement())
   countUpload Int
   addedImage  String    @db.Text
   description String
-  // method      String    @db.VarChar(50)
-  user        user?     @relation(fields: [userId], references: [userId])
   userId      String?   @db.VarChar(50)
-  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
-}
+  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
+  user        user?     @relation(fields: [userId], references: [userId])
 
-// model hashTag {
-//   title     String   @unique @db.VarChar(15)
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
+  @@index([chalngId], map: "joinedChallenge_chalngId_fkey")
+  @@index([userId], map: "joinedChallenge_userId_fkey")
+}
