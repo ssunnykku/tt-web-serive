@@ -6,13 +6,13 @@ import likedimg from "../images/userLiked/liked.png";
 import "../styles/network/userLike.css";
 function UserLike({ challengeId}) {
   const [likeImoticon, setLikeImoticon] = useState(false);
-  const [countLike, setCountLike] = useState(0);
+  const [countLike, setCountLike] = useState('0');
   // const myId = 1;
   const [likeId,setLikeId] = useState(1);
   const [likeStatus,setLikeStatus]=useState(false)
   const [checkUserId,setCheckUserId]=useState('')
   useEffect(()=>{
-    
+  
   },[])
   // useEffect(()=>{
   //   Api.post('liked').then((res)=>{
@@ -70,8 +70,8 @@ function UserLike({ challengeId}) {
         Api.post('liked',{
           challengeId
         }).then((res)=>setCheckUserId(res))
-        Api.get('likedCount',{challengeId}).then((res)=>console.log('카운트',res))
-        console.log(checkUserId)
+        Api.get(`likedCount/:${challengeId}`).then((res)=>console.log('좋아여개수',res))
+        
         console.log(countLike)
       }} id="userLike"className="likeButton">
         {likeStatus ? <img src={likedimg} /> : <img src={likeimg} />}
