@@ -16,26 +16,7 @@ class challenge {
     const challenges = await prisma.challenge.findMany();
     return challenges;
   }
-  // 진행중인 챌린지만 불러오기 (시작예정인 챌린지 제외되어있음)
-  static async findOngoing() {
-    const challenges = await prisma.challenge.findMany({
-      where: {
-        AND: [
-          {
-            startRemainingDate: {
-              gte: Number(0),
-            },
-          },
-          {
-            endRemainingDate: {
-              gte: Number(0),
-            },
-          },
-        ],
-      },
-    });
-    return challenges;
-  }
+
   // (params 값) 게시물 1개 선택
   static async findUnique(id) {
     const challenge = await prisma.challenge.findUnique({
@@ -51,7 +32,7 @@ class challenge {
   }
 
   // (params 값) 게시물 1개 선택
-  static async findUnique(id) {
+  static async findUniqueId(id) {
     const challenge = await prisma.challenge.findUnique({
       where: {
         challengeId: Number(id),
@@ -68,14 +49,5 @@ class challenge {
     });
     return challenge;
   }
-  // 해당 유저아이디를 가진 챌린지 하나 가져오기
-  // static async findUniqueUser(userId, id) {
-  //   const challenge = await prisma.userToChallenge.findUnique({
-  //     where: {
-  //       And: [{ userId: userId }, { challengeId: id }],
-  //     },
-  //   });
-  //   return challenge;
-  // }
 }
 export { challenge };

@@ -48,21 +48,20 @@ model refreshToken {
 }
 
 model challenge {
-  challengeId        Int               @id @unique @default(autoincrement())
-  title              String            @db.VarChar(50)
-  holdUserId         String            @db.VarChar(50)
-  description        String
-  fromDate           String
-  toDate             String
-  mainImg            String            @db.Text
-  explainImg         String            @db.Text
-  startRemainingDate Int
-  endRemainingDate   Int
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  liked              liked[]
-  joinedChallenges   joinedChallenge[]
-  userToChallenge    userToChallenge[]
+  challengeId      Int               @id @unique @default(autoincrement())
+  title            String            @db.VarChar(50)
+  holdUserId       String            @db.VarChar(50)
+  description      String
+  method           String
+  fromDate         String
+  toDate           String
+  mainImg          String            @db.Text
+  explainImg       String            @db.Text
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  liked            liked[]
+  joinedChallenges joinedChallenge[]
+  userToChallenge  userToChallenge[]
 }
 
 model joinedChallenge {
@@ -71,8 +70,8 @@ model joinedChallenge {
   countUpload Int
   addedImage  String    @db.Text
   description String
-  user        user?     @relation(fields: [userId], references: [userId])
-  userId      String?   @db.VarChar(50)
+  user        user      @relation(fields: [userId], references: [userId])
+  userId      String    @db.VarChar(50)
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
 }
