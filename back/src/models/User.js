@@ -11,6 +11,7 @@ class User {
         password: newUser.password,
         name: newUser.name,
         withdrawal: 0,
+        // img: null,
       },
       include: {
         liked: true,
@@ -87,33 +88,46 @@ class User {
     });
     return img.img;
   }
-  //img 수정,
-  static async updateUserImg({ userId, img }) {
-    console.log("이미지모델:", img);
-    console.log("userId:", userId);
-
-    const updateimg = await prisma.user.update({
+  // //img 수정(sh),
+  static async EditImg({ userId, img }) {
+    const addedImage = `uploads/${img}`;
+    const updateImg = await prisma.user.update({
       where: {
         userId: userId,
       },
-      data: { img },
-    });
-    console.log("updateimg:", updateimg);
-    return updateimg;
-  }
-  //img 삭제,
-  static async deleteUserImg({ userId }) {
-    console.log("userId:", userId);
-
-    const updateimg = await prisma.user.update({
-      where: {
-        userId: userId,
+      data: {
+        img: addedImage,
       },
-      data: { img: null },
     });
-    console.log("updateimg:", updateimg.img);
-    return updateimg;
+    return updateImg;
   }
+
+  // static async updateUserImg({ userId, img }) {
+  //   console.log("이미지모델:", img);
+  //   console.log("userId:", userId);
+
+  //   const updateimg = await prisma.user.update({
+  //     where: {
+  //       userId: userId,
+  //     },
+  //     data: { img },
+  //   });
+  //   console.log("updateimg:", updateimg);
+  //   return updateimg;
+  // }
+  // //img 삭제,
+  // static async deleteUserImg({ userId }) {
+  //   console.log("userId:", userId);
+
+  //   const updateimg = await prisma.user.update({
+  //     where: {
+  //       userId: userId,
+  //     },
+  //     data: { img: null },
+  //   });
+  //   console.log("updateimg:", updateimg.img);
+  //   return updateimg;
+  // }
 
   // 토큰업데이트;
   static async tokenUpdate({ userId, refreshToken }) {

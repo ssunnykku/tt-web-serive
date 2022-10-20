@@ -38,7 +38,7 @@ model user {
   email            String            @db.VarChar(30)
   password         String            @db.VarChar(100)
   withdrawal       Int               @default(0) @db.TinyInt
-  img              Bytes?            @db.Blob
+  img              String?           @db.Text
   joinedChallenges joinedChallenge[]
   liked            liked[]
   refreshToken     refreshToken?

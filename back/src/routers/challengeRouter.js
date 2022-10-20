@@ -6,6 +6,8 @@ import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAn
 
 const upload = addImage("uploads");
 
+// const upload = multer({ dest: "uploads/" });
+
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -13,8 +15,8 @@ const multiImg = upload.fields([
 
 const challengeRouter = Router();
 
+// 1. 챌린지 등록
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
-  // console.log(req);
   try {
     const holdUserId = req.currentUserId;
     const { title, description, fromDate, toDate, method } = req.body;
@@ -49,13 +51,13 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   }
 });
 
-// Get (전체) ok
+//2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
   res.status(200).json({ result });
 });
 
-// Get (선택한 항목 1개) ok
+//3. Get (선택한 항목 1개)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   const holdUserId = req.currentUserId;
   const { id } = req.params;
@@ -66,7 +68,7 @@ challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   res.status(200).json({ updateChallenge });
 });
 
-// Delete 관리용 코드임 ok
+// Delete (관리용 코드)
 challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   const userId = req.currentUserId;
   const { id } = req.params;
@@ -76,7 +78,7 @@ challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   res.status(200).json({ result });
 });
 
-// 챌린지 수정
+// 5. 챌린지 수정
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
@@ -121,7 +123,7 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   }
 });
 
-// get(1개 불러오기/ login 한 유저꺼 불러오기)
+// 6. get(1개 불러오기/ login 한 유저꺼 불러오기)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   const userId = req.currentUserId;
 
