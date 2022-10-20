@@ -26,21 +26,22 @@ const serverUrl =
 // }
 
 async function updateToken() {
+  
   if (localStorage.getItem("refreshToken")) {
-    console.log(localStorage.getItem('refreshToken'))
-    console.log(refreshAccessToken)
-    let refreshedAccessTokenResponse = await axios.put(serverUrl + "currentUser", {
-     
-      body: JSON.stringify({
+    console.log('리프레쉬 존재함')
+    let refreshedAccessTokenResponse = await fetch(serverUrl + 'currentUser', {
+      method: "PUT",
+      body: ({
         refreshToken: localStorage.getItem("refreshToken"),
       }),
       headers: {
         "Content-Type": "application/json",
       }
     });
+    console.log('받았다 응답',refreshedAccessTokenResponse)
     
     let refreshAccessToken = await refreshedAccessTokenResponse.json();
-    console.log(refreshAccessToken)
+    console.log('이거는?',refreshAccessToken)
     if (refreshedAccessTokenResponse.Logout) {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
@@ -57,7 +58,7 @@ axios.interceptors.response.use(
   },
   async (error) => {
     if (error.response.status === 490) {
-      let refreshedAccessTokenResponse = await fetch(serverUrl + "login", {
+      let refreshedAccessTokenResponse = await fetch(serverUrl + 'currentUser', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
