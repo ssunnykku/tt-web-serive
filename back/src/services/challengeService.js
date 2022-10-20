@@ -84,6 +84,27 @@ class challengeService {
   //   const findUserId = await challenge.findUniqueUser(userId, id);
   //   return findUserId;
   // }
+
+  static async updateChallenge({
+    id,
+    title,
+    description,
+    fromDate,
+    toDate,
+    titleImg,
+    explainImgs,
+  }) {
+    const updated = await challenge.update({
+      id,
+      title,
+      description,
+      fromDate,
+      toDate,
+      titleImg,
+      explainImgs,
+    });
+    return updated;
+  }
 }
 
 export { challengeService };

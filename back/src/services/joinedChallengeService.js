@@ -2,21 +2,31 @@ import { joinedChallenge } from "../models/joinedChallenge";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class joinedChallengeService {
-  static async addChallenge({
-    id,
-    countUpload,
-    addedImage,
-    description,
-    // challenges,
-  }) {
-    const createdChallenge = await challenge.create({
+  static async count({ id }) {
+    const countJoinedChallenge = await joinedChallenge.count({
       id,
-      countUpload,
-      addedImage,
+    });
+    return countJoinedChallenge;
+  }
+  static async addChallenge({ id, userId, countUploads, image, description }) {
+    const createdChallenge = await joinedChallenge.create({
+      id,
+      userId,
+      countUploads,
+      image,
       description,
-      //   challenges,
     });
     return createdChallenge;
+  }
+  // 인증한 챌린지의 정보 불러오기
+  static async findChallenge(challengeId) {
+    const challengeInfo = await joinedChallenge.findUnique(challengeId);
+    return challengeInfo;
+  }
+
+  static async findJoinedChallenges(challengeId) {
+    const challengeInfo = await joinedChallenge.findMany(challengeId);
+    return challengeInfo;
   }
 }
 
