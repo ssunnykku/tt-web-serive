@@ -61,8 +61,8 @@ model challenge {
   explainImg       String            @db.Text
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
-  liked            liked[]
   joinedChallenges joinedChallenge[]
+  liked            liked[]
   userToChallenge  userToChallenge[]
 }
 
@@ -71,10 +71,10 @@ model joinedChallenge {
   countUpload Int
   addedImage  String    @db.Text
   description String
-  user        user      @relation(fields: [userId], references: [userId])
   userId      String    @db.VarChar(50)
-  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
+  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
+  user        user      @relation(fields: [userId], references: [userId])
 
   @@index([chalngId], map: "joinedChallenge_chalngId_fkey")
   @@index([userId], map: "joinedChallenge_userId_fkey")
