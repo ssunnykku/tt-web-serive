@@ -80,13 +80,11 @@ class User {
   }
   //get img
   static async getUserImg({ userId }) {
-    console.log("userId:", userId);
     const img = await prisma.user.findUnique({
       where: {
         userId: userId,
       },
     });
-    console.log("img:", img.img);
     return img.img;
   }
   //img 수정,

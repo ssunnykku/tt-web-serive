@@ -32,6 +32,7 @@ likedRouter.get("/liked", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const likedList = await likedService.getLiked({ userId });
+    console.log(likedList);
     res.status(200).send(likedList);
   } catch (error) {
     next(error);
