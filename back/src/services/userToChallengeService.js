@@ -30,12 +30,6 @@ class userToChallengeService{
         const getJoinCallenge=await UserToChallenge.getJoinChallengeList({userId});
         return getJoinCallenge;
     }
-
-    //user별 참가한 챌린지 조회(마이페이지)
-    static async getUserChallengePoint({userId}){
-        const getCallengePointInfoList=await UserToChallenge.getCallengePointInfoList({userId});
-        return getCallengePointInfoList;
-    }
     
     //참가취소
     static async JoinDelete({userId,challengeId}){

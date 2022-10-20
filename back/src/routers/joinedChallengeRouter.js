@@ -82,7 +82,6 @@ joinedChallengeRouter.get(
   "/mypage/userToChallengePoint",
   loginRequired,
   async function (req, res, next){
-    console.log("라우터 시작했냐");
       try{
           const userId=req.currentUserId;
           const userJoinChallengeList=await joinedChallengeService.getUserChallengePoint({userId});

@@ -29,9 +29,7 @@ class joinedChallengeService {
   }
   //user별 참가한 챌린지 포인트조회(마이페이지)
   static async getUserChallengePoint(userId){
-    console.log("서비스 시작했냐");
     const getChallengePointInfoList=await JoinedChallenge.getChallengePointInfoList({userId});
-    console.log(getChallengePointInfoList,"서비스");
      return getChallengePointInfoList;
  }
 }
