@@ -15,14 +15,32 @@ const ChallengeInfo = ({
   setEndDate,
   startDate,
   endDate,
+  formData,
+  title,
+  method,
+  description,
 }) => {
+  var startYear = startDate.getFullYear();
+  var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
+  var startDay = ("0" + startDate.getDate()).slice(-2);
+  var fromDate = startYear + "-" + startMonth + "-" + startDay;
+  /**endDate yyyy-MM-dd형식으로 변경 */
+  var endYear = endDate.getFullYear();
+  var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
+  var endDay = ("0" + endDate.getDate()).slice(-2);
+  var toDate = endYear + "-" + endMonth + "-" + endDay;
+
   const onStartDate = (data) => {
     setStartDate(data);
   };
   const onEndDate = (data) => {
     setEndDate(data);
   };
-
+  formData.append("title", title);
+  formData.append("method", method);
+  formData.append("description", description);
+  formData.append("fromDate", fromDate);
+  formData.append("toDate", toDate);
   return (
     <>
       <div className="inner">

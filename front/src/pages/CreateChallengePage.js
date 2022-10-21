@@ -12,9 +12,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import GoodImg from "../components/createChallenge/GoodImg";
 import BadImg from "../components/createChallenge/BadImg";
 import { DispatchContext } from "../App";
-import * as Api from "../api.js";
 import { ConsoleSqlOutlined } from "@ant-design/icons";
-import '../styles/createChallengePage.css'
+import "../styles/createChallengePage.css";
+import axios from "axios";
+import Swal from "sweetalert2";
 {
   /**챌린지 개설하기 스타일 설정 */
 }
@@ -84,7 +85,9 @@ const CreateChallenge = () => {
   const dispatch = useContext(DispatchContext);
   const isLogin = !!userState.user;
   const [challengeImage, setChallengeImage] = useState(blankImg);
-
+  const backendPortNumber = "5001";
+  const serverUrl =
+    "http://" + window.location.hostname + ":" + backendPortNumber + "/";
   {
     /**ChallengeInfo.js*/
   }
@@ -98,20 +101,26 @@ const CreateChallenge = () => {
   const [startDate, setStartDate] = useState(new Date());
   //useState로 챌린지 끝날짜 생성
   const [endDate, setEndDate] = useState(new Date());
+  const formData = new FormData();
 
-  var startYear = startDate.getFullYear();
-  var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
-  var startDay = ("0" + startDate.getDate()).slice(-2);
-  var fromDate = startYear + "-" + startMonth + "-" + startDay;
-  /**endDate yyyy-MM-dd형식으로 변경 */
-  var endYear = endDate.getFullYear();
-  var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
-  var endDay = ("0" + endDate.getDate()).slice(-2);
-  var toDate = endYear + "-" + endMonth + "-" + endDay;
+  // var startYear = startDate.getFullYear();
+  // var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
+  // var startDay = ("0" + startDate.getDate()).slice(-2);
+  // var fromDate = startYear + "-" + startMonth + "-" + startDay;
+  // /**endDate yyyy-MM-dd형식으로 변경 */
+  // var endYear = endDate.getFullYear();
+  // var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
+  // var endDay = ("0" + endDate.getDate()).slice(-2);
+  // var toDate = endYear + "-" + endMonth + "-" + endDay;
 
   const [goodImage, setGoodImage] = useState(blankImg);
   const [badImage, setBadImage] = useState(blankImg);
-  const formData = new FormData();
+
+  // formData.append("mainImg", blob, challengeImage);
+  // formData.append("explainImg", blob, goodImage);
+  // formData.append("explainImg", blob, badImage);
+  // console.log(formData);
+
   // useEffect(() => {
   //   Api.post("title").then((req) => title);
   //   Api.post("method").then((req) => method);
@@ -124,25 +133,73 @@ const CreateChallenge = () => {
   // }, []);
   // console.log()
 
+  // async function post(endpoint, formData) {
+  //   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+  //   // 예시: {name: "Kim"} => {"name": "Kim"}
+  //   console.log(`%cPOST 요청: ${serverUrl + endpoint}`, "color: #296aba;");
+  //   console.log(`%cPOST 요청 데이터: ${formData}`, "color: #296aba;");
+
+  //   return axios.post(serverUrl + endpoint, formData, {
+  //     headers: {
+  //       "Content-Type": "multipart/form-data",
+  //       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+  //     },
+  //   });
+  // }
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = {};
+    console.log(`%cPOST 요청 데이터: ${formData}`, "color: #296aba;");
     try {
-      res = await Api.post("challenges", {
-        title,
-        method,
-        description,
-        fromDate,
-        toDate,
-        mainImg: challengeImage,
-        explainImg: { badImage, goodImage },
+      axios({
+        method: "post",
+        url: "http://localhost:5001/challenges/",
+        data: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        },
       });
-      console.log("res.data", res.data);
-      console.log(res.data.explainImg);
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "챌린지 생성 성공",
+      }).then(function () {
+        navigate("/network", { replace: true });
+      });
     } catch (err) {
-      console.log("챌린지 생성 실패!");
+      console.log("챌린지 생성 실패", err);
     }
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("method", method);
+    // formData.append("description", description);
+    // formData.append("fromDate", fromDate);
+    // formData.append("toDate", toDate);
+    // formData.append("mainImg", challengeImage);
+    // formData.append("explainImg", goodImage);
+    // formData.append("explainImg", badImage);
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   let res = {};
+  //   try {
+  //     res = await Api.post("challenges", {
+  //       title,
+  //       method,
+  //       description,
+  //       fromDate,
+  //       toDate,
+  //       mainImg: challengeImage,
+  //       explainImg: { badImage, goodImage },
+  //     });
+  //     console.log("res.data", res.data);
+  //     console.log(res.data.explainImg);
+  //   } catch (err) {
+  //     console.log("챌린지 생성 실패!");
+  //   }
+  // };
   return (
     <>
       {isLogin === true ? (
@@ -158,11 +215,15 @@ const CreateChallenge = () => {
                 challengeImage={challengeImage}
               ></MainImgUpoloader>
               <ChallengeInfo
+                formData={formData}
                 setTitle={setTitle}
                 setMethod={setMethod}
                 setDescription={setDescription}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
+                title={title}
+                method={method}
+                descroption={description}
                 startDate={startDate}
                 endDate={endDate}
               ></ChallengeInfo>
