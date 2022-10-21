@@ -9,6 +9,8 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const upload = addImage("uploads");
+// const upload = multer({ dest: "uploads/" });
+
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -16,13 +18,14 @@ const multiImg = upload.fields([
 
 const challengeRouter = Router();
 
+// 1. 챌린지 등록
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
-  // console.log(req);
   try {
     const holdUserId = req.currentUserId;
-    const { title, description, fromDate, toDate } = req.body;
 
+    const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
+
     const mainImg = image.main[0];
 
     const explainImg = image.explain;
@@ -38,45 +41,37 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `uploads/${mainImg.path}`,
-      explainImg: `uploads/${explainImgPath}`,
+      mainImg: `initial/${mainImg.path}`,
+      explainImg: `initial/${explainImgPath}`,
+      method,
     });
     if (newChallenge.errorMessage) {
       throw new Error(newChallenge.errorMessage);
     }
-
     res.status(201).json({ newChallenge });
   } catch (error) {
     next(error);
   }
 });
 
-// Get (전체)
+//2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
   res.status(200).json({ result });
 });
 
-// Get (진행중인 챌린지 전체) 보류
-challengeRouter.get("/ongoing", async (req, res) => {
-  const result = await challengeService.getOngoing();
-  res.status(200).json({ result });
-});
-
-// Get (선택한 항목 1개)
+//3. Get (선택한 항목 1개)
 challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
-  const userId = req.currentUserId;
+  const holdUserId = req.currentUserId;
   const { id } = req.params;
 
   // 해당 사용자 아이디로 챌린지 정보를 db에서 찾아 업데이트
-  const updateChallenge = await challengeService.findUniqueUser({ userId, id });
+  const updateChallenge = await challengeService.findUniqueUser(id);
 
   res.status(200).json({ updateChallenge });
 });
 
-// Delete
-// 폴더의 파일도 삭제 할 수가 있는지?
-// 시작 전 삭제 막기
+// Delete (관리용 코드)
 challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   const userId = req.currentUserId;
   const { id } = req.params;
@@ -86,12 +81,12 @@ challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   res.status(200).json({ result });
 });
 
-// 챌린지 시작 전에는 수정 못하는 코드 작성 // 3계층 분리...
+// 5. 챌린지 수정
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const { id } = req.params;
-    const { title, description, fromDate, toDate } = req.body;
+    const { title, description, fromDate, toDate, method } = req.body;
 
     const image = req.files;
     const mainImg = image.main[0];
@@ -108,21 +103,15 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
         .send("cannot modify it after the challenge begins.");
     }
 
-    console.log(explainImgPath);
-    const updatedChallenge = await prisma.challenge.update({
-      where: {
-        challengeId: Number(id),
-      },
-      data: {
-        title,
-        description,
-        fromDate,
-        toDate,
-        mainImg: `uploads/${mainImg.path}`,
-        explainImg: `uploads/${explainImgPath}`,
-        startRemainingDate: dayCountsBetweenTodayAnd(fromDate),
-        endRemainingDate: dayCountsBetweenTodayAnd(toDate) * -1,
-      },
+    const updatedChallenge = await challengeService.updateChallenge({
+      id,
+      title,
+      description,
+      method,
+      fromDate,
+      toDate,
+      titleImg,
+      explainImgs,
     });
 
     res.status(200).json({ updatedChallenge });
@@ -131,15 +120,15 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   }
 });
 
-// // get(1개 불러오기/ login 한 유저꺼 불러오기)
-// challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
-//   // const userId = req.currentUserId;
+// 6. get(1개 불러오기/ login 한 유저꺼 불러오기)
+challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
+  const userId = req.currentUserId;
 
-//   const { id } = req.params;
+  const { id } = req.params;
 
-//   const result = await challengeService.findUniqueId(id);
+  const result = await challengeService.findUniqueId(id);
 
-//   res.status(200).json({ result });
-// });
+  res.status(200).json({ result });
+});
 
 export { challengeRouter };

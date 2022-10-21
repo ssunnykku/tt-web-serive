@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import ChallengeInfo from "../components/createChallenge/ChallengeInfo";
 import MainImgUpoloader from "../components/createChallenge/MainImgUploader";
@@ -11,8 +11,9 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import GoodImg from "../components/createChallenge/GoodImg";
 import BadImg from "../components/createChallenge/BadImg";
-// import { DispatchContext, UserStateContext } from "../../App";
-// import Api from "..api";
+import { DispatchContext } from "../App";
+import * as Api from "../api.js";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 {
   /**챌린지 개설하기 스타일 설정 */
@@ -77,19 +78,20 @@ const CheckImg = styled.div`
   align-items: center;
 `;
 const CreateChallenge = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate("/");
   const userState = useContext(UserStateContext);
   const [user, setUsers] = useState([]);
-  // // const dispatch = useContext(DispatchContext);
+  const dispatch = useContext(DispatchContext);
+  const isLogin = !!userState.user;
   const [challengeImage, setChallengeImage] = useState(blankImg);
 
   {
     /**ChallengeInfo.js*/
   }
   //useState로 챌린지이름 생성
-  const [challengeName, setChallengeName] = useState("");
+  const [title, setTitle] = useState("");
   //useState로 챌린지인증방법 생성
-  const [checkMethod, setCheckMethod] = useState("");
+  const [method, setMethod] = useState("");
   //useState로 챌린지 설명 생성
   const [description, setDescription] = useState("");
   //useState로 챌린지 시작날짜 생성
@@ -100,71 +102,94 @@ const CreateChallenge = () => {
   var startYear = startDate.getFullYear();
   var startMonth = ("0" + (startDate.getMonth() + 1)).slice(-2);
   var startDay = ("0" + startDate.getDate()).slice(-2);
-  var startDateString = startYear + "-" + startMonth + "-" + startDay;
+  var fromDate = startYear + "-" + startMonth + "-" + startDay;
   /**endDate yyyy-MM-dd형식으로 변경 */
   var endYear = endDate.getFullYear();
   var endMonth = ("0" + (endDate.getMonth() + 1)).slice(-2);
   var endDay = ("0" + endDate.getDate()).slice(-2);
-  var endDateString = endYear + "-" + endMonth + "-" + endDay;
+  var toDate = endYear + "-" + endMonth + "-" + endDay;
 
   const [goodImage, setGoodImage] = useState(blankImg);
   const [badImage, setBadImage] = useState(blankImg);
+  const formData = new FormData();
+  // useEffect(() => {
+  //   Api.post("title").then((req) => title);
+  //   Api.post("method").then((req) => method);
+  //   Api.post("description").then((req) => description);
+  //   Api.post("fromDate").then((req) => fromDate);
+  //   Api.post("toDate").then((req) => toDate);
+  //   Api.post("mainImg").then((req) => challengeImage);
+  //   Api.post("explainImg").then((req) => goodImage);
+  //   Api.post("explainImg").then((req) => badImage);
+  // }, []);
+  // console.log()
 
-  const onSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.append("challengeImage", content);
-    // formData.append("goodImage", content);
-    // formData.append("badImage", content);
-    // axios
-    //   .post("http://localhost:3001/upload", formData)
-    //   .then((res) => {
-    //     const { fileName } = res.data;
-    //     console.log(fileName);
-    //     setUploadedImg({ fileName });
-    //     alert("The file is successfully uploaded");
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    let res = {};
+    try {
+      res = await Api.post("challenges", {
+        title,
+        method,
+        description,
+        fromDate,
+        toDate,
+        mainImg: challengeImage,
+        explainImg: { badImage, goodImage },
+      });
+      console.log("res.data", res.data);
+      console.log(res.data.explainImg);
+    } catch (err) {
+      console.log("챌린지 생성 실패!");
+    }
   };
-
   return (
     <>
-      <NavBar />
-      <hr></hr>
-      <form onSubmit={onSubmit}>
-        <Title>챌린지 개설하기</Title>
-        <Line></Line>
-        <Inner>
-          <MainImgUpoloader
-            setChallengeImage={setChallengeImage}
-            challengeImage={challengeImage}
-          ></MainImgUpoloader>
-          <ChallengeInfo
-            setChallengeName={setChallengeName}
-            setCheckMethod={setCheckMethod}
-            setDescription={setDescription}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            startDate={startDate}
-            endDate={endDate}
-          ></ChallengeInfo>
-        </Inner>
-        <InnerCheckImg>
-          <ImgTitle>인증샷 예시</ImgTitle>
-          <CheckImg>
-            <GoodImg
-              goodImage={goodImage}
-              setGoodImage={setGoodImage}
-            ></GoodImg>
-            <BadImg badImage={badImage} setBadImage={setBadImage}></BadImg>
-          </CheckImg>
-        </InnerCheckImg>
-        <StyledButton>
-          <CreateFont>챌린지 생성하기</CreateFont>
-        </StyledButton>
-      </form>
+      {isLogin === true ? (
+        <form onSubmit={handleSubmit}>
+          <div className="createChallenge">
+            <NavBar />
+            <Title>챌린지 개설하기</Title>
+            <Line></Line>
+            <Inner>
+              <MainImgUpoloader
+                formData={formData}
+                setChallengeImage={setChallengeImage}
+                challengeImage={challengeImage}
+              ></MainImgUpoloader>
+              <ChallengeInfo
+                setTitle={setTitle}
+                setMethod={setMethod}
+                setDescription={setDescription}
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
+                startDate={startDate}
+                endDate={endDate}
+              ></ChallengeInfo>
+            </Inner>
+            <InnerCheckImg>
+              <ImgTitle>인증샷 예시</ImgTitle>
+              <CheckImg>
+                <GoodImg
+                  formData={formData}
+                  goodImage={goodImage}
+                  setGoodImage={setGoodImage}
+                ></GoodImg>
+                <BadImg
+                  formData={formData}
+                  badImage={badImage}
+                  setBadImage={setBadImage}
+                ></BadImg>
+              </CheckImg>
+            </InnerCheckImg>
+            <StyledButton>
+              <CreateFont>챌린지 생성하기</CreateFont>
+            </StyledButton>
+          </div>
+        </form>
+      ) : (
+        navigate("/challenge")
+      )}
     </>
   );
 };

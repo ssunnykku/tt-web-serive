@@ -30,5 +30,22 @@ class userToChallengeService{
         const getJoinCallenge=await UserToChallenge.getJoinChallengeList({userId});
         return getJoinCallenge;
     }
+    
+    //참가취소
+    static async JoinDelete({userId,challengeId}){
+        const userJoinList=await UserToChallenge.getJoinChallengeList({userId});
+        if(userJoinList){
+            for(var i=0;i<userJoinList.length;i++){
+                if(userJoinList[i].challenge.challengeId==challengeId){
+                    const id=userJoinList[i].userToChallengeId
+                    const JoinDelte = await UserToChallenge.deleteJoinUser({id});
+                    return JoinDelte;
+                }
+            }
+            const errorMessage = "이미 참가중인 챌린지입니다.";
+            return errorMessage;
+        }
+        
+    }
 }
 export {userToChallengeService}

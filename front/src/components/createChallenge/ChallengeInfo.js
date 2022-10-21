@@ -4,37 +4,38 @@ import challengeInfo from "../../styles/createChallenge/challengeInfo.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-
+import { addDays } from "date-fns";
+import { excludeDateIntervals } from "date-fns";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 const ChallengeInfo = ({
-  setChallengeName,
-  setCheckMethod,
+  setTitle,
+  setMethod,
   setDescription,
   setStartDate,
   setEndDate,
   startDate,
   endDate,
 }) => {
-  /**startDate yyyy-MM-dd형식으로 변경 */
   const onStartDate = (data) => {
     setStartDate(data);
   };
   const onEndDate = (data) => {
     setEndDate(data);
   };
-  // console.log(endDateString);
+
   return (
     <>
       <div className="inner">
         <span className="infoSpan">이름</span>
         <input
           className="infoInput"
-          onChange={(e) => setChallengeName(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder=" ex) 주 1회 플로깅"
         ></input>
         <span className="infoSpan">인증방법</span>
         <input
           className="infoInput"
-          onChange={(e) => setCheckMethod(e.target.value)}
+          onChange={(e) => setMethod(e.target.value)}
           placeholder=" ex) 쓰레기 봉투 인증"
         ></input>
         <span className="infoSpan">설명</span>
@@ -52,8 +53,10 @@ const ChallengeInfo = ({
             dateFormat="yyyy-MM-dd"
             selected={startDate}
             selectsStart
+            handlerWeek={startDate}
             onChange={onStartDate}
             locale={ko}
+            highlightDates={addDays(new Date(), 7)}
             minDate={new Date()}
           />
 
@@ -63,8 +66,20 @@ const ChallengeInfo = ({
             dateFormat="yyyy-MM-dd"
             selected={endDate}
             selectsEnd
+            filterDate={(date) => {
+              const day = date.getDay();
+
+              const dayOfStartDay = startDate.getDay();
+
+              if (dayOfStartDay === 0) {
+                return day === 6;
+              }
+
+              return day === dayOfStartDay - 1;
+            }}
             endDate={endDate}
             minDate={startDate}
+            maxDate={addDays(startDate, 76)}
             onChange={onEndDate}
             locale={ko}
           />

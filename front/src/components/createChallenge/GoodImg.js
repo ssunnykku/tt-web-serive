@@ -6,6 +6,8 @@ const GoodImg = ({ goodImage, setGoodImage }) => {
   const fileInput = useRef(null);
   const onChangeGoodImage = (e) => {
     if (e.target.files[0]) {
+      console.log("e.target.files[0].filename", e.target.files[0]);
+      console.log("e.target.files[0].name", e.target.files[0].name);
       setGoodImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
@@ -32,6 +34,7 @@ const GoodImg = ({ goodImage, setGoodImage }) => {
             <img
               className="img"
               src={goodImage}
+              enctype="multipart/form-data"
               onClick={() => {
                 fileInput.current.click();
               }}
@@ -40,7 +43,7 @@ const GoodImg = ({ goodImage, setGoodImage }) => {
               type="file"
               style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="goodImg"
+              name="explainImg"
               multiple
               onChange={onChangeGoodImage}
               ref={fileInput}

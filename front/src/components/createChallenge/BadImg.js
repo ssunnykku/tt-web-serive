@@ -1,7 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, forwardRef } from "react";
 import blankImg from "../../images/createChallengePage/blankImg.png";
 import sad from "../../images/createChallengePage/sad.png";
 import badImg from "../../styles/createChallenge/BadImg.css";
+
 const BadImg = ({ badImage, setBadImage }) => {
   const fileInput = useRef(null);
   const onChangeBadImage = (e) => {
@@ -9,7 +10,7 @@ const BadImg = ({ badImage, setBadImage }) => {
       setBadImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
-      setBadImage({ blankImg });
+      setBadImage(blankImg);
       return;
     }
     //화면에 챌린지 사진 표시
@@ -35,6 +36,7 @@ const BadImg = ({ badImage, setBadImage }) => {
             <img
               className="img"
               src={badImage}
+              enctype="multipart/form-data"
               onClick={() => {
                 fileInput.current.click();
               }}
@@ -43,7 +45,7 @@ const BadImg = ({ badImage, setBadImage }) => {
               type="file"
               style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="badImg"
+              name="explainImg"
               multiple
               onChange={onChangeBadImage}
               ref={fileInput}

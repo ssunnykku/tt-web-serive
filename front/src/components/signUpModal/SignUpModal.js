@@ -88,6 +88,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         confirmPassword,
       });
       
+      
       if(res.data=='이미 사용중인 email입니다.'){
         setCheckEmail(true);
         return;

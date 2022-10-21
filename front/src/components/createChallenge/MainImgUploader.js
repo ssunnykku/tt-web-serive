@@ -15,6 +15,10 @@ const MainImgUpoloader = ({ challengeImage, setChallengeImage }) => {
       setChallengeImage(blankImg);
       return;
     }
+
+    // if (files) {
+    //   FormData.append("file", files);
+    // }
     //화면에 챌린지 사진 표시
     const reader = new FileReader();
     reader.onload = () => {
@@ -32,6 +36,7 @@ const MainImgUpoloader = ({ challengeImage, setChallengeImage }) => {
         <img
           className="main"
           src={challengeImage}
+          enctype="multipart/form-data"
           onClick={() => {
             fileInput.current.click();
           }}
@@ -40,7 +45,7 @@ const MainImgUpoloader = ({ challengeImage, setChallengeImage }) => {
           type="file"
           style={{ display: "none" }}
           accept="image/jpg, image/png, image/jpeg"
-          name="challengeImg"
+          name="mainImg"
           onChange={onChange}
           ref={fileInput}
         ></input>

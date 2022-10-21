@@ -4,26 +4,16 @@ import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
 import is from "@sindresorhus/is";
 import multer from "multer";
+import assert from "assert";
+import { config } from "dotenv";
 
-const storage = multer.memoryStorage();
-
-//0. img limit 20mb
-const upload = multer({
-  limits: {
-    fileSize: 13000000,
-  },
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|png)$/)) {
-      return cb(new Error(" please upload a Jpg or png"));
-    }
-    cb(undefined, true);
-  },
-  storage: storage,
-});
+//0. multer
 
 //  1. 회원가입 라우터
 userRouter.post("/register", async (req, res, next) => {
+  console.log("여기냐1고");
   try {
+    console.log("여기냐1");
     //헤더에 json타입이 명시되지 않으면 req보낸 payload(body)내용이 빈배열이 반환될 수 있다.
     //JS object는 json 타입으로 데이터 전송이 가능하다.
     if (is.emptyObject(req.body)) {
@@ -41,16 +31,55 @@ userRouter.post("/register", async (req, res, next) => {
       confirmPassword,
       name,
     });
+    console.log("여기냐2");
 
     if (newUser.errorMessage) {
+      console.log("여기냐3");
       throw new Error(newUser, errorMessage);
     }
+    console.log("여기냐4");
 
     res.status(201).send(newUser);
+  } catch (error) {
+    console.log("여기냐");
+    next(error);
+  }
+});
+//배포 후 카카오에서 웹 도메인 변경해야 함.
+//1-1 카카오 회원가입 및 로그인
+userRouter.get("/auth/kakao", async (req, res, next) => {
+  const code = req.query.code;
+  try {
+    //토큰 발급
+    let result = await axios.post(
+      config.kakao.kakaoAuthUrl,
+      {},
+      {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+        params: {
+          grant_type: "authorization_code",
+          client_id: config.kakao.kakaoClientId,
+          redirect_uri: config.kakao.kakaoRedirectUrl,
+          code: code,
+        },
+      }
+    );
+    const kakaoId = result.data.id;
+
+    let user = await userService.getUserByKakaoId({ kakaoId });
+    if (!user) {
+      user = await userService.addUserByKakaoId;
+    }
+    user = await userService.getKakaoUser({ kakaoId });
+    res.status(200).json(user);
   } catch (error) {
     next(error);
   }
 });
+
+//1-2 네이버 회원가입 및 로그인
 
 // 2. 로그인 라우터
 userRouter.post("/login", async (req, res, next) => {
@@ -139,7 +168,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    res.set("Content-Type", "image/png");
+    // res.set("Content-Type", "image/png");
     res.status(200).send(getImg);
   } catch (error) {
     next(error);
@@ -147,26 +176,25 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 });
 
 //img update
+
 userRouter.put(
   "/userImg",
   loginRequired,
-  upload.single("image"),
+  //upload.single("image"),
   async (req, res, next) => {
     try {
-      console.log(req.file);
-      const img = req.file.buffer;
       const userId = req.currentUserId;
-      console.log("1.라우터-", userId, img);
+      const img = req.file.path;
 
-      const updateImg = await userService.updateUserImg({
-        img,
-        userId,
-      });
-      if (updateImg.errorMessage) {
-        throw new Error(updateImg.errorMessage);
+      if (img === undefined) {
+        return res.status(400).send("이미지가 존재하지 않습니다.");
       }
 
-      res.status(201).send("Image updated successfully!");
+      const EditImg = await userService.updateUserImg({
+        userId,
+        img,
+      });
+      res.status(200).json({ EditImg });
     } catch (error) {
       next(error);
     }

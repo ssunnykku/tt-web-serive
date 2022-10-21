@@ -5,7 +5,10 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 136ac2edab4dab7f345059257269d50c9025780b
 model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)
@@ -39,7 +42,7 @@ model user {
   email            String            @db.VarChar(30)
   password         String            @db.VarChar(100)
   withdrawal       Int               @default(0) @db.TinyInt
-  img              Bytes?            @db.Blob
+  img              String?           @db.Text
   joinedChallenges joinedChallenge[]
   liked            liked[]
   refreshToken     refreshToken?
@@ -53,22 +56,20 @@ model refreshToken {
 }
 
 model challenge {
-  challengeId        Int               @id @unique @default(autoincrement())
-  title              String            @db.VarChar(50)
-  holdUserId         String            @db.VarChar(50)
-  description        String
-  method             String            @db.VarChar(50)
-  fromDate           String
-  toDate             String
-  mainImg            String            @db.Text
-  explainImg         String            @db.Text
-  startRemainingDate Int
-  endRemainingDate   Int
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  joinedChallenges   joinedChallenge[]
-  liked              liked[]
-  userToChallenge    userToChallenge[]
+  challengeId      Int               @id @unique @default(autoincrement())
+  title            String            @db.VarChar(50)
+  holdUserId       String            @db.VarChar(50)
+  description      String
+  method           String
+  fromDate         String
+  toDate           String
+  mainImg          String            @db.Text
+  explainImg       String            @db.Text
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  joinedChallenges joinedChallenge[]
+  liked            liked[]
+  userToChallenge  userToChallenge[]
 }
 
 model joinedChallenge {
@@ -76,10 +77,10 @@ model joinedChallenge {
   countUpload Int
   addedImage  String    @db.Text
   description String
-  userId      String?   @db.VarChar(50)
+  userId      String    @db.VarChar(50)
   chalngId    Int
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])
-  user        user?     @relation(fields: [userId], references: [userId])
+  user        user      @relation(fields: [userId], references: [userId])
 
   @@index([chalngId], map: "joinedChallenge_chalngId_fkey")
   @@index([userId], map: "joinedChallenge_userId_fkey")
