@@ -5,6 +5,7 @@ const prisma = new PrismaClient();
 class challenge {
   // create/ post(유저별로 수정할 것)
   static async create({ newChallenge }) {
+    console.log(newChallenge.explainImg);
     const createdChallenge = await prisma.challenge.create({
       data: newChallenge,
     });

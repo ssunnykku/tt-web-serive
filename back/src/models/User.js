@@ -80,17 +80,17 @@ class User {
     });
   }
   //get img
-  // static async getUserImg({ userId }) {
-  //   const img = await prisma.user.findUnique({
-  //     where: {
-  //       userId: userId,
-  //     },
-  //   });
-  //   return img.img;
-  // }
+  static async getUserImg({ userId }) {
+    const img = await prisma.user.findUnique({
+      where: {
+        userId: userId,
+      },
+    });
+    return img.img;
+  }
   // //img 수정(sh),
   static async EditImg({ userId, img }) {
-    const addedImage = `uploads/${img}`;
+    const addedImage = `${img}`;
     const updateImg = await prisma.user.update({
       where: {
         userId: userId,

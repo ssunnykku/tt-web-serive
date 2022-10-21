@@ -6,9 +6,9 @@ import is from "@sindresorhus/is";
 import multer from "multer";
 import assert from "assert";
 import { config } from "dotenv";
-
+import { addImage } from "../middlewares/addImage";
 //0. multer
-
+const upload = addImage("uploads");
 //  1. 회원가입 라우터
 userRouter.post("/register", async (req, res, next) => {
   console.log("여기냐1고");
@@ -21,6 +21,7 @@ userRouter.post("/register", async (req, res, next) => {
         "header의 Content-Type을 application/json으로 설정해주세요"
       );
     }
+    
     const email = req.body.email;
     const password = req.body.password;
     const confirmPassword = req.body.confirmPassword;
@@ -180,7 +181,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 userRouter.put(
   "/userImg",
   loginRequired,
-  //upload.single("image"),
+  upload.single("img"),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;

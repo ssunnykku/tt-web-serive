@@ -12,8 +12,8 @@ const upload = addImage("uploads");
 // const upload = multer({ dest: "uploads/" });
 
 const multiImg = upload.fields([
-  { name: "main", maxCount: 1 },
-  { name: "explain", maxCount: 2 },
+  { name: "mainImg", maxCount: 1 },
+  { name: "explainImg", maxCount: 2 },
 ]);
 
 const challengeRouter = Router();
@@ -25,6 +25,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
 
     const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
+    console.log("왜안돼:", image);
 
     const mainImg = image.main[0];
 
@@ -41,8 +42,8 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `initial/${mainImg.path}`,
-      explainImg: `initial/${explainImgPath}`,
+      mainImg: `${mainImg.path}`,
+      explainImg: `${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
@@ -94,6 +95,8 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     const explainImg = image.explain;
     const explainImgPath = explainImg.map((img) => img.path);
 
+    const titleImg = `${mainImg.path}`;
+    const explainImgs = `${explainImgPath}`;
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }
