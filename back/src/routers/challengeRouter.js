@@ -52,6 +52,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   }
 });
 
+// 에러남
 //2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
