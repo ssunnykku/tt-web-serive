@@ -7,6 +7,10 @@ import * as Api from '../api'
 
 const CheckChallenge = () => {
     const [mainImg,setMainImg]=useState('')
+    const [remainDate,setRemainDate]=useState()
+    const [title,setTitle]=useState('')
+    const [playPoint,setPlayPoint]=useState(0);
+    const [expectedPoint,setExpectedPoint]=useState(0);
 
   return (
     <div className="checkChallenge">
