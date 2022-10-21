@@ -36,6 +36,7 @@ const BadImg = ({ badImage, setBadImage }) => {
             <img
               className="img"
               src={badImage}
+              enctype="multipart/form-data"
               onClick={() => {
                 fileInput.current.click();
               }}
@@ -44,7 +45,7 @@ const BadImg = ({ badImage, setBadImage }) => {
               type="file"
               style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="badImg"
+              name="explainImg"
               multiple
               onChange={onChangeBadImage}
               ref={fileInput}

@@ -128,6 +128,7 @@ class userService {
     const updateUser = await User.updateUser(userId, name, email);
     return updateUser;
   }
+
   // user img get
   static async getCurrentImg({ userId }) {
     const newImg = await User.getUserImg({ userId });
@@ -139,6 +140,7 @@ class userService {
     ("");
     return newImg;
   }
+
   // user img update
   static async updateUserImg({ img, userId }) {
     const user = await User.findByUserId({ userId });
@@ -149,9 +151,10 @@ class userService {
       return { errorMessage };
     }
     console.log("서비스");
-    const updateimg = await User.updateUserImg({ userId, img });
+    const updateimg = await User.EditImg({ userId, img });
     return updateimg;
   }
+
   // user img delete
   static async removeUserImg({ userId }) {
     const user = await User.findByUserId({ userId });

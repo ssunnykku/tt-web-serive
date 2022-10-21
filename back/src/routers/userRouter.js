@@ -3,23 +3,10 @@ const userRouter = Router();
 import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
 import is from "@sindresorhus/is";
-import multer from "multer";
+import { addImage } from "../middlewares/addImage";
 
-const storage = multer.memoryStorage();
-
-//0. img limit 20mb
-const upload = multer({
-  limits: {
-    fileSize: 13000000,
-  },
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|png)$/)) {
-      return cb(new Error(" please upload a Jpg or png"));
-    }
-    cb(undefined, true);
-  },
-  storage: storage,
-});
+//0. multer
+const upload = addImage("uploads");
 
 //  1. 회원가입 라우터
 userRouter.post("/register", async (req, res, next) => {
@@ -139,7 +126,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    res.set("Content-Type", "image/png");
+    // res.set("Content-Type", "image/png");
     res.status(200).send(getImg);
   } catch (error) {
     next(error);
@@ -147,26 +134,25 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 });
 
 //img update
+
 userRouter.put(
   "/userImg",
   loginRequired,
   upload.single("image"),
   async (req, res, next) => {
     try {
-      console.log(req.file);
-      const img = req.file.buffer;
       const userId = req.currentUserId;
-      console.log("1.라우터-", userId, img);
+      const img = req.file.path;
 
-      const updateImg = await userService.updateUserImg({
-        img,
-        userId,
-      });
-      if (updateImg.errorMessage) {
-        throw new Error(updateImg.errorMessage);
+      if (img === undefined) {
+        return res.status(400).send("이미지가 존재하지 않습니다.");
       }
 
-      res.status(201).send("Image updated successfully!");
+      const EditImg = await userService.updateUserImg({
+        userId,
+        img,
+      });
+      res.status(200).json({ EditImg });
     } catch (error) {
       next(error);
     }

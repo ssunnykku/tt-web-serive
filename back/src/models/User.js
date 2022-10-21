@@ -11,6 +11,7 @@ class User {
         password: newUser.password,
         name: newUser.name,
         withdrawal: 0,
+        // img: null,
       },
       include: {
         liked: true,
@@ -79,15 +80,28 @@ class User {
     });
   }
   //get img
-  static async getUserImg({ userId }) {
-    const img = await prisma.user.findUnique({
+  // static async getUserImg({ userId }) {
+  //   const img = await prisma.user.findUnique({
+  //     where: {
+  //       userId: userId,
+  //     },
+  //   });
+  //   return img.img;
+  // }
+  // //img 수정(sh),
+  static async EditImg({ userId, img }) {
+    const addedImage = `uploads/${img}`;
+    const updateImg = await prisma.user.update({
       where: {
         userId: userId,
       },
+      data: {
+        img: addedImage,
+      },
     });
-    return img.img;
+    return updateImg;
   }
-  //img 수정,
+
   static async updateUserImg({ userId, img }) {
     console.log("이미지모델:", img);
     console.log("userId:", userId);

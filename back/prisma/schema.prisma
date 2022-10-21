@@ -5,7 +5,10 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 136ac2edab4dab7f345059257269d50c9025780b
 model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)
@@ -39,7 +42,7 @@ model user {
   email            String            @db.VarChar(30)
   password         String            @db.VarChar(100)
   withdrawal       Int               @default(0) @db.TinyInt
-  img              Bytes?            @db.Blob
+  img              String?           @db.Text
   joinedChallenges joinedChallenge[]
   liked            liked[]
   refreshToken     refreshToken?
@@ -78,8 +81,6 @@ model joinedChallenge {
   userId      String    @db.VarChar(50)
   challenges  challenge @relation(fields: [chalngId], references: [challengeId])
   chalngId    Int
-  challenges  challenge @relation(fields: [chalngId], references: [challengeId])
-  user        user?     @relation(fields: [userId], references: [userId])
 
   @@index([chalngId], map: "joinedChallenge_chalngId_fkey")
   @@index([userId], map: "joinedChallenge_userId_fkey")

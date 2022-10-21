@@ -78,7 +78,7 @@ const CheckImg = styled.div`
   align-items: center;
 `;
 const CreateChallenge = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate("/");
   const userState = useContext(UserStateContext);
   const [user, setUsers] = useState([]);
   const dispatch = useContext(DispatchContext);
@@ -111,7 +111,7 @@ const CreateChallenge = () => {
 
   const [goodImage, setGoodImage] = useState(blankImg);
   const [badImage, setBadImage] = useState(blankImg);
-
+  const formData = new FormData();
   // useEffect(() => {
   //   Api.post("title").then((req) => title);
   //   Api.post("method").then((req) => method);
@@ -128,7 +128,7 @@ const CreateChallenge = () => {
     e.preventDefault();
     let res = {};
     try {
-      res = await Api.post("network/pages/CreateChallengePage", {
+      res = await Api.post("challenges", {
         title,
         method,
         description,
@@ -137,7 +137,7 @@ const CreateChallenge = () => {
         mainImg: challengeImage,
         explainImg: { badImage, goodImage },
       });
-      console.log(res.data);
+      console.log("res.data", res.data);
       console.log(res.data.explainImg);
     } catch (err) {
       console.log("챌린지 생성 실패!");
@@ -153,6 +153,7 @@ const CreateChallenge = () => {
             <Line></Line>
             <Inner>
               <MainImgUpoloader
+                formData={formData}
                 setChallengeImage={setChallengeImage}
                 challengeImage={challengeImage}
               ></MainImgUpoloader>
@@ -170,10 +171,15 @@ const CreateChallenge = () => {
               <ImgTitle>인증샷 예시</ImgTitle>
               <CheckImg>
                 <GoodImg
+                  formData={formData}
                   goodImage={goodImage}
                   setGoodImage={setGoodImage}
                 ></GoodImg>
-                <BadImg badImage={badImage} setBadImage={setBadImage}></BadImg>
+                <BadImg
+                  formData={formData}
+                  badImage={badImage}
+                  setBadImage={setBadImage}
+                ></BadImg>
               </CheckImg>
             </InnerCheckImg>
             <StyledButton>
