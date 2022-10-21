@@ -1,0 +1,75 @@
+.checkChallenge{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.upperSection{
+    width: 100%;
+    height: 15vh;
+     border-bottom: 1px solid #7E7E84;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+.checkText{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 600;
+}
+.checkContents{
+    width: 100%;
+    background-color: red;
+    height: 80vh;
+    display: flex;
+    flex-direction: row;
+}
+.mainimg{
+    width: 40%;
+    background-color: black;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+
+}
+.mainContent{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.dropdowncontents{
+    width: 100%;
+    height: 10vh;
+    background-color: grey;
+}
+.selectWeek{
+    width: 100%;
+    height: 10vh;
+    background-color: white;
+}
+.imgContents{
+    width: 100%;
+    height: 15vh;
+    background-color: aqua;
+}
+.textContents{
+    width: 100%;
+    height: 15vh;
+    background-color: blue;
+}
+.pointContents{
+    width: 100%;
+    height: 10vh;
+    background-color: brown;
+}
+.buttonContents{
+    width: 100%;
+    height: 15vh;
+    background-color: bisque;
+}

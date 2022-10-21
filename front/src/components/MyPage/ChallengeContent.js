@@ -3,6 +3,7 @@ import NetworkCard from "../NetworkCard";
 import * as Api from '../../api'
 import { Col, Container, Row } from "react-bootstrap";
 import StyledButton from "../../styles/commonstyles/Button";
+import MychallengeCard from "../Card/MyChallengeCard";
 
 const ChallengeContent = ({myChallengeList}) => {
   
@@ -16,7 +17,7 @@ const ChallengeContent = ({myChallengeList}) => {
         {myChallengeList.slice(0, visible).map((menu) => (
           <Col lg={3}
           key={menu.challangeId}>
-            <NetworkCard item={menu} />
+            <MychallengeCard item={menu} />
           </Col>
         ))}
       </Row>
@@ -26,7 +27,7 @@ const ChallengeContent = ({myChallengeList}) => {
           className="mt-3 mb-5"
           onClick={showMoreCards}
         >
-          +
+          더보기
         </StyledButton>
       ) : null}
     </Container>

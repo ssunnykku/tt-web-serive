@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
-import "../styles/network/networkcard.css";
+import { useNavigate } from "react-router-dom";
+import "../../styles/network/networkcard.css";
 
-import UserLike from "./UserLike";
-const NetworkCard = ({ item }) => {
+import UserLike from "../UserLike";
+const MychallengeCard = ({ item }) => {
   var today = new Date();
   var year = today.getFullYear();
   var month = ("0" + (today.getMonth() + 1)).slice(-2);
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
+  let navigate=useNavigate()
   return (
     <Card
       id="cardBody"
@@ -45,6 +47,16 @@ const NetworkCard = ({ item }) => {
               {item?.fromDate}-{item?.toDate}
             </a>{" "}
           </div>
+          <button
+            disabled={new Date(item.fromDate) <= new Date(dateString) && new Date(dateString) <= new Date(item.toDate) }
+            className="networkButton"
+            onClick={()=>{
+                navigate('/checkChallenge')
+            }}
+            
+          >
+            인증하기
+          </button>
           
         </div>
       </Card.Body>
@@ -52,4 +64,4 @@ const NetworkCard = ({ item }) => {
   );
 };
 
-export default NetworkCard;
+export default MychallengeCard;
