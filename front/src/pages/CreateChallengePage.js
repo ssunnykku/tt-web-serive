@@ -149,7 +149,7 @@ const CreateChallenge = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = {};
-    console.log(`%cPOST 요청 데이터: ${formData}`, "color: #296aba;");
+    console.log(formData);
     try {
       axios({
         method: "post",
@@ -160,17 +160,16 @@ const CreateChallenge = () => {
           Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
         },
       });
-
-      Swal.fire({
-        position: "top-center",
-        icon: "success",
-        text: "챌린지 생성 성공",
-      }).then(function () {
-        navigate("/network", { replace: true });
-      });
     } catch (err) {
       console.log("챌린지 생성 실패", err);
     }
+    // Swal.fire({
+    //   position: "top-center",
+    //   icon: "success",
+    //   text: "챌린지 생성 성공",
+    // }).then(function () {
+    //   navigate("/network", { replace: true });
+    // });
     // const formData = new FormData();
     // formData.append("title", title);
     // formData.append("method", method);
