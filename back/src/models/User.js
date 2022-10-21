@@ -102,32 +102,32 @@ class User {
   //   return updateImg;
   // }
 
-  // static async updateUserImg({ userId, img }) {
-  //   console.log("이미지모델:", img);
-  //   console.log("userId:", userId);
+  static async updateUserImg({ userId, img }) {
+    console.log("이미지모델:", img);
+    console.log("userId:", userId);
 
-  //   const updateimg = await prisma.user.update({
-  //     where: {
-  //       userId: userId,
-  //     },
-  //     data: { img },
-  //   });
-  //   console.log("updateimg:", updateimg);
-  //   return updateimg;
-  // }
-  // //img 삭제,
-  // static async deleteUserImg({ userId }) {
-  //   console.log("userId:", userId);
+    const updateimg = await prisma.user.update({
+      where: {
+        userId: userId,
+      },
+      data: { img },
+    });
+    console.log("updateimg:", updateimg);
+    return updateimg;
+  }
+  //img 삭제,
+  static async deleteUserImg({ userId }) {
+    console.log("userId:", userId);
 
-  //   const updateimg = await prisma.user.update({
-  //     where: {
-  //       userId: userId,
-  //     },
-  //     data: { img: null },
-  //   });
-  //   console.log("updateimg:", updateimg.img);
-  //   return updateimg;
-  // }
+    const updateimg = await prisma.user.update({
+      where: {
+        userId: userId,
+      },
+      data: { img: null },
+    });
+    console.log("updateimg:", updateimg.img);
+    return updateimg;
+  }
 
   // 토큰업데이트;
   static async tokenUpdate({ userId, refreshToken }) {

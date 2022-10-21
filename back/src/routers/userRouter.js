@@ -158,31 +158,6 @@ userRouter.put(
     }
   }
 );
-// userRouter.put(
-//   "/userImg",
-//   loginRequired,
-//   upload.single("image"),
-//   async (req, res, next) => {
-//     try {
-//       console.log(req.file);
-//       const img = req.file.buffer;
-//       const userId = req.currentUserId;
-//       console.log("1.라우터-", userId, img);
-
-//       const updateImg = await userService.updateUserImg({
-//         img,
-//         userId,
-//       });
-//       if (updateImg.errorMessage) {
-//         throw new Error(updateImg.errorMessage);
-//       }
-
-//       res.status(201).send("Image updated successfully!");
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 
 // delete profile img
 userRouter.put("/userImg/delete", loginRequired, async (req, res, next) => {
