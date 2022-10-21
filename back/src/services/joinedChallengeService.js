@@ -14,6 +14,7 @@ class joinedChallengeService {
       countUploads,
       image,
       description,
+      //   challenges,
     });
     return createdChallenge;
   }

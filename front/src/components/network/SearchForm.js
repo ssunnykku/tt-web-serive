@@ -24,7 +24,7 @@ const SearchForm = ({ data, setData,originalData }) => {
         onChange={handleChange}
         placeholder="검색어를 입력하세요"
       />
-      <FontAwesomeIcon icon={faSearch} />
+      <FontAwesomeIcon id="dotbogi" icon={faSearch} />
     </div>
   );
 };

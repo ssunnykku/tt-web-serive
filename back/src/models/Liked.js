@@ -33,7 +33,6 @@ class Liked {
         likedId: likedId,
       },
     });
-    console.log("liked?? delete 왜안됨:", liked);
     return;
   }
   static async getLikedList({ userId }) {
@@ -46,9 +45,11 @@ class Liked {
     return likedList;
   }
   //likedCount
-  static async getLikedCount({ userId }) {
+  static async getLikedCount({ challengeId }) {
     const likedList = await prisma.liked.count({
-      where: { userId: userId },
+      where: {
+        challengeId: Number(challengeId),
+      },
     });
     return likedList;
   }

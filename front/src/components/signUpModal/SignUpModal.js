@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../../styles/signUpModal.css";
 import { useNavigate } from "react-router-dom";
@@ -11,10 +11,10 @@ import Swal from "sweetalert2";
 
 function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const navigate = useNavigate();
-
+  
   // useState로 name 상태를 생성함.
   const [name, setName] = useState("");
-  //useState로 email 상태를 생성함.
+  //use State로 email 상태를 생성함.
   const [email, setEmail] = useState("");
   //useState로 checkEmail 상태를 생성함 -> email 중복확인
   const [checkEmail, setCheckEmail] = useState(false);
@@ -73,12 +73,13 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const clickCheckedBox = () => {
     setCheckBox(true);
   };
-
+  console.log(checkEmail)
   const handleSubmit = async (e) => {
     e.preventDefault();
     let res = {};
     let user = {};
     try {
+      
       // "user/register" 엔드포인트로 post요청함.
       res = await Api.post("register", {
         name,
@@ -86,8 +87,11 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         password,
         confirmPassword,
       });
-      console.log(res);
-
+      
+      if(res.data=='이미 사용중인 email입니다.'){
+        setCheckEmail(true);
+        return;
+      }else{
       setSignUpModalOpen(false);
       Swal.fire({
         position: "top-center",
@@ -95,7 +99,7 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
         text: "회원가입 성공, 로그인 해주세요",
       }).then(function () {
         navigate("/", { replace: true });
-      });
+      });}
     } catch (err) {
       Swal.fire({
         position: "top-center",
@@ -111,6 +115,9 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
   const closeSignUpModal = () => {
     setSignUpModalOpen(false);
   };
+  useEffect(()=>{
+    setCheckEmail(false)
+  },[email])
   // console.log(setSignUpModalOpen);
   return (
     <>
@@ -146,9 +153,15 @@ function SignUpModal({ signUpModalOpen, setSignUpModalOpen }) {
                     setEmail(e.target.value);
                   }}
                 ></input>
-                <button className="emailCheck">이메일 중복확인</button>
               </div>
               {!isEmailValid && <alert>이메일 형식이 올바르지 않습니다.</alert>}
+              {
+                checkEmail===true
+                ?
+                <alert>이미 가입된 이메일입니다.</alert>
+                :
+                null
+              }
               <h3>비밀번호</h3>
               <input
                 type="password"

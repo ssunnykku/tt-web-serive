@@ -22,8 +22,9 @@ const NavBar = () => {
   
   const handleDelete = async (e) => {
     e.preventDefault();
-    await Api.put(`withdrawl/${userState.user.userId}`, {
-      withdrawl: 1,
+    await Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));
+    await Api.put(`withdrawal/${currentUserId}`, {
+      withdrawal: 1,
     });
 
   sessionStorage.removeItem('accessToken');
@@ -33,7 +34,9 @@ const NavBar = () => {
 
     navigate("/");
   };
-
+  useEffect(()=>{
+    Api.get('currentUser').then((res)=> setCurrentUserId(res.data.userId))
+  },[])
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -61,9 +64,6 @@ const NavBar = () => {
     alert("로그아웃 완료");
     navigate("/");
   };
-  useEffect(() => {
-    Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));
-  }, []);
   return (
     <div className="navBar">
       <nav className="nav">

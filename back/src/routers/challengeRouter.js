@@ -4,8 +4,11 @@ import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
-const upload = addImage("uploads");
+const { PrismaClient } = require("@prisma/client");
 
+const prisma = new PrismaClient();
+
+const upload = addImage("uploads");
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -76,7 +79,7 @@ challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   res.status(200).json({ result });
 });
 
-// 챌린지 수정
+// 챌린지 시작 전에는 수정 못하는 코드 작성 // 3계층 분리...
 challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
@@ -89,15 +92,9 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     const explainImg = image.explain;
     const explainImgPath = explainImg.map((img) => img.path);
 
-    const titleImg = `uploads/${mainImg.path}`;
-    const explainImgs = `uploads/${explainImgPath}`;
-
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }
-
-    // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
-    // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
     if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
       return res
         .status(400)

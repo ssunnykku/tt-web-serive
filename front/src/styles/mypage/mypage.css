@@ -19,6 +19,7 @@
     align-items: center;
     height: 100vh;
     border-right: 2px solid #9C9C9C;
+    margin-top: 5%;
     
 }
 .userprofile img{
@@ -38,6 +39,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
+    margin-top: 5%;
 }
 .upperbar{
     width: 100%;
@@ -48,13 +50,13 @@
 }
 .point{
     width: 33%;
-    height: 20vh;
-    border-right: 1px solid black;
+    height: 13vh;
+    border-right: 1.5px solid #9C9C9C;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-top: 4%;
-    padding-top: 3%;
+    padding-top: 2%;
     cursor: pointer;
 }
 .point h1{
@@ -62,13 +64,13 @@
 }
 .challange{
     width: 33%;
-    height: 20vh;
-    border-right: 1px solid black;
+    height: 13vh;
+    border-right: 1.5px solid #9C9C9C;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-top: 4%;
-    padding-top: 3%;
+    padding-top: 2%;
     cursor: pointer;
 }
 .challange h1{
@@ -76,12 +78,12 @@
 }
 .liked{
     width: 33%;
-    height: 20vh;
+    height: 13vh;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin-top: 4%;
-    padding-top: 3%;
+    padding-top: 2%;
     cursor: pointer;
 }
 .liked h1{
