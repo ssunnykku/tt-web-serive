@@ -10,7 +10,9 @@ import ok from "../../images/Ok.png";
 import scroll from "../../images/scroll.png";
 import { useNavigate } from "react-router-dom";
 import { DispatchContext, UserStateContext } from "../../App";
-
+import logoF from "../../images/logoF.png";
+// import imageCompression from "browser-image-compression";
+import todayLogo from "../../images/todayLogo.png";
 const MainPage1 = () => {
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -39,17 +41,22 @@ const MainPage1 = () => {
   //   navigate('/')
   // }
 
-  
-
   return (
     <>
       <div className="mainPage1">
         <NavBar />
         <div className="mainPageContainer">
-          <a>환경챌린지의 모든 것</a>
+          <a className="warmFont fontColorWhite">나도 살고 지구도 사는</a>
+          <a className="warmFont fontColorWhite">환경 습관 기르기 프로젝트</a>
           <div className="secondlinetext">
-            <a className="missioncheck">미션체크</a>
-            <a>에서 쉽고 빠르게</a>
+            <a className="missioncheck">
+              {/* <img src={logoF} className="mainLogo" /> */}
+            </a>
+            {/* <div className="todayLogo"></div> */}
+            {/* <img src={todayLogo} className="todayLogo"></img> */}
+            {/* <span className="mainTitleFont todayColor">
+              오늘 내<span className=" mainTitleFont todayTaskColor">일</span>
+            </span> */}
           </div>
           <div className="buttonContainer">
             <StyledButton

@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { DispatchContext, UserStateContext } from "../App";
 import ok from "../images/Ok.png";
+import logoM from "../images/logoM.png";
+import logoF from "../images/logoF.png";
+import todayLogo from "../images/todayLogo.png";
 import * as Api from "../api";
 const NavBar = () => {
   const navigate = useNavigate();
@@ -19,24 +22,26 @@ const NavBar = () => {
   const dispatch = useContext(DispatchContext);
   const [currentUserId, setCurrentUserId] = useState("");
   const isLogin = !!userState.user;
-  
+
   const handleDelete = async (e) => {
     e.preventDefault();
-    await Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));
+    await Api.get("currentUser").then((res) =>
+      setCurrentUserId(res.data.userId)
+    );
     await Api.put(`withdrawal/${currentUserId}`, {
       withdrawal: 1,
     });
 
-  sessionStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-  dispatch({type:'LOGOUT'});
-  alert('탈퇴 완료')
+    sessionStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    dispatch({ type: "LOGOUT" });
+    alert("탈퇴 완료");
 
     navigate("/");
   };
-  useEffect(()=>{
-    Api.get('currentUser').then((res)=> setCurrentUserId(res.data.userId))
-  },[])
+  useEffect(() => {
+    Api.get("currentUser").then((res) => setCurrentUserId(res.data.userId));
+  }, []);
   const navToggle = () => {
     active === "nav-menu"
       ? setActive("nav-menu nav-active")
@@ -73,7 +78,7 @@ const NavBar = () => {
           }}
           className="nav-brand"
         >
-          <img src={ok} className="logoSmall"></img>미션체크
+          <img src={todayLogo} className="logoSmall"></img>
         </a>
         <ul className={active}>
           <li className="nav-item">

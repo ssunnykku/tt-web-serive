@@ -4,6 +4,7 @@
    
 }
 
+
 li{
     list-style: none;
 }
@@ -14,7 +15,10 @@ a{
     
 }
 .logoSmall{
-    padding-bottom: 0.2rem;
+    padding-bottom: 1.3rem;
+    width: 7.3rem;
+    height: 8.3rem;
+ 
  
 }
 a:hover{
@@ -30,6 +34,8 @@ a:hover{
     height: 8.5vh;
     background: #FFFFFF;
     font-family: 'Nanum Gothic';
+    padding-top:1.5rem !important;
+    flex-wrap: nowrap !important;
     /* background-color: ; */
 
 }
@@ -127,5 +133,3 @@ a:hover{
     font-size: 1.5rem;
     
 }
-
-

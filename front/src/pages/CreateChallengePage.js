@@ -14,7 +14,7 @@ import BadImg from "../components/createChallenge/BadImg";
 import { DispatchContext } from "../App";
 import * as Api from "../api.js";
 import { ConsoleSqlOutlined } from "@ant-design/icons";
-
+import '../styles/createChallengePage.css'
 {
   /**챌린지 개설하기 스타일 설정 */
 }

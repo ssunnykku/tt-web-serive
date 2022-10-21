@@ -1,6 +1,52 @@
+/*오늘 내 일 폰트*/
+@font-face {
+  font-family: 'TmonMonsori';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/TmonMonsori.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+/*따뜻한 느낌 폰트*/
+@font-face {
+  font-family: 'GangwonEdu_OTFBoldA';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEdu_OTFBoldA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'KOTRA_BOLD-Bold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.1/KOTRA_BOLD-Bold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 html { 
   scroll-behavior: smooth; 
+}
+.mainTitleFont {
+  font-family: 'TmonMonsori';
 } 
+.warmFont {
+  font-family: 'KOTRA_BOLD-Bold';
+}
+.todayColor {
+  color: #6a71e6;
+}
+.todayTaskColor {
+color : #e6c33a;
+}
+.fontColorWhite {
+  color: #FFFFFF;
+}
+.todayLogo {
+  width: 40rem;
+  height: 40rem;
+}
+.todayLogo{
+  background-image: url('../../images/todayLogo.png');
+  background-repeat: no-repeat;
+  background: cover;
+  /* width: 80rem;
+  height: 80rem; */
+}
 .mainPage1{
   width: 100%;
   height: 100vh;
@@ -10,6 +56,9 @@ html {
   flex-direction: column;
   font-family: 'Nanum Gothic';
 }
+/* a:hover {
+  color: #FFFFFF;
+} */
 
 .mainPageContainer{
   background-image: url('../../images/mainpage/MainPage1.png');
@@ -62,6 +111,13 @@ html {
   width: 24px;
   height: 24px;
   margin-left: 2px;
+}
+.mainLogo {
+  width: 20rem;
+  height: 15rem;
+  /* -webkit-filter:opacity(.5) drop-shadow(0 0 0 navy);
+  filter:opacity(0.5) drop-shadow(0 0 0 navy); */
+  
 }
 
 @keyframes circlemove{
