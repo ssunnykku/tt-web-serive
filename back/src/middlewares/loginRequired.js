@@ -33,6 +33,7 @@ function loginRequired(req, res, next) {
             const refreshFromDb = token.refreshToken;
 
             if (refreshFromDb != refreshToken) {
+
               const errorMessage = "refresh token이 유효하지 않습니다.";
               res.status(400).send("디비와 토큰이 다른 에러:");
             }
