@@ -14,7 +14,7 @@ class JoinedChallenge {
   }
   // 인증 업로드 코드
   static async createC({ id, userId, countUploads, image, description }) {
-    const addedImage = `uploads/${image}`;
+    const addedImage = `${image}`;
     const createdChallenge = await prisma.joinedChallenge.create({
       data: {
         user: {
@@ -61,6 +61,5 @@ class JoinedChallenge {
     return ChallengePointInfoList;
   }
 }
-
 
 export { JoinedChallenge };

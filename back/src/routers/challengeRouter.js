@@ -38,8 +38,8 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `initial/${mainImg.path}`,
-      explainImg: `initial/${explainImgPath}`,
+      mainImg: `${mainImg.path}`,
+      explainImg: `${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
@@ -91,9 +91,8 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     const explainImg = image.explain;
     const explainImgPath = explainImg.map((img) => img.path);
 
-    const titleImg = `uploads/${mainImg.path}`;
-    const explainImgs = `uploads/${explainImgPath}`;
-
+    const titleImg = `${mainImg.path}`;
+    const explainImgs = `${explainImgPath}`;
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }

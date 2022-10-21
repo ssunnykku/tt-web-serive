@@ -17,7 +17,7 @@ function addImage(imgPath) {
       const ext = path.extname(file.originalname);
       cb(null, path.basename(file.originalname, ext) + "-" + Date.now() + ext);
     },
-    limits: { fileSize: 5 * 1024 * 1024 },
+    limit: { fileSize: 50 * 1024 * 1024 },
   });
 
   return multer({ storage: storage });
