@@ -2,12 +2,9 @@ import { Router } from "express";
 import { challengeService } from "../services/challengeService";
 import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
-import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 const challengeRouter = Router();
 const upload = addImage("uploads");
-
-// const upload = multer({ dest: "uploads/" });
 
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
@@ -19,12 +16,13 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
     const holdUserId = req.currentUserId;
 
     const { title, description, fromDate, toDate, method } = req.body;
-    const image = req.files;
 
     const mainImg = image.main[0];
 
     const explainImg = image.explain;
-    const explainImgPath = explainImg.map((img) => img.path);
+    const explainOnePath = explainImg[0].path;
+    const explainTwoPath = explainImg[1].path;
+    // const explainImgPath = explainImg.map((img) => img.path);
 
     if (image === undefined) {
       return res.status(400).send("이미지가 존재하지 않습니다.");
@@ -36,8 +34,8 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `initial/${mainImg.path}`,
-      explainImg: `initial/${explainImgPath}`,
+      mainImg: `${mainImg.path}`,
+      explainImg: `${explainOnePath}, ${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
@@ -49,7 +47,6 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   }
 });
 
-// 에러남
 //2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
@@ -67,7 +64,7 @@ challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   res.status(200).json({ updateChallenge });
 });
 
-// Delete (관리용 코드)
+// Delete
 challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   const userId = req.currentUserId;
   const { id } = req.params;
@@ -94,14 +91,6 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     const explainImgs = `${explainImgPath}`;
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
-    }
-
-    // 새로 입력받은 날짜 기준 개시 전으로 수정 막음
-    // startRemainingDate(시작까지 남은 날짜 수) 가져와서 시작한 챌린지 수정 불가하게 막기 구현하기...
-    if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
-      return res
-        .status(400)
-        .send("cannot modify it after the challenge begins.");
     }
 
     const updatedChallenge = await challengeService.updateChallenge({

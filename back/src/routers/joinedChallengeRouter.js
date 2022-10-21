@@ -2,10 +2,9 @@ import { Router } from "express";
 import { joinedChallengeService } from "../services/joinedChallengeService";
 import { loginRequired } from "../middlewares/loginRequired";
 import { addImage } from "../middlewares/addImage";
-
+const sharp = require("sharp");
 const fs = require("fs");
 const joinedChallengeRouter = Router();
-const sharp = require("sharp");
 
 const upload = addImage("uploads");
 
@@ -32,9 +31,9 @@ joinedChallengeRouter.post(
 
       const { description } = req.body;
 
-      // if (image === undefined) {
-      //   return res.status(400).send("이미지가 존재하지 않습니다.");
-      // }
+      if (image === undefined) {
+        return res.status(400).send("이미지가 존재하지 않습니다.");
+      }
 
       const { id } = req.params;
       const countUploads = await joinedChallengeService.count({
