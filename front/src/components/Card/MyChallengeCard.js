@@ -11,6 +11,7 @@ const MychallengeCard = ({ item }) => {
   var day = ("0" + today.getDate()).slice(-2);
   var dateString = year + "-" + month + "-" + day;
   let navigate=useNavigate()
+  console.log(item.challenge.title)
   return (
     <Card
       id="cardBody"
@@ -36,22 +37,22 @@ const MychallengeCard = ({ item }) => {
             alt="대표 사진"
           />
 
-          <Card.Title>{item?.title}</Card.Title>
-
+          <Card.Title>{item?.challenge.title}</Card.Title>
+        
           <div className="cardtext">
             👨‍👧‍👧 100
-            <UserLike challengeId={item.challengeId} />
+            <UserLike challengeId={item.challenge.challengeId} />
           </div>
           <div className="duration">
             <a className="cardSubText">
-              {item?.fromDate}-{item?.toDate}
+              {item?.challenge.fromDate}-{item?.challenge.toDate}
             </a>{" "}
           </div>
           <button
-            disabled={new Date(item.fromDate) <= new Date(dateString) && new Date(dateString) <= new Date(item.toDate) }
+            disabled={new Date(item.challenge.fromDate) <= new Date(dateString) && new Date(dateString) <= new Date(item.challenge.toDate) }
             className="networkButton"
             onClick={()=>{
-                navigate('/checkChallenge')
+                navigate(`/checkChallenge/${item.challenge.challengeId}`)
             }}
             
           >

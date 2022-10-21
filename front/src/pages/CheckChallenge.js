@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../components/NavBar";
 import NetworkCard from "../components/NetworkCard";
 
 import "../styles/checkChallenge.css";
+import * as Api from '../api'
+
 const CheckChallenge = () => {
+    const [mainImg,setMainImg]=useState('')
+
   return (
     <div className="checkChallenge">
       <NavBar />
@@ -13,7 +17,8 @@ const CheckChallenge = () => {
       </div>
       <div className="checkContents">
         <div className="mainimg">
-            
+            <div className="imgsize"></div>
+            <h1> 안녕</h1>
         </div>
         <div className="mainContent">
           <div className="dropdowncontents"></div>

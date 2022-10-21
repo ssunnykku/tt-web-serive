@@ -85,7 +85,7 @@ function App() {
               element={<CreateChallenge />}
             />
             <Route path="/ChallengeDetail" element={<ChallengeDetailModal />} />
-            <Route path="/checkChallenge" element={<CheckChallenge/>} />
+            <Route path="/checkChallenge/:id" element={<CheckChallenge/>} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
