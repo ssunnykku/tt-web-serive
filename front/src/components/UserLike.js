@@ -12,15 +12,19 @@ function UserLike({ challengeId }) {
   const [likeStatus, setLikeStatus] = useState(false);
   const [checkUserId, setCheckUserId] = useState("");
   useEffect(()=>{
-    Api.get(`likedCount/${challengeId}`).then((res) =>
-    setCountLike(res.data))
     Api.get('currentUser').then((res)=>setMyid(res.data.userId))
   },[])
   useEffect(()=>{
-    Api.get('liked').then((res)=>setCheckUserId(res.data.map((item)=>item.challenge)))
+    Api.get('liked').then((res)=>setCheckUserId(res.data))
   },[])
-    
-  
+  useEffect(()=>{
+    Api.get(`likedCount/${challengeId}`).then((res) =>
+    setCountLike(res.data))
+  },[countLike])
+  // checkUserId.forEach((menu)=>console.log(menu))
+  // console.log(checkUserId.array.forEach(x => {
+  //   x.holdUserId === myId && setLikeStatus(true)
+  // }))
   
   // console.log('asd',checkUserId.forEach(x=>{
   //   x.userId === 
@@ -88,8 +92,6 @@ function UserLike({ challengeId }) {
           Api.get(`likedCount/${challengeId}`).then((res) =>
             setCountLike(res.data)
           );
-
-          
         }}
         id="userLike"
         className="likeButton"

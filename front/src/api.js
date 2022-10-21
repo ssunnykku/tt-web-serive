@@ -26,28 +26,32 @@ const serverUrl =
 // }
 
 async function updateToken() {
-  
+  console.log('내가 보내는거',localStorage.getItem("refreshToken"))
   if (localStorage.getItem("refreshToken")) {
     console.log('리프레쉬 존재함')
-    let refreshedAccessTokenResponse = await fetch(serverUrl + 'currentUser', {
-      method: "PUT",
-      body: ({
-        refreshToken: localStorage.getItem("refreshToken"),
+    let refreshedAccessTokenResponse = await fetch(serverUrl + 'liked', {
+      method: "POST",
+      body: JSON.stringify({
+        refreshToken: localStorage.getItem("refreshToken")
       }),
       headers: {
         "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem('accessToken')
       }
     });
     console.log('받았다 응답',refreshedAccessTokenResponse)
     
-    let refreshAccessToken = await refreshedAccessTokenResponse.json();
-    console.log('이거는?',refreshAccessToken)
+    let refreshAccessToken = await refreshedAccessTokenResponse;
+    let answer= await refreshAccessToken.text()
+    console.log('제발',answer)
+    console.log('이거는?',refreshAccessToken.text())
     if (refreshedAccessTokenResponse.Logout) {
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");
       window.location.reload();
     } else {
-      sessionStorage.setItem("accessToken", refreshAccessToken.accessToken);
+      await sessionStorage.setItem("accessToken", answer);
+      console.log('이게들어감', refreshAccessToken.text())
     }
   }
 }
@@ -64,6 +68,7 @@ axios.interceptors.response.use(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          
           refreshToken: localStorage.getItem("refreshToken"),
         }),
       });
