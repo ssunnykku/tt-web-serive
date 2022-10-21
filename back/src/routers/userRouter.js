@@ -38,6 +38,21 @@ userRouter.post("/register", async (req, res, next) => {
   }
 });
 
+userRouter.post("/login", async (req, res, next) => {
+  try {
+    const email = req.body.email;
+    const password = req.body.password;
+    const user = await userService.userLogin({ email, password });
+    if (user.errorMessage) {
+      throw new Error(user.errorMessage);
+    }
+
+    res.status(200).send(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
 userRouter.get("/currentUser", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
