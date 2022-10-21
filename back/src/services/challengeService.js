@@ -1,5 +1,4 @@
 import { challenge } from "../models/challenge";
-import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
 class challengeService {
   // create/ post
@@ -56,11 +55,6 @@ class challengeService {
 
   // Delete
   static async deleteOne(id) {
-    // const findId = await challenge.findFromDate(id);
-    // if (dayCountsBetweenTodayAnd(fromDate) >= 0) {
-    //   const error = new Error("cannot modify it after the challenge begins.");
-    //   throw error;
-    // }
     const deleteChallenge = await challenge.delete(id);
 
     return deleteChallenge;

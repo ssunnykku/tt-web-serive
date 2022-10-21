@@ -24,19 +24,18 @@ const MyPage = () => {
   const [showDrop, setShowDrop] = useState(false);
   const [contents, setContents] = useState(1);
   const isLogin = !!userState.user;
-  const [likedList,setLikedList]=useState([]);
+  const [likedList, setLikedList] = useState([]);
   const [challengeData, setChallengeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
-  const [myChallengeList,setMyChallengeList]=useState([]);
-  
+  const [myChallengeList, setMyChallengeList] = useState([]);
+
   useEffect(() => {
     Api.get("challenges").then((res) => setChallengeData(res.data.result));
     Api.get("challenges").then((res) => setOriginalData(res.data.result));
     Api.get(`point`).then((res) => setMyPoint(res.data.toString()));
-    Api.get('liked').then((res)=>setLikedList(res.data))
-    Api.get('userToChallenge').then((res)=>setMyChallengeList(res.data))
+    Api.get("liked").then((res) => setLikedList(res.data));
+    Api.get("userToChallenge").then((res) => setMyChallengeList(res.data));
   }, []);
-    console.log(myChallengeList)
   return (
     <>
       {isLogin === true ? (
@@ -108,7 +107,7 @@ const MyPage = () => {
                           (item) =>
                             new Date(item.toDate) <= new Date(dateString)
                         );
-                        
+
                         setChallengeData(results);
                       }}
                     >
@@ -130,16 +129,13 @@ const MyPage = () => {
                 {contents === 2 && (
                   <ChallengeContent myChallengeList={myChallengeList} />
                 )}
-                {contents === 3 && (
-                  <LikedContent likedList={likedList} />
-                )}
+                {contents === 3 && <LikedContent likedList={likedList} />}
               </div>
             </div>
           </div>
         </div>
       ) : (
         navigate("/")
-      
       )}
     </>
   );
