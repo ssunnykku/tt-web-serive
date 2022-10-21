@@ -30,19 +30,12 @@ class userToChallengeService{
         const getJoinCallenge=await UserToChallenge.getJoinChallengeList({userId});
         return getJoinCallenge;
     }
-
-    //user별 참가한 챌린지 조회(마이페이지)
-    static async getUserChallengePoint({userId}){
-        const getCallengePointInfoList=await UserToChallenge.getCallengePointInfoList({userId});
-        return getCallengePointInfoList;
-    }
     
     //참가취소
     static async JoinDelete({userId,challengeId}){
         const userJoinList=await UserToChallenge.getJoinChallengeList({userId});
-        //console.log(userJoinList);
+
         if(userJoinList){
-            //console.log(userJoinList);
             for(var i=0;i<userJoinList.length;i++){
                 if(userJoinList[i].challenge.challengeId==challengeId){
                     const id=userJoinList[i].userToChallengeId

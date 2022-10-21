@@ -49,18 +49,6 @@ class UserToChallenge{
         })
         return JoinChallengeList;
     }
-
-    static async getCallengePointInfoList({userId}){
-        const CallengePointInfoList=await prisma.joinedChallenge.findMany({
-            where:{
-                userId:userId,
-            },
-            select:{
-                challenge:true,
-            }
-        })
-        return CallengePointInfoList;
-    }
     
 }
 export {UserToChallenge};
