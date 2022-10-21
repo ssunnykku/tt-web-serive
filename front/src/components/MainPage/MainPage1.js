@@ -46,10 +46,14 @@ const MainPage1 = () => {
       <div className="mainPage1">
         <NavBar />
         <div className="mainPageContainer">
-          <a className="warmFont fontColorWhite">나도 살고 지구도 사는</a>
-          <a className="warmFont fontColorWhite">환경 습관 기르기 프로젝트</a>
+          <a className="warmFont aMainPage1 todayColor">
+            나도 살고 지구도 사는
+          </a>
+          <a className="warmFont fontColorWhite aMainPage1 mainTitle2">
+            환경 습관 기르기 프로젝트
+          </a>
           <div className="secondlinetext">
-            <a className="missioncheck">
+            <a className="missioncheck aMainPage1">
               {/* <img src={logoF} className="mainLogo" /> */}
             </a>
             {/* <div className="todayLogo"></div> */}
@@ -94,8 +98,10 @@ const MainPage1 = () => {
           </div>
         </div>
         <div className="scroll">
-          <span className="titleScroll">WHY 미션체크?</span>
-          <img src={scroll} className="scrollLogo"></img>
+          <span className="titleScroll">
+            <img src={todayLogo} className="LogoScroll" />이 궁금하다면?
+          </span>
+          {/* <img src={scroll} className="scrollLogo"></img> */}
         </div>
       </div>
     </>

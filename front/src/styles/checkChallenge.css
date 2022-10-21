@@ -30,7 +30,7 @@
     flex-direction: row;
 }
 .mainimg{
-    width: 40%;
+    width: 20%;
     
     height: 80vh;
     display: flex;
@@ -41,7 +41,7 @@
 }
 
 .mainContent{
-    width: 100%;
+    width: 80%;
     height: 100vh;
     display: flex;
     flex-direction: column;

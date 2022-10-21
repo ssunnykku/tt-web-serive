@@ -76,7 +76,7 @@ const NavBar = () => {
           onClick={() => {
             navigate("/");
           }}
-          className="nav-brand"
+          className="nav-brand aNav"
         >
           <img src={todayLogo} className="logoSmall"></img>
         </a>
@@ -86,7 +86,7 @@ const NavBar = () => {
               onClick={() => {
                 navigate("/");
               }}
-              className="nav-link"
+              className="nav-link aNav"
             >
               Home
             </a>
@@ -97,7 +97,7 @@ const NavBar = () => {
                 navigate("/mypage");
               }}
               href="#"
-              className="nav-link"
+              className="nav-link aNav"
             >
               MyPage
             </a>
@@ -107,7 +107,7 @@ const NavBar = () => {
               onClick={() => {
                 navigate("/network");
               }}
-              className="nav-link"
+              className="nav-link aNav"
             >
               Challenge
             </a>

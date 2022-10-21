@@ -3,10 +3,11 @@ import blankImg from "../../images/createChallengePage/blankImg.png";
 import sad from "../../images/createChallengePage/sad.png";
 import badImg from "../../styles/createChallenge/BadImg.css";
 
-const BadImg = ({ badImage, setBadImage }) => {
+const BadImg = ({ badImage, setBadImage, formData }) => {
   const fileInput = useRef(null);
   const onChangeBadImage = (e) => {
     if (e.target.files[0]) {
+      formData.append("explainImg", e.target.files[0]);
       setBadImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
@@ -33,14 +34,15 @@ const BadImg = ({ badImage, setBadImage }) => {
             <span>
               <img className="icon" src={sad}></img>이렇게 찍으면 안돼요!
             </span>
-            <img
-              className="img"
-              src={badImage}
-              enctype="multipart/form-data"
-              onClick={() => {
-                fileInput.current.click();
-              }}
-            ></img>
+            <form name="explainImg" encType="multipart/form-data">
+              <img
+                className="img"
+                src={badImage}
+                onClick={() => {
+                  fileInput.current.click();
+                }}
+              ></img>
+            </form>
             <input
               type="file"
               style={{ opacity: "0" }}

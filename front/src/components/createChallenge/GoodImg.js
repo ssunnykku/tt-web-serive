@@ -2,12 +2,13 @@ import React, { useState, useRef } from "react";
 import blankImg from "../../images/createChallengePage/blankImg.png";
 import happy from "../../images/createChallengePage/happy.png";
 import goodImg from "../../styles/createChallenge/GoodImg.css";
-const GoodImg = ({ goodImage, setGoodImage }) => {
+const GoodImg = ({ goodImage, setGoodImage, formData }) => {
   const fileInput = useRef(null);
   const onChangeGoodImage = (e) => {
     if (e.target.files[0]) {
-      console.log("e.target.files[0].filename", e.target.files[0]);
-      console.log("e.target.files[0].name", e.target.files[0].name);
+      // console.log("e.target.files[0].filename", e.target.files[0]);
+      // console.log("e.target.files[0].name", e.target.files[0].name);
+      formData.append("explainImg", e.target.files[0]);
       setGoodImage(e.target.files[0]);
     } else {
       //업로드 취소할 시
@@ -31,14 +32,15 @@ const GoodImg = ({ goodImage, setGoodImage }) => {
             <span>
               <img className="icon" src={happy}></img>이렇게 찍어주세요!
             </span>
-            <img
-              className="img"
-              src={goodImage}
-              enctype="multipart/form-data"
-              onClick={() => {
-                fileInput.current.click();
-              }}
-            ></img>
+            <form name="explainImg" encType="multipart/form-data">
+              <img
+                className="img"
+                src={goodImage}
+                onClick={() => {
+                  fileInput.current.click();
+                }}
+              ></img>
+            </form>
             <input
               type="file"
               style={{ opacity: "0" }}
