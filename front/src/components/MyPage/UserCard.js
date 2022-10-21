@@ -8,10 +8,10 @@ import axios from "axios";
 const UserCard = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    Api.get("currentUser").then((res) => setName(res.data.name));
-    Api.get("userImg").then((res) => setProfileImage(res.data));
-  }, []);
+  // useEffect(() => {
+  //   Api.get("currentUser").then((res) => setName(res.data.name));
+  //   Api.get("userImg").then((res) => setProfileImage(res.data));
+  // }, []);
   const [showForm, setShowForm] = useState(false);
   const [showContent, setShowContent] = useState("정보수정");
   const [profileImage, setProfileImage] = useState(
@@ -20,6 +20,8 @@ const UserCard = () => {
   const fileInput = useRef(null);
   const onChangeImage = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
+    const nowImageUrl = URL.createObjectURL(e.target.files[0]);
+    console.log("nowImageUrl", nowImageUrl);
     if (e.target.files[0]) {
       const formData = new FormData();
       formData.append("img", e.target.files[0]);
@@ -45,6 +47,7 @@ const UserCard = () => {
       setProfileImage(
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU"
       );
+      Api.get("userImg").then((res) => setProfileImage(res.data));
       return;
     }
   };
@@ -78,7 +81,7 @@ const UserCard = () => {
     <div className="userprofile">
       <form
         className="imageForm"
-        onSubmit={onSubmit}
+        onSubmit={onChangeImage}
         encType="multipart/form-data"
       >
         <img
