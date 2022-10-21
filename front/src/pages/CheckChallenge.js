@@ -6,18 +6,16 @@ import "../styles/checkChallenge.css";
 import * as Api from '../api'
 import Dropdown from "../components/Dropdown";
 import CheckDropdown from "../components/Dropdown";
+import StyledButton from "../styles/commonstyles/Button";
 
 const CheckChallenge = () => {
     let {id}=useParams();
     let realId=parseInt(id);
-    const [mainImg,setMainImg]=useState('')
-    const [remainDate,setRemainDate]=useState()
-    const [title,setTitle]=useState('제목')
-    const [playPoint,setPlayPoint]=useState(0);
-    const [expectedPoint,setExpectedPoint]=useState(0);
+    const [countPerson,setCountPerson]=useState(0)
     const [challengeData,setChallengeData]=useState([]);
     useEffect(()=>{
       Api.get(`challenges/mine/${realId}`).then((res)=>setChallengeData(res.data.updateChallenge))
+      Api.get('countJoinUser').then((res)=>setCountPerson(res.data))
     },[])
     // Api.get(`challenges/mine/:${realId}}`).then((res)=>console.log(res))
     console.log(challengeData.fromDate)
@@ -30,7 +28,7 @@ const CheckChallenge = () => {
     }
     console.log(challengeData.fromDate=='2022-10-22')
     let dif=getDateDiff(challengeData.fromDate,challengeData.toDate)
-    
+    console.log(challengeData.challengeId)
   return (
     <div className="checkChallenge">
       <NavBar />
@@ -41,7 +39,7 @@ const CheckChallenge = () => {
       <div className="checkContents">
         <div className="mainimg">
             <div className="imgsize">
-              <NetworkCard item={challengeData}/>
+              <NetworkCard item={challengeData} countPerson={countPerson}/>
             </div>
         </div>
         <div className="mainContent">
@@ -50,13 +48,15 @@ const CheckChallenge = () => {
           
           <div className="pointContents">
             <div>
-              참가 포인트 50
+              참가 포인트 -50
             </div>
             <div>
-              최대 포인트 {dif*10}
+              획득 최대 포인트 {dif*10}
             </div>
           </div>
-          <div className="buttonContents"></div>
+          <div className="buttonContents">
+            <StyledButton>인증샷 업로드</StyledButton>
+          </div>
         </div>
       </div>
     </div>

@@ -3,11 +3,18 @@ import Card from "react-bootstrap/Card";
 import "../styles/network/networkcard.css";
 import ChallengeDetailModal from "./ChallengeDetailModal/ChallengeDetailModal";
 import UserLike from "./UserLike";
-const NetworkCard = ({ item }) => {
+
+const NetworkCard = ({ item, countPerson }) => {
+  const getDateDiff=(d1,d2)=>{
+    const date1=new Date(d1);
+    const date2=new Date(d2);
+    const diffDate=date1.getTime()-date2.getTime();
+    return Math.abs(diffDate/(1000*60*60*24));
+  }
   const [challengeDetailModalOpen, setChallengeDetailModalOpen] =
     useState(false);
   const [challengeItem, setChallengeItem] = useState(null);
-
+  console.log(item)
   const showChallengeDetailModalOpen = () => {
     setChallengeDetailModalOpen(true);
     setChallengeItem(item.challengeId);
@@ -17,6 +24,8 @@ const NetworkCard = ({ item }) => {
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
   const dateString = year + "-" + month + "-" + day;
+  
+  
   return (
     <Card
       id="cardBody"
@@ -48,7 +57,7 @@ const NetworkCard = ({ item }) => {
           </Card.Title>
 
           <div className="cardtext">
-            👨‍👧‍👧 100
+            👨‍👧‍👧 {countPerson}
             <UserLike challengeId={item.challengeId} />
           </div>
           <div className="duration">
@@ -56,6 +65,7 @@ const NetworkCard = ({ item }) => {
               {item?.fromDate}-{item?.toDate}
             </a>{" "}
           </div>
+          
           {challengeDetailModalOpen && (
             <ChallengeDetailModal
               setChallengeDetailModalOpen={setChallengeDetailModalOpen}

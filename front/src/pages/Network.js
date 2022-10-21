@@ -15,7 +15,7 @@ const Network = () => {
   const [challengeData, setChallengeData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
   const navigate = useNavigate();
-
+  const [countPerson,setCountPerson]=useState(0)
   const [visible, setVisible] = useState(4);
   const showMoreCards = () => {
     setVisible((preValue) => preValue + 4);
@@ -30,8 +30,10 @@ const Network = () => {
     Api.get("challenges").then((res) =>
       setOriginalData(res.data.result.reverse())
     );
+    Api.get('countJoinUser').then((res)=>setCountPerson(res.data))
+    
   }, []);
-
+  
   return (
     <div className="NetworkContainer">
       <NavBar />
@@ -61,7 +63,7 @@ const Network = () => {
         <Row>
           {challengeData.slice(0, visible).map((menu) => (
             <Col lg={3}>
-              <NetworkCard item={menu} />
+              <NetworkCard item={menu} countPerson={countPerson} />
             </Col>
           ))}
         </Row>
