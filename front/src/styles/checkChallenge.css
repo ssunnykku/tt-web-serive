@@ -24,14 +24,14 @@
 }
 .checkContents{
     width: 100%;
-    background-color: red;
+   
     height: 80vh;
     display: flex;
     flex-direction: row;
 }
 .mainimg{
     width: 40%;
-    background-color: black;
+    
     height: 80vh;
     display: flex;
     
@@ -39,78 +39,32 @@
     align-items: center;
 
 }
-.imgsize{
-    background-color: yellow;
-    width: 60%;
-    height: 20vh;
-    margin-top: 10%;
-}
+
 .mainContent{
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
-.dropdowncontents{
-    width: 100%;
-    height: 10vh;
-    background-color: grey;
-    display: flex;
-    flex-direction: row-reverse;
-    padding-right: 5%;
-}
-.selectWeek{
-    width: 100%;
-    height: 10vh;
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.firstWeek{
-    font-size: 3rem;
-    font-weight: 400;
-    width: 15%;
-    border-right: 1.5px solid grey;
-    
-   
-}
-.secondWeek{
-    font-size: 3rem;
-    font-weight: 400;
-    width: 15%;
-    border-right: 1.5px solid grey;
-    margin-left: 6%;
-}
-.thirdWeek{
-    font-size: 3rem;
-    font-weight: 400;
-    width: 15%;
-    border-right: 1.5px solid grey;
-    margin-left: 6%;
-}
-.fourthWeek{
-    font-size: 3rem;
-    font-weight: 400;
-    width: 15%;
-    
-    margin-left: 6%;
-}
+
+
 .imgContents{
     width: 100%;
-    height: 15vh;
+    height: 50vh;
     background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
 }
-.textContents{
-    width: 100%;
-    height: 15vh;
-    background-color: blue;
-}
+
 .pointContents{
     width: 100%;
     height: 10vh;
-    background-color: brown;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
 .buttonContents{
     width: 100%;

@@ -49,7 +49,7 @@ const MychallengeCard = ({ item }) => {
             </a>{" "}
           </div>
           <button
-            disabled={new Date(item.challenge.fromDate) <= new Date(dateString) && new Date(dateString) <= new Date(item.challenge.toDate) }
+           
             className="networkButton"
             onClick={()=>{
                 navigate(`/checkChallenge/${item.challenge.challengeId}`)
