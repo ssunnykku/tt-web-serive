@@ -13,7 +13,6 @@ function loginRequired(req, res, next) {
       const jwtDecoded = jwt.verify(accessToken, secretKey);
       const userId = jwtDecoded.userId;
       req.currentUserId = userId;
-
       next();
     } catch (error) {
       const refreshToken = req.body.refreshToken;
@@ -57,9 +56,7 @@ function loginRequired(req, res, next) {
             .send("Refresh token does not exist, 로그인후 이용해주세요");
           return;
         }
-      } else {
-        res.status(400).send("access token이 유효하지 않습니다.");
-      }
+      } 
       return;
     }
   }

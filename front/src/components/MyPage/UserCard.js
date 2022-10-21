@@ -61,7 +61,7 @@ const UserCard = () => {
       type='file'
       style={{display:'none'}}
       accept='image/jpg, image/png, image/jpeg'
-      name="profileImage"
+      name="Img"
       onChange={onChangeImage}
       ref={fileInput}
       ></input>
