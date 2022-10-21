@@ -89,18 +89,18 @@ class User {
   //   return img.img;
   // }
   // //img 수정(sh),
-  // static async EditImg({ userId, img }) {
-  //   const addedImage = `uploads/${img}`;
-  //   const updateImg = await prisma.user.update({
-  //     where: {
-  //       userId: userId,
-  //     },
-  //     data: {
-  //       img: addedImage,
-  //     },
-  //   });
-  //   return updateImg;
-  // }
+  static async EditImg({ userId, img }) {
+    const addedImage = `uploads/${img}`;
+    const updateImg = await prisma.user.update({
+      where: {
+        userId: userId,
+      },
+      data: {
+        img: addedImage,
+      },
+    });
+    return updateImg;
+  }
 
   static async updateUserImg({ userId, img }) {
     console.log("이미지모델:", img);
