@@ -8,15 +8,10 @@ import assert from "assert";
 import { config } from "dotenv";
 import { addImage } from "../middlewares/addImage";
 
-//0. multer
 const upload = addImage("uploads");
-//  1. 회원가입 라우터
+
 userRouter.post("/register", async (req, res, next) => {
-  console.log("여기냐1고");
   try {
-    console.log("여기냐1");
-    //헤더에 json타입이 명시되지 않으면 req보낸 payload(body)내용이 빈배열이 반환될 수 있다.
-    //JS object는 json 타입으로 데이터 전송이 가능하다.
     if (is.emptyObject(req.body)) {
       throw new Error(
         "header의 Content-Type을 application/json으로 설정해주세요"
@@ -32,74 +27,17 @@ userRouter.post("/register", async (req, res, next) => {
       confirmPassword,
       name,
     });
-    // console.log("여기냐2");
 
     if (newUser.errorMessage) {
-      // console.log("여기냐3");
       throw new Error(newUser, errorMessage);
     }
-    // console.log("여기냐4");
 
     res.status(201).send(newUser);
   } catch (error) {
-    // console.log("여기냐");
-    next(error);
-  }
-});
-//배포 후 카카오에서 웹 도메인 변경해야 함.
-//1-1 카카오 회원가입 및 로그인
-userRouter.get("/auth/kakao", async (req, res, next) => {
-  const code = req.query.code;
-  try {
-    //토큰 발급
-    let result = await axios.post(
-      config.kakao.kakaoAuthUrl,
-      {},
-      {
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-        params: {
-          grant_type: "authorization_code",
-          client_id: config.kakao.kakaoClientId,
-          redirect_uri: config.kakao.kakaoRedirectUrl,
-          code: code,
-        },
-      }
-    );
-    const kakaoId = result.data.id;
-
-    let user = await userService.getUserByKakaoId({ kakaoId });
-    if (!user) {
-      user = await userService.addUserByKakaoId;
-    }
-    user = await userService.getKakaoUser({ kakaoId });
-    res.status(200).json(user);
-  } catch (error) {
     next(error);
   }
 });
 
-//1-2 네이버 회원가입 및 로그인
-
-// 2. 로그인 라우터
-userRouter.post("/login", async (req, res, next) => {
-  try {
-    const email = req.body.email;
-    const password = req.body.password;
-    const user = await userService.userLogin({ email, password });
-    if (user.errorMessage) {
-      throw new Error(user.errorMessage);
-    }
-
-    res.status(200).send(user);
-  } catch (error) {
-    next(error);
-  }
-});
-//3.📌 없어도 되는 로직 나중에 한번 확인해보기
-//로그인한 유저 한명 정보 가져오기- (:id 파라미터로 찾는거 필요 없는게 이번엔 챌린지 id페이지 접근이라 )
-//챌린지id를 파라미터로 받아서 챌린지 get 하는건 필요
 userRouter.get("/currentUser", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
@@ -115,11 +53,9 @@ userRouter.get("/currentUser", loginRequired, async (req, res, next) => {
   }
 });
 
-// 4. 비밀번호수정
 userRouter.put("/passwordUpdate", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    //const userId=req.params.userId;
     const password = req.body.password;
 
     const updatePW = await userService.updatePW({ userId, password });
@@ -129,10 +65,8 @@ userRouter.put("/passwordUpdate", loginRequired, async (req, res, next) => {
   }
 });
 
-//5. 유저정보 수정
 userRouter.put("/userUpdate", loginRequired, async (req, res, next) => {
   try {
-    //const  userId  = req.params.userId;
     const userId = req.currentUserId;
     const { name, description } = req.body;
     const updatedUser = await userService.updateUser(userId, name, description);
@@ -142,7 +76,6 @@ userRouter.put("/userUpdate", loginRequired, async (req, res, next) => {
   }
 });
 
-//6. 회원탈퇴(withdrawal 수정)-> 아직 완료 전
 userRouter.put(
   "/withdrawal/:id",
   loginRequired,
@@ -164,19 +97,15 @@ userRouter.put(
   }
 );
 
-// get 이미지 // null일 때 error반환!!...프론트에 해당내용 공유드리기
 userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    // res.set("Content-Type", "image/png");
     res.status(200).send(getImg);
   } catch (error) {
     next(error);
   }
 });
-
-//img update
 
 userRouter.put(
   "/userImg",
@@ -202,7 +131,6 @@ userRouter.put(
   }
 );
 
-// delete profile img
 userRouter.put("/userImg/delete", loginRequired, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
