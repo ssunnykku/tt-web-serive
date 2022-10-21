@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import "../styles/network/networkcard.css";
-
+import ChallengeDetailModal from "./ChallengeDetailModal/ChallengeDetailModal";
 import UserLike from "./UserLike";
 const NetworkCard = ({ item }) => {
-  var today = new Date();
-  var year = today.getFullYear();
-  var month = ("0" + (today.getMonth() + 1)).slice(-2);
-  var day = ("0" + today.getDate()).slice(-2);
-  var dateString = year + "-" + month + "-" + day;
+  const [challengeDetailModalOpen, setChallengeDetailModalOpen] =
+    useState(false);
+  const [challengeItem, setChallengeItem] = useState(null);
+
+  const showChallengeDetailModalOpen = () => {
+    setChallengeDetailModalOpen(true);
+    setChallengeItem(item.challengeId);
+  };
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ("0" + (today.getMonth() + 1)).slice(-2);
+  const day = ("0" + today.getDate()).slice(-2);
+  const dateString = year + "-" + month + "-" + day;
   return (
     <Card
       id="cardBody"
@@ -32,9 +40,12 @@ const NetworkCard = ({ item }) => {
             className="mb-3"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRM79qhm5WWiW46jcsrREwPVX87kZygj9CQDw&usqp=CAU"
             alt="대표 사진"
+            onClick={showChallengeDetailModalOpen}
           />
 
-          <Card.Title>{item?.title}</Card.Title>
+<Card.Title onClick={showChallengeDetailModalOpen}>
+            {item?.title}
+          </Card.Title>
 
           <div className="cardtext">
             👨‍👧‍👧 100
@@ -45,7 +56,12 @@ const NetworkCard = ({ item }) => {
               {item?.fromDate}-{item?.toDate}
             </a>{" "}
           </div>
-          
+          {challengeDetailModalOpen && (
+            <ChallengeDetailModal
+              setChallengeDetailModalOpen={setChallengeDetailModalOpen}
+            />
+          )}
+          {<challengeDetailModal setChallengeItem={setChallengeItem} />}
         </div>
       </Card.Body>
     </Card>

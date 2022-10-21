@@ -1,7 +1,6 @@
-import React from "react";
-import { useState } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "../../styles/ChallengeDetailModal.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Close_round_light from "../../images/Close_round_light.png";
 import TimeLight from "../../images/challenge/TimeLight1x.png";
@@ -11,57 +10,126 @@ import UserFill from "../../images/challenge/UserFill1x.png";
 import Gift from "../../images/challenge/Gift1x.png";
 import Happy from "../../images/challenge/Happy1x.png";
 import Sad from "../../images/challenge/Sad1x.png";
-// import Baemin from "../../images/challenge/Baemin.png";
-// import HappyCertificate from "../../images/challenge/HappyCertificate.png";
-// import SadCertificate from "../../images/challenge/SadCertificate.png";
 
+import { UserStateContext } from "../../App";
 import * as Api from "../../api";
+import Swal from "sweetalert2";
+import UserLike from "../UserLike";
 
-function ChallengeDetailModal({ setModalOpen }) {
+function ChallengeDetailModal({
+  challengeDetailModalOpen,
+  setChallengeDetailModalOpen,
+  challengeItem,
+  setChallengeItem,
+}) {
   const navigate = useNavigate();
+  const params = useParams();
+  // const isLogin = !!userState.user;
+  const challengeId = { challengeItem };
 
-  //useState로 선택한 챌린지 image 상태를 생성함.
+  // 사용자가 선택한 챌린지의 상태를 생성함
+  const [selectedChallenge, setSelectedChallenge] = useState(null);
+  // fetchSelectedChallenge 함수가 완료된 이후에만 컴포넌트가 구현되게 함
+  const [isFetchCompleted, setIsFetchCompleted] = useState(false);
+  const userState = useContext(UserStateContext);
+
+  // 챌린지 main image URL 상태를 생성함
   const [challengeImage, setChallengeImage] = useState("");
-  //useState로 D-day 상태를 생성함.
-  const [chanllegeDday, setChanllegeDday] = useState("");
-  const [chanllegeTitle, setChanllegeTitle] = useState("");
+  // 챌린지 시작까지 남은 날(D-day)
+  const [challengeDday, setChallengeDday] = useState("");
+  // 챌린지 제목
+  const [challengeTitle, setChallengeTitle] = useState("");
+  // 챌린지 세부 내용
   const [challengeDescription, setChallengeDescription] = useState("");
-
-  const [challengeJoinNumber, setChallengeJoinNumber] = useState("");
-  const [challengePoint, setchallengePoint] = useState("");
-
+  // 해당 챌린지에 참여한 인원수
+  const [challengeJoinedNumber, setChallengeJoinedNumber] = useState("");
+  // 해당 챌린지 모두 완수시 받을 수 있는 예상 최대 point
+  const [challengePoint, setChallengePoint] = useState("");
+  // 챌린지 인증 방법 설명
   const [challengeManual, setChallengeManual] = useState("");
+  // Good, Bad 인증사진 URL
   const [goodImage, setGoodImage] = useState("");
   const [badImage, setBadImage] = useState("");
 
-  // const challengeShowDetail = async (e) => {
-  //   const res = await Api.get("challenges", challengeId);
-  //   const selectedChallenge = res.data;
-  //   const challengeId = selectedChallenge.challengeId;
-  // };
+  const fetchSelectedChallenge = async () => {
+    let res = await Api.get(`challenges/mine/:${challengeId}`);
+    const challengeData = res.data.updateChallenge;
+    const Dday = challengeData.startRemainingDate;
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
+    setSelectedChallenge(challengeData);
+    setChallengeDday(Dday);
+    setIsFetchCompleted(true);
 
-  //   try {
-  //     // "currentUser" 엔드포인트로 post요청함.
-  //     await Api.put("currentUser", {
-  //       joinedChallenge: challengeId,
-  //     });
+    return challengeData, Dday;
+  };
 
-  //     navigate("/network");
-  //   } catch (err) {
-  //     console.log("챌린지 참가에 실패하였습니다.", err);
-  //   }
-  // };
+  useEffect(() => {
+    if (!userState.user) {
+      navigate("/login", { replace: true });
+      return;
+    }
 
-  //모달창 끄기
-  const closeModal = () => {
-    setModalOpen(false);
+    if (params.challengeId) {
+      const selectedChallengeId = params.challlengeId;
+      fetchSelectedChallenge(selectedChallengeId);
+    }
+  }, [params, userState, navigate]);
+
+  
+
+  function countDday(Dday) {
+    const today = new Date();
+    const date = new Date(Dday);
+    const dayCount = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+
+    return dayCount;
+  }
+
+  const challengeExpectedPoint = async () => {
+    const res = await Api.get("challenges/expectPoint/:challengeId");
+    const expectedPoint = res.data;
+    setChallengePoint(expectedPoint);
+
+    return expectedPoint;
+  };
+
+  const challengeCountedJoinUser = async () => {
+    const res = await Api.get("countJoinUser/:challengeId");
+    const countedJoinUser = res.data;
+    setChallengeJoinedNumber(countedJoinUser);
+
+    return countedJoinUser;
   };
 
   const favoriteChallenge = () => {};
+
+  // 모달창 끄기
+  const closeChallengeDetailModal = () => {
+    setChallengeDetailModalOpen(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // "currentUser" 엔드포인트로 post요청함.
+      let res = {};
+      res = await Api.post("userToChallenge", {
+        challengeId,
+      });
+      // console.log("res", res);
+      setChallengeDetailModalOpen(false);
+
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        text: "챌린지 참가 성공",
+      }).then(function () {
+        navigate("/network", { replace: true });
+      });
+    } catch (err) {
+      console.log("챌린지 참가에 실패하였습니다.", err);
+    }
+  };
 
   return (
     <>
@@ -71,25 +139,24 @@ function ChallengeDetailModal({ setModalOpen }) {
             <img
               className="challengeModalCloseBtn"
               src={Close_round_light}
-              onClick={closeModal}
+              setChallengeDetailModalOpen={setChallengeDetailModalOpen}
+              onClick={closeChallengeDetailModal}
               width="32px"
               height="32px"
               alt="닫기 버튼"
             ></img>
+
             {/* 챌린지 사진, 제목, 세부내용 */}
             <div className="challengeDetailTop">
               <div className="challengeTopLeft">
                 <img
                   className="challengeImage"
-                  // src={selectedChallenge.img}
-                  width="310"
-                  height="240"
-                  margin="0"
+                  // src={selectedChallenge.mainImg}
                   alt=""
                 ></img>
                 <p className="chanllegeDday">
                   <img src={TimeLight} alt="시계"></img> 챌린지 시작까지{" "}
-                  {chanllegeDday}일 전
+                  {challengeDday}일 전
                 </p>
               </div>
               <div className="challengeTopRight">
@@ -98,95 +165,74 @@ function ChallengeDetailModal({ setModalOpen }) {
                   <img
                     className="FavoriteLight"
                     src={FavoriteLight}
-                    style={{ marginLeft: 170 }}
                     alt="하트"
                   ></img>
                 </span>
-                {/* <a>
-                  <img
-                    className="FavoriteLight"
-                    src={FavoriteLight}
-                    style={{ marginLeft: 170 }}
-                    alt="하트"
-                  ></img>
-                </a> */}
-                <h4>1주일간 배달용기 받지않기</h4>
-                <div
-                  className="challengeScroll"
-                  style={{
-                    overflow: "scroll",
-                    overflowX: "hidden",
-                    width: 290,
-                    height: 170,
-                    padding: 10,
-                    backgroundColor: "gray",
-                    marginTop: 0,
-                  }}
-                >
-                  {/* {selectedChallenge.description} */}
+
+                <h5>플로깅</h5>
+                <div className="challengeScroll">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse dapibus pellentesque ipsum, id viverra nunc
+                  laoreet eu. Etiam blandit libero a dapibus ornare. Sed
+                  fermentum justo vel neque fringilla consequat. Pellentesque
+                  non maximus ligula, non gravida magna. Nam non arcu imperdiet,
+                  aliquet nunc in, lacinia mi. Sed vehicula, nisl eget dignissim
+                  ultrices, nunc nulla dapibus mi, eu interdum enim dui et sem.
+                  Vestibulum id volutpat ex, non fringilla augue. Nulla ornare
+                  lacus id neque dignissim, quis malesuada erat pharetra.
                 </div>
               </div>
             </div>
+
             {/* 참가인원, 포인트 */}
             <div className="challengeDetailMiddle">
-              <p className="challengeJoinNumber" style={{ color: "#9C9C9C" }}>
-                <img src={UserFill} alt="사람" style={{ marginLeft: 80 }}></img>
-                참가인원
-                <span style={{ color: "black" }}> {challengeJoinNumber}명</span>
-              </p>
-              <p
-                className="challengePoint"
-                style={{ color: "#9C9C9C", marginLeft: 250 }}
-              >
-                <img src={Gift} alt="선물상자"></img>
-                포인트
-                <span style={{ color: "black" }}>
-                  {" "}
-                  총 {challengePoint}포인트
-                </span>
-              </p>
+              <div className="challengeJoinNumber">
+                <p className="personNum colorGray">
+                  <img src={UserFill} alt="사람"></img>
+                  참가인원
+                </p>
+                <span className="colorBlack"> {challengeJoinedNumber}명</span>
+              </div>
+
+              <div classNmae="challengePoint">
+                <p className="expectedPoint colorGray">
+                  <img src={Gift} alt="선물상자"></img>
+                  포인트
+                  <span className="colorBlack"> 총 {challengePoint}포인트</span>
+                </p>
+              </div>
             </div>
 
             {/* 챌린지 인증방법 */}
             <div className="challengeDetailBottom">
               <div className="challengeManual">
-                <span style={{ marginLeft: 30 }}>챌린지 인증방법</span>
-                <p style={{ marginLeft: 30, marginTop: 10, marginBottom: 0 }}>
-                  "배달용기 필요없어요" 문구가 적힌 영수증을 사진 찍기
-                </p>
+                <span className="manualTitle">챌린지 인증방법</span>
+                <p>Lorem ipsum dolor sit amet</p>
               </div>
 
               <div className="challengeManualDescription">
                 <div className="challengeManualDescriptionLeft">
-                  <p style={{ marginTop: 0, marginBottom: 5 }}>
+                  <a>
                     <img src={Happy} alt="웃는 얼굴"></img> 이렇게 찍어주세요!
-                  </p>
+                  </a>
                   <img
-                    // src={selectedChallenge.explainImg}
-                    style={{ width: 240, height: 180, margin: 0 }}
+                    className="explainImage"
+                    // src={selectedChallenge.explainImg[0]}
                     alt=""
                   ></img>
-                  <p
-                    style={{ color: "orange", marginTop: 10, marginBottom: 5 }}
-                  >
-                    문구가 잘 보이도록 밝은 곳에서 찍힌 사진
-                  </p>
+                  <a className="colorOrange">문구가 잘 보이도록 찍힌 사진</a>
                 </div>
 
                 <div className="challengeManualDescriptionRight">
-                  <p style={{ marginTop: 0, marginBottom: 5 }}>
+                  <a>
                     <img src={Sad} alt="찡그린 얼굴"></img> 이렇게 하면 안돼요!
-                  </p>
+                  </a>
                   <img
-                    // src={selectedChallenge.explainImg}
-                    style={{ width: 240, height: 180, margin: 0 }}
+                    className="explainImage"
+                    // src={selectedChallenge.explainImg[1]}
                     alt=""
                   ></img>
-                  <p
-                    style={{ color: "orange", marginTop: 10, marginBottom: 5 }}
-                  >
-                    문구가 명확히 보이지 않는 사진
-                  </p>
+                  <a className="colorOrange">문구가 명확히 보이지 않는 사진</a>
                 </div>
               </div>
             </div>
