@@ -1,4 +1,3 @@
-
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
@@ -13,7 +12,6 @@ function loginRequired(req, res, next) {
       const jwtDecoded = jwt.verify(accessToken, secretKey);
       const userId = jwtDecoded.userId;
       req.currentUserId = userId;
-      console.log("여기임");
       next();
     } catch (error) {
       const refreshToken = req.body.refreshToken;
@@ -33,26 +31,18 @@ function loginRequired(req, res, next) {
             const refreshFromDb = token.refreshToken;
 
             if (refreshFromDb != refreshToken) {
-
-              const errorMessage = "refresh token이 유효하지 않습니다.";
-              res.status(400).send("디비와 토큰이 다른 에러:");
+              res
+                .status(400)
+                .send("refresh token의 전자서명이 일치하지 않습니다.");
             }
-            // res
-            //   .status(200)
-            //   .send("refresh token검증완료. access token을 발급해주세요");
-            // // return token.refreshToken;
-             // refresh token 유효하면 access token생성 후, currentUserId와 함께 req로 보냄(req 두번보내도 되는건가..?)
-             const accessToken = jwt.sign({ userId }, secretKey, {
-            expiresIn: "1h",
-          });
-          req.currentUserId = userId;
-          console.log('여기로 오면 백 이상 없음')
+            const accessToken = jwt.sign({ userId }, secretKey, {
+              expiresIn: "1h",
+            });
+            req.currentUserId = userId;
 
-          res.status(201).send(accessToken);
+            res.status(201).send(accessToken);
           };
           const refreshFromDb = token();
-
-         
         } catch (error) {
           res
             .status(400)
@@ -61,7 +51,7 @@ function loginRequired(req, res, next) {
         }
       } else {
         console.log("access not ");
-        res.status(400).send("access token이 유효하지 않습니다.왜그러는거임 진짜ㅣ");
+        res.status(400).send("access token이 유효하지 않습니다.");
       }
       return;
     }
@@ -69,4 +59,3 @@ function loginRequired(req, res, next) {
 }
 
 export { loginRequired };
-

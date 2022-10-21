@@ -45,7 +45,7 @@ const GoodImg = ({ goodImage, setGoodImage, formData }) => {
               type="file"
               style={{ opacity: "0" }}
               accept="image/jpg, image/png, image/jpeg"
-              name="explainImg"
+              name="explain"
               multiple
               onChange={onChangeGoodImage}
               ref={fileInput}

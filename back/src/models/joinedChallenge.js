@@ -52,7 +52,9 @@ class JoinedChallenge {
         userId: userId.userId,
       },
       select: {
-        challenges: true,
+        challenge: true,
+        description:true,
+        countUpload:true,
       },
     });
     return ChallengePointInfoList;
