@@ -2,9 +2,11 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 generator client {
   provider = "prisma-client-js"
 }
+
 model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)

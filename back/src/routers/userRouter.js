@@ -138,7 +138,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 userRouter.put(
   "/userImg",
   loginRequired,
-  upload.single("image"),
+  upload.single("img"),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;

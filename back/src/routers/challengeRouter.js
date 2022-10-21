@@ -9,8 +9,8 @@ const upload = addImage("uploads");
 // const upload = multer({ dest: "uploads/" });
 
 const multiImg = upload.fields([
-  { name: "main", maxCount: 1 },
-  { name: "explain", maxCount: 2 },
+  { name: "mainImg", maxCount: 1 },
+  { name: "explainImg", maxCount: 2 },
 ]);
 
 const challengeRouter = Router();
@@ -22,6 +22,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
 
     const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
+    console.log("왜안돼:", image);
 
     const mainImg = image.main[0];
 

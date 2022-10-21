@@ -95,15 +95,16 @@ joinedChallengeRouter.get("/:challengeId", loginRequired, async (req, res) => {
 joinedChallengeRouter.get(
   "/mypage/userToChallengePoint",
   loginRequired,
-  async function (req, res, next){
-      try{
-          const userId=req.currentUserId;
-          const userJoinChallengeList=await joinedChallengeService.getUserChallengePoint({userId});
-          res.status(200).send(userJoinChallengeList);
-      }catch(error){
-          next(error);
-      }
+  async function (req, res, next) {
+    try {
+      const userId = req.currentUserId;
+      const userJoinChallengeList =
+        await joinedChallengeService.getUserChallengePoint({ userId });
+      res.status(200).send(userJoinChallengeList);
+    } catch (error) {
+      next(error);
+    }
   }
-  );
+);
 
 export { joinedChallengeRouter };
