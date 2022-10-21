@@ -2,6 +2,7 @@ import { Router } from "express";
 import { joinedChallengeService } from "../services/joinedChallengeService";
 import { loginRequired } from "../middlewares/loginRequired";
 import { addImage } from "../middlewares/addImage";
+
 const sharp = require("sharp");
 const fs = require("fs");
 const joinedChallengeRouter = Router();
@@ -36,16 +37,20 @@ joinedChallengeRouter.post(
       }
 
       const { id } = req.params;
-      const countUploads = await joinedChallengeService.count({
-        id,
+      const countUpload = await prisma.joinedChallenge.count({
+        where: {
+          chalngId: Number(id),
+        },
       });
-
+      const addedImage = `uploads/${image}`;
+      const description = req.body.description;
       const addImage = await joinedChallengeService.addChallenge({
         id,
         userId,
-        countUploads,
-        image,
+        countUpload,
+        addedImage,
         description,
+        // challenges,
       });
 
       res.status(200).json({ addImage });
@@ -55,34 +60,31 @@ joinedChallengeRouter.post(
   }
 );
 
-joinedChallengeRouter.get(
-  "/info/:challengeId",
-  loginRequired,
-  async (req, res) => {
-    try {
-      const userId = req.currentUserId;
-      const { challengeId } = req.params;
-
-      // 인증한 사진 관련된 챌린지 정보
-      const showChallenge = await joinedChallengeService.findChallenge(
-        challengeId
-      );
-
-      res.status(200).json({ showChallenge });
-    } catch (error) {
-      res.json({ message: error.message });
-    }
-  }
-);
-
-joinedChallengeRouter.get("/:challengeId", loginRequired, async (req, res) => {
+// challenge 정보
+joinedChallengeRouter.get("/info/:challengeId", async (req, res) => {
   try {
-    const userId = req.currentUserId;
+    const { challengeId } = req.params;
+
+    // 인증한 사진 관련된 챌린지 정보
+    const showChallenge = await prisma.challenge.findUnique({
+      where: { challengeId: Number(challengeId) },
+    });
+
+    res.status(200).json({ showChallenge });
+  } catch (error) {
+    res.json({ message: error.message });
+  }
+});
+
+// 인증 사진들 전체 보여주기
+joinedChallengeRouter.get("/:challengeId", async (req, res) => {
+  try {
     const { challengeId } = req.params;
 
     // 해당 챌린지의 인증 정보 전부가져오는 코드
-    const showCompletedChallenge =
-      await joinedChallengeService.findJoinedChallenges(challengeId);
+    const showCompletedChallenge = await prisma.joinedChallenge.findMany({
+      where: { chalngId: Number(challengeId) },
+    });
 
     res.status(200).json({ showCompletedChallenge });
   } catch (error) {

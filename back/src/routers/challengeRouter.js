@@ -6,8 +6,6 @@ import { loginRequired } from "../middlewares/loginRequired";
 const challengeRouter = Router();
 const upload = addImage("uploads");
 
-// const upload = multer({ dest: "uploads/" });
-
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -91,6 +89,9 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
 
     const titleImg = `${mainImg.path}`;
     const explainImgs = `${explainImgPath}`;
+    if (image === undefined) {
+      return res.status(400).send("cannot find image.");
+    }
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }

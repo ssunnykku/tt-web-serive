@@ -4,68 +4,91 @@ const backendPortNumber = "5001";
 const serverUrl =
   "http://" + window.location.hostname + ":" + backendPortNumber + "/";
 
+//  async function updateToken(endpoint, refreshToken) {
+//   if (localStorage.getItem("refreshToken")) {
+//     let refreshedAccessTokenResponse = await axios.post(serverUrl + endpoint, {
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         refreshToken: localStorage.getItem("refreshToken"),
+//       }),
+//     });
+//     let refreshAccessToken = await refreshedAccessTokenResponse.json();
+//     if (refreshedAccessTokenResponse.Logout) {
+//       localStorage.removeItem("refreshToken");
+//       localStorage.removeItem("accessToken");
+//       window.location.reload();
+//     } else {
+//       sessionStorage.setItem("accessToken", refreshAccessToken.accessToken);
+//     }
+//   }
+// }
 
-async function updateToken(){
-  if(localStorage.getItem('refreshToken')){
-    let refreshedAccessTokenResponse=await fetch(serverUrl+'login',{
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+async function updateToken() {
+  if (localStorage.getItem("refreshToken")) {
+    console.log('리프레쉬 존재함')
+    let refreshedAccessTokenResponse = await fetch(serverUrl + 'liked', {
+      method: "POST",
       body: JSON.stringify({
-        refreshToken: localStorage.getItem('refreshToken'),
+        refreshToken: localStorage.getItem("refreshToken")
       }),
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem('accessToken')
+      }
     });
-
-    let refreshAccessToken= await refreshedAccessTokenResponse.json();
-    if(refreshedAccessTokenResponse.Logout){
-      localStorage.removeItem('refreshToken');
-      localStorage.removeItem('accessToken');
+    
+    let refreshAccessToken = await refreshedAccessTokenResponse;
+    let answer= await refreshAccessToken.text()
+    if (refreshedAccessTokenResponse.Logout) {
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
       window.location.reload();
-    }else{
-      sessionStorage.setItem('accessToken', refreshAccessToken.accessToken);
-      localStorage.setItem('refreshToken',refreshAccessToken.refreshToken)
+    } else {
+      await sessionStorage.setItem("accessToken", answer);
     }
   }
 }
 
 axios.interceptors.response.use(
-  async function(response){
+  async function (response) {
     return response;
   },
-  async(error)=>{
-    if(error.response.status===490){
-      let refreshedAccessTokenResponse= await fetch(serverUrl+'login',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
+  async (error) => {
+    if (error.response.status === 490) {
+      let refreshedAccessTokenResponse = await fetch(serverUrl + 'currentUser', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          refreshToken: localStorage.getItem('refreshToken'),
+          
+          refreshToken: localStorage.getItem("refreshToken"),
         }),
       });
-      let refreshAccessToken= await refreshedAccessTokenResponse.json();
-      if(refreshAccessToken.logout){
-        localStorage.removeItem('refreshToken');
-        sessionStorage.removeItem('accessToken');
+      let refreshAccessToken = await refreshedAccessTokenResponse.json();
+      if (refreshAccessToken.logout) {
+        localStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("accessToken");
         window.location.reload();
-      }else{
+      } else {
         await sessionStorage.setItem(
-          'accessToken',
+          "accessToken",
           refreshAccessToken.accessToken
         );
         await localStorage.setItem(
-          'refreshToken',
+          "refreshToken",
           refreshAccessToken.refreshToken
         );
-        let retryData=error.config;
-        retryData.headers.Authorization=`Bearer ${refreshAccessToken.accessToken}`;
-        return await axios.request(retryData)
+        let retryData = error.config;
+        retryData.headers.Authorization = `Bearer ${refreshAccessToken.accessToken}`;
+        return await axios.request(retryData);
       }
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
   }
-)
+);
 async function get(endpoint, params = "") {
   console.log(
     `%cGET 요청 ${serverUrl + endpoint + "/" + params}`,
@@ -91,7 +114,7 @@ async function post(endpoint, data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-    },//getItem('accessToken')으로 바꿔줘야함
+    }, //getItem('accessToken')으로 바꿔줘야함
   });
 }
 
@@ -106,7 +129,7 @@ async function put(endpoint, data) {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-    },//getItem('accessToken')으로 바꿔줘야함
+    }, //getItem('accessToken')으로 바꿔줘야함
   });
 }
 

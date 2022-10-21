@@ -17,12 +17,9 @@ class JoinedChallenge {
     const addedImage = `${image}`;
     const createdChallenge = await prisma.joinedChallenge.create({
       data: {
-        user: {
-          connect: { userId: userId },
-        },
-        countUpload: countUploads,
-        addedImage: addedImage,
-        description: description,
+        countUpload,
+        addedImage,
+        description,
         challenges: {
           connect: {
             challengeId: Number(id),

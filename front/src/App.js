@@ -24,7 +24,6 @@ function App() {
     let accessToken = await sessionStorage.getItem("accessToken");
     console.log(accessToken);
     console.log(refreshToken);
-    console.log(userState);
     if (!refreshToken && !accessToken && userState.user) {
       dispatch({ type: "LOGOUT" });
       console.log("로그아웃함");

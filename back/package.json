@@ -1,7 +1,7 @@
 {
   "name": "cafe-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "## 실행 방법",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
@@ -20,8 +20,9 @@
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "@prisma/client": "^4.4.0",
+    "@prisma/client": "^4.5.0",
     "@sindresorhus/is": "^4.2.0",
+    "axios": "^1.1.3",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
     "cookie-parser": "^1.4.6",
@@ -38,6 +39,7 @@
     "multer": "^1.4.5-lts.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
+    "passport-kakao": "^1.0.1",
     "passport-local": "^1.0.0",
     "redis": "^4.3.1",
     "sharp": "^0.31.1",
@@ -53,7 +55,7 @@
     "@babel/preset-env": "^7.16.4",
     "dotenv": "^16.0.0",
     "nodemon": "^2.0.15",
-    "prisma": "^4.4.0"
+    "prisma": "^4.5.0"
   },
   "jest": {
     "testEnvironment": "node",

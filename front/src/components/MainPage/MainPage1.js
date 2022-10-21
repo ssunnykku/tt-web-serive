@@ -39,7 +39,7 @@ const MainPage1 = () => {
   //   navigate('/')
   // }
 
-  console.log("setLoginModalOpen", loginModalOpen);
+  
 
   return (
     <>
