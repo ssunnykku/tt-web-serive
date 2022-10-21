@@ -19,9 +19,10 @@ const challengeRouter = Router();
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   try {
     const holdUserId = req.currentUserId;
-    const { title, description, fromDate, toDate, method } = req.body;
 
+    const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
+
     const mainImg = image.main[0];
 
     const explainImg = image.explain;
@@ -37,14 +38,13 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `uploads/${mainImg.path}`,
-      explainImg: `uploads/${explainImgPath}`,
+      mainImg: `initial/${mainImg.path}`,
+      explainImg: `initial/${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
       throw new Error(newChallenge.errorMessage);
     }
-
     res.status(201).json({ newChallenge });
   } catch (error) {
     next(error);
