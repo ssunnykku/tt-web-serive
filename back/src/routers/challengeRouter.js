@@ -4,25 +4,22 @@ import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
 import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
 
+const challengeRouter = Router();
 const upload = addImage("uploads");
 
 // const upload = multer({ dest: "uploads/" });
 
 const multiImg = upload.fields([
-  { name: "mainImg", maxCount: 1 },
-  { name: "explainImg", maxCount: 2 },
+  { name: "main", maxCount: 1 },
+  { name: "explain", maxCount: 2 },
 ]);
 
-const challengeRouter = Router();
-
-// 1. 챌린지 등록
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   try {
     const holdUserId = req.currentUserId;
 
     const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
-    console.log("왜안돼:", image);
 
     const mainImg = image.main[0];
 
@@ -39,8 +36,8 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       description,
       fromDate,
       toDate,
-      mainImg: `${mainImg.path}`,
-      explainImg: `${explainImgPath}`,
+      mainImg: `initial/${mainImg.path}`,
+      explainImg: `initial/${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
