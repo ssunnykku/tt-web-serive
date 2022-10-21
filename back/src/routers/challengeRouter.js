@@ -6,6 +6,8 @@ import { loginRequired } from "../middlewares/loginRequired";
 const challengeRouter = Router();
 const upload = addImage("uploads");
 
+// const upload = multer({ dest: "uploads/" });
+
 const multiImg = upload.fields([
   { name: "main", maxCount: 1 },
   { name: "explain", maxCount: 2 },
@@ -16,13 +18,12 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
     const holdUserId = req.currentUserId;
 
     const { title, description, fromDate, toDate, method } = req.body;
+    const image = req.files;
 
     const mainImg = image.main[0];
 
     const explainImg = image.explain;
-    const explainOnePath = explainImg[0].path;
-    const explainTwoPath = explainImg[1].path;
-    // const explainImgPath = explainImg.map((img) => img.path);
+    const explainImgPath = explainImg.map((img) => img.path);
 
     if (image === undefined) {
       return res.status(400).send("이미지가 존재하지 않습니다.");
@@ -35,7 +36,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
       fromDate,
       toDate,
       mainImg: `${mainImg.path}`,
-      explainImg: `${explainOnePath}, ${explainImgPath}`,
+      explainImg: `${explainImgPath}`,
       method,
     });
     if (newChallenge.errorMessage) {
@@ -47,6 +48,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   }
 });
 
+// 에러남
 //2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
@@ -64,7 +66,7 @@ challengeRouter.get("/mine/:id", loginRequired, async (req, res) => {
   res.status(200).json({ updateChallenge });
 });
 
-// Delete
+// Delete (관리용 코드)
 challengeRouter.delete("/:id", loginRequired, async (req, res) => {
   const userId = req.currentUserId;
   const { id } = req.params;
