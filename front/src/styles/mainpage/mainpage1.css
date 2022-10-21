@@ -28,7 +28,7 @@ html {
   font-family: 'KOTRA_BOLD-Bold';
 }
 .todayColor {
-  color: #6a71e6;
+  color: #2A1A8F;
 }
 .todayTaskColor {
 color : #e6c33a;
@@ -56,10 +56,6 @@ color : #e6c33a;
   flex-direction: column;
   font-family: 'Nanum Gothic';
 }
-/* a:hover {
-  color: #FFFFFF;
-} */
-
 .mainPageContainer{
   background-image: url('../../images/mainpage/MainPage1.png');
   background-size: cover;
@@ -72,6 +68,13 @@ color : #e6c33a;
   font-size: 4rem;
   font-weight: 500;
   width: 100%;
+}
+
+.aMainPage1 {
+  text-decoration: none;
+}
+.mainTitle2:hover {
+  color: #FFFFFF;
 }
 
 .mainPageContainer .logoBig {
@@ -98,19 +101,25 @@ color : #e6c33a;
   justify-items: center;
   text-align: center; 
   /* transform:translate(-50%,-50%); */
-  padding-top: 1rem;
+  /* padding-top: 1rem; */
   animation:circlemove 1.5s infinite linear;
 }
 .titleScroll{
-  font-size: 1.7rem;
-  color:  #98108D;
+  font-size: 1.3rem;
+  color:  #6a71e6;
   margin-right: 2px;
+  font-family: 'TmonMonsori';
 }
-
+.LogoScroll{
+  width: 9rem;
+  height: 6rem;
+  /* padding-left: rem; */
+}
 .scrollLogo{
   width: 24px;
   height: 24px;
   margin-left: 2px;
+
 }
 .mainLogo {
   width: 20rem;

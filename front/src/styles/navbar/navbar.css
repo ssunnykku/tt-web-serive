@@ -8,7 +8,7 @@
 li{
     list-style: none;
 }
-a{
+.aNav {
     text-decoration: none;
     color: #2A1A8F;
     cursor: pointer;
