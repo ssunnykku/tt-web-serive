@@ -1,14 +1,12 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-generator client {
-  provider = "prisma-client-js"
-}
-<<<<<<< HEAD
 
-=======
->>>>>>> 136ac2edab4dab7f345059257269d50c9025780b
 model liked {
   likedId     String    @id @unique(map: "likedId_UNIQUE") @db.VarChar(45)
   userId      String    @db.VarChar(45)

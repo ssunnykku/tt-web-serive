@@ -62,12 +62,12 @@ function LoginModal({
       // sessionStorage에 "userToken"이라는 키로 JWT 토큰을 저장함.
       // sessionStorage.setItem("userToken", jwtToken);
       // // dispatch 함수를 이용해 로그인 성공 상태로 만듦.
-      if (user == "존재하지 않는 계정입니다.") {
+      if (user == "존재하지 않는 계정입니다." || user == '비밀번호가 일치하지 않습니다.') {
         setLoginModalOpen(false);
         Swal.fire({
           position: "top-center",
           icon: "fail",
-          text: "존재하지 않는 계정입니다.",
+          text: "로그인에 실패했습니다.",
         }).then(function () {
           e.preventDefault();
           navigate("/", { replace: true });
