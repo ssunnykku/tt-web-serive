@@ -34,7 +34,6 @@ class userToChallengeService{
     //참가취소
     static async JoinDelete({userId,challengeId}){
         const userJoinList=await UserToChallenge.getJoinChallengeList({userId});
-
         if(userJoinList){
             for(var i=0;i<userJoinList.length;i++){
                 if(userJoinList[i].challenge.challengeId==challengeId){

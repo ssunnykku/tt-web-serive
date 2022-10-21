@@ -33,7 +33,6 @@ function loginRequired(req, res, next) {
             const refreshFromDb = token.refreshToken;
 
             if (refreshFromDb != refreshToken) {
-<<<<<<< HEAD
               const errorMessage = "refresh token이 유효하지 않습니다.";
               res.status(400).send("디비와 토큰이 다른 에러:");
             }
@@ -43,14 +42,6 @@ function loginRequired(req, res, next) {
             // // return token.refreshToken;
              // refresh token 유효하면 access token생성 후, currentUserId와 함께 req로 보냄(req 두번보내도 되는건가..?)
              const accessToken = jwt.sign({ userId }, secretKey, {
-=======
-              res.status(400).return("디비와 토큰이 다른 에러:");
-            }
-          };
-          const refreshFromDb = token();
-
-          const accessToken = jwt.sign({ userId }, secretKey, {
->>>>>>> 136ac2edab4dab7f345059257269d50c9025780b
             expiresIn: "1h",
           });
           req.currentUserId = userId;
