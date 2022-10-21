@@ -45,7 +45,7 @@ const MainImgUpoloader = ({ challengeImage, setChallengeImage }) => {
           type="file"
           style={{ display: "none" }}
           accept="image/jpg, image/png, image/jpeg"
-          name="mainImg"
+          name="main"
           onChange={onChange}
           ref={fileInput}
         ></input>

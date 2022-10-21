@@ -2,30 +2,21 @@ import { Router } from "express";
 import { challengeService } from "../services/challengeService";
 import { addImage } from "../middlewares/addImage";
 import { loginRequired } from "../middlewares/loginRequired";
-import { dayCountsBetweenTodayAnd } from "../middlewares/dayCountsBetweenTodayAnd";
-
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
-
-const upload = addImage("uploads");
-// const upload = multer({ dest: "uploads/" });
-
-const multiImg = upload.fields([
-  { name: "mainImg", maxCount: 1 },
-  { name: "explainImg", maxCount: 2 },
-]);
 
 const challengeRouter = Router();
+const upload = addImage("uploads");
 
-// 1. 챌린지 등록
+const multiImg = upload.fields([
+  { name: "main", maxCount: 1 },
+  { name: "explain", maxCount: 2 },
+]);
+
 challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   try {
     const holdUserId = req.currentUserId;
 
     const { title, description, fromDate, toDate, method } = req.body;
     const image = req.files;
-    console.log("왜안돼:", image);
 
     const mainImg = image.main[0];
 
@@ -55,6 +46,7 @@ challengeRouter.post("/", loginRequired, multiImg, async (req, res, next) => {
   }
 });
 
+// 에러남
 //2. Get (전체) 로그인 필수 X
 challengeRouter.get("/", async (req, res) => {
   const result = await challengeService.getChallenges();
@@ -100,10 +92,8 @@ challengeRouter.put("/:id", multiImg, loginRequired, async (req, res, next) => {
     if (image === undefined) {
       return res.status(400).send("cannot find image.");
     }
-    if (dayCountsBetweenTodayAnd(req.body.fromDate) >= 0) {
-      return res
-        .status(400)
-        .send("cannot modify it after the challenge begins.");
+    if (image === undefined) {
+      return res.status(400).send("cannot find image.");
     }
 
     const updatedChallenge = await challengeService.updateChallenge({

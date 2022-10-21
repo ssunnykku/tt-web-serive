@@ -3,12 +3,9 @@ import { joinedChallengeService } from "../services/joinedChallengeService";
 import { loginRequired } from "../middlewares/loginRequired";
 import { addImage } from "../middlewares/addImage";
 
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
+const sharp = require("sharp");
 const fs = require("fs");
 const joinedChallengeRouter = Router();
-const sharp = require("sharp");
 
 const upload = addImage("uploads");
 
@@ -36,6 +33,7 @@ joinedChallengeRouter.post(
       if (image === undefined) {
         return res.status(400).send("이미지가 존재하지 않습니다.");
       }
+
       const { id } = req.params;
       const countUpload = await prisma.joinedChallenge.count({
         where: {
@@ -59,47 +57,6 @@ joinedChallengeRouter.post(
     }
   }
 );
-
-// 참가한 챌린지 사진 추가하기 // 1개 추가..
-// joinedChallengeRouter.post(
-//   "/:id",
-//   loginRequired,
-//   upload.single("image"),
-//   async (req, res, next) => {
-//     try {
-//       const userId = req.currentUserId;
-//       const image = req.file.path;
-
-//       if (image === undefined) {
-//         return res.status(400).send("이미지가 존재하지 않습니다.");
-//       }
-
-//       const { id } = req.params;
-//       const countUploads = await prisma.joinedChallenge.count({
-//         where: {
-//           chalngId: Number(id),
-//         },
-//       });
-
-//       const addImage = await prisma.joinedChallenge.create({
-//         data: {
-//           countUpload: countUploads,
-//           addedImage: `uploads/${image}`,
-//           description: req.body.description,
-//           challenges: {
-//             connect: {
-//               challengeId: Number(id),
-//             },
-//           },
-//         },
-//       });
-
-//       res.status(200).json({ addImage });
-//     } catch (error) {
-//       next(error);
-//     }
-//   }
-// );
 
 // challenge 정보
 joinedChallengeRouter.get("/info/:challengeId", async (req, res) => {
