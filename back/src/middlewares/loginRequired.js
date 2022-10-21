@@ -32,16 +32,16 @@ function loginRequired(req, res, next) {
             const refreshFromDb = token.refreshToken;
 
             if (refreshFromDb != refreshToken) {
-              res.status(400).return("디비와 토큰이 다른 에러:");
+              res.status(400).send("디비와 토큰이 다른 에러:");
             }
+
+            const accessToken = jwt.sign({ userId }, secretKey, {
+              expiresIn: "1h",
+            });
+            req.currentUserId = userId;
+            res.status(201).send(accessToken);
           };
           const callback = token();
-
-          const accessToken = jwt.sign({ userId }, secretKey, {
-            expiresIn: "1h",
-          });
-          req.currentUserId = userId;
-          res.status(201).send(accessToken);
         } catch (error) {
           res
             .status(400)

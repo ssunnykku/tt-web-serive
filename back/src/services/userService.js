@@ -45,6 +45,40 @@ class userService {
   }
 
   //1-1 카카오 회원가입
+  static async addUserByKakaoId({ kakaoId }) {
+    const user = await User.findByKakaoId({ kakaoId });
+    if (user) {
+      const errorMessage = "이미 연동된 이메일 입니다. 다시 로그인 해주세요";
+      return errorMessage;
+    }
+    //카카오 유저용 임시 email ??
+    let tempUser = true;
+    let randomString = null;
+    let email = null;
+    do {
+      randomString = Math.random().toString(10).slice(2, 10);
+      email = `kakaouser${randomString}@test.com`;
+
+      tempUser = await User.findByEmail({ email });
+    } while (tempUser);
+
+    // 카카오용 임시 비밀번호
+    const password = Math.random().toString(36).slice(2, 11);
+    const hashpassword = await bcrypt.hash(password, 10);
+    //카카오용 임시 닉네임
+    const name = `하프물범${randomString}`;
+    const newUser = { email, password: hashpassword, name, userId: kakaoId };
+    const createNewUser = await User.createPoint({ newUser });
+    createNewUser.errorMessage = null;
+    //db에 저장
+
+    try {
+      delete createNewUser._doc["password"];
+      delete createNewUser._doc["kakaoId"];
+    } finally {
+      return createNewUser;
+    }
+  }
 
   //1-2 카카오 로그인
   static async getKakaoUser({ kakaoId }) {
