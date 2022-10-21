@@ -11,7 +11,9 @@ import { config } from "dotenv";
 
 //  1. 회원가입 라우터
 userRouter.post("/register", async (req, res, next) => {
+  console.log("여기냐1고");
   try {
+    console.log("여기냐1");
     //헤더에 json타입이 명시되지 않으면 req보낸 payload(body)내용이 빈배열이 반환될 수 있다.
     //JS object는 json 타입으로 데이터 전송이 가능하다.
     if (is.emptyObject(req.body)) {
@@ -29,13 +31,17 @@ userRouter.post("/register", async (req, res, next) => {
       confirmPassword,
       name,
     });
+    console.log("여기냐2");
 
     if (newUser.errorMessage) {
+      console.log("여기냐3");
       throw new Error(newUser, errorMessage);
     }
+    console.log("여기냐4");
 
     res.status(201).send(newUser);
   } catch (error) {
+    console.log("여기냐");
     next(error);
   }
 });
@@ -174,7 +180,7 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 userRouter.put(
   "/userImg",
   loginRequired,
-  upload.single("image"),
+  //upload.single("image"),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
