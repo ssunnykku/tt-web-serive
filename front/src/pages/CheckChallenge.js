@@ -20,15 +20,25 @@ const CheckChallenge = () => {
     // Api.get(`challenges/mine/:${realId}}`).then((res)=>console.log(res))
     console.log(challengeData.fromDate)
     console.log(challengeData.toDate -challengeData.fromDate)
+    const [checkImg,setCheckImg]=useState([]);
+    const addImg=(e)=>{
+      const nowSelectImageList=e.target.files;
+      const nowImageURLList=[...checkImg];
+      for(let i=0; i<nowSelectImageList.length; i+=1){
+        const nowImageUrl=URL.createObjectURL(nowSelectImageList[i]);
+        nowImageURLList.push(nowImageUrl);
+
+      }
+      setCheckImg(nowImageURLList)
+    };
     const getDateDiff=(d1,d2)=>{
       const date1=new Date(d1);
       const date2=new Date(d2);
       const diffDate=date1.getTime()-date2.getTime();
       return Math.abs(diffDate/(1000*60*60*24));
     }
-    console.log(challengeData.fromDate=='2022-10-22')
     let dif=getDateDiff(challengeData.fromDate,challengeData.toDate)
-    console.log(challengeData.challengeId)
+    
   return (
     <div className="checkChallenge">
       <NavBar />
@@ -45,7 +55,21 @@ const CheckChallenge = () => {
         <div className="mainContent">
           
           <div className="imgContents">이미지들</div>
-          
+          <div>
+            <label
+            htmlFor="input-file"
+            className="OOTDWrite-input-file"
+            onChange={addImg}
+            >
+              <input
+              type='file'
+              multiple='multiple'
+              id="input-file"
+              style={{display:'none'}}
+              accept=".jpg,.jpeg,.png"
+              />
+            </label>
+          </div>
           <div className="pointContents">
             <div>
               참가 포인트 -50

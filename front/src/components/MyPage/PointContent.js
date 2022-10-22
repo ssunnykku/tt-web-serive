@@ -14,7 +14,7 @@ const Title = styled.h2`
 `;
 
 const Count = styled.h3`
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   font-family: "Nanum Gothic", sans-serif;
   text-align: left;
@@ -30,7 +30,7 @@ const Inner = styled.div`
   flex-direction: column;
 `;
 const SubTitle = styled.h3`
-  font-size: 27px;
+  font-size: 23px;
   font-weight: bold;
   font-family: "Nanum Gothic", sans-serif;
   text-align: left;
@@ -38,7 +38,7 @@ const SubTitle = styled.h3`
   margin-left: 100px;
 `;
 const Description = styled.h4`
-  font-size: 27px;
+  font-size: 20px;
   font-family: "Nanum Gothic", sans-serif;
   text-align: left;
   margin-top: 5px;
@@ -46,7 +46,7 @@ const Description = styled.h4`
   margin-bottom: 50px;
 `;
 const Point = styled.h5`
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   color: #6a71e6;
   font-family: "Nanum Gothic", sans-serif;
@@ -170,13 +170,13 @@ const PointContent = () => {
   return (
     <>
       <Border>
-        <Title>{data2[0].createdAt}</Title>
+        <Title>2022년 8월</Title>
         <Inner>
           <History>
-            {data.map((a, i) => {
+            {data.map((x, i) => {
               return (
                 <Each>
-                  <Count>{data[i].countUpload}</Count>
+                  <Count>1</Count>
                   <div>
                     <SubTitle>포인트 획득</SubTitle>
                     <Description>{data[i].description}</Description>
@@ -187,12 +187,7 @@ const PointContent = () => {
             })}
           </History>
         </Inner>
-        <StyledButton
-        // onClick={() => {
-        //   let point = [...shoes];
-        //   setPoint(copy);
-        // }}
-        >
+        <StyledButton>
           <CreateFont>더보기</CreateFont>
         </StyledButton>
       </Border>
