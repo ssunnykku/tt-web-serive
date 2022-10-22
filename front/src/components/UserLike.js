@@ -20,7 +20,7 @@ function UserLike({ challengeId }) {
   useEffect(()=>{
     Api.get(`likedCount/${challengeId}`).then((res) =>
     setCountLike(res.data))
-  },[countLike])
+  },[])
   // checkUserId.forEach((menu)=>console.log(menu))
   // console.log(checkUserId.array.forEach(x => {
   //   x.holdUserId === myId && setLikeStatus(true)

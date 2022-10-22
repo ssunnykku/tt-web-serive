@@ -9,7 +9,7 @@ const UserCard = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   // useEffect(() => {
-  //   Api.get("currentUser").then((res) => setName(res.data.name));
+    Api.get("currentUser").then((res) => setName(res.data.name));
   //   Api.get("userImg").then((res) => setProfileImage(res.data));
   // }, []);
   const [showForm, setShowForm] = useState(false);
