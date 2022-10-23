@@ -11,6 +11,9 @@ const UserEditForm = ({name, setName, password, setPassword, setShowForm}) => {
       .match(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/);
   };  
   const isPwdValid = validatePwd(password);
+  useEffect(()=>{
+    Api.get('currentUser').then((res)=>setName(res.data.name))
+  },[])
 const handleSubmit=async(e)=>{
   e.preventDefault();
   try{

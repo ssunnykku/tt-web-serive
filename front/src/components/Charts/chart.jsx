@@ -62,7 +62,7 @@ const data = [
 const Gas = () => {
   return (
     <>
-    <ResponsiveContainer width="100%" aspect={2}>
+    <ResponsiveContainer width="100%" aspect={4}>
       <BarChart
         width={500}
         height={300}
@@ -83,7 +83,7 @@ const Gas = () => {
         
       </BarChart>
     </ResponsiveContainer>
-    <ResponsiveContainer width="100%" aspect={2}>
+    <ResponsiveContainer width="100%" aspect={4}>
       <BarChart
         width={500}
         height={300}

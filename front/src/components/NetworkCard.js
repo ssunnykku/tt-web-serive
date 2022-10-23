@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import "../styles/network/networkcard.css";
 import ChallengeDetailModal from "./ChallengeDetailModal/ChallengeDetailModal";
 import UserLike from "./UserLike";
-
+import * as Api from '../api'
 const NetworkCard = ({ item, countPerson }) => {
   const getDateDiff=(d1,d2)=>{
     const date1=new Date(d1);
@@ -24,8 +24,13 @@ const NetworkCard = ({ item, countPerson }) => {
   const month = ("0" + (today.getMonth() + 1)).slice(-2);
   const day = ("0" + today.getDate()).slice(-2);
   const dateString = year + "-" + month + "-" + day;
-  
-  
+  const Id=item.challengeId
+  console.log(Id)
+  const [person,setPerson]=useState()
+    useEffect(()=>{
+      Api.get('countJoinUser',item.challengeId).then((res)=>setPerson(res))
+    },[])
+  console.log(person)
   return (
     <Card
       id="cardBody"

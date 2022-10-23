@@ -2,9 +2,11 @@ import React from "react";
 import NavBar from "../NavBar";
 import "../../styles/mainpage/mainpage4.css";
 import StyledButton from "../../styles/commonstyles/Button";
+import { useNavigate } from "react-router-dom";
 // import * as Api from "../../api";
 const MainPage4 = () => {
   // Api.get("chllenges/mine/18").then((res) => console.log(res));
+  let navigate=useNavigate()
   return (
     <div className="mainPage4">
       <NavBar />
@@ -16,7 +18,9 @@ const MainPage4 = () => {
         <h1>시작하세요</h1>
       </div>
       <div className="buttonContainer">
-        <StyledButton className="main4Btn">
+        <StyledButton className="main4Btn" onClick={()=>{
+          navigate('network')
+        }}>
           <h1>챌린지하러 가기</h1>
         </StyledButton>
       </div>
