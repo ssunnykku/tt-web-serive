@@ -7,6 +7,8 @@ import multer from "multer";
 import assert from "assert";
 import { config } from "dotenv";
 import { addImage } from "../middlewares/addImage";
+import { executionAsyncId } from "async_hooks";
+const path = require("path");
 
 const upload = addImage("uploads");
 
@@ -126,15 +128,22 @@ userRouter.get("/userImg", loginRequired, async (req, res, next) => {
 userRouter.put(
   "/userImg",
   loginRequired,
-  upload.single("img"),
+  // upload.single("img"),
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      const img = req.file.path;
+      // const img = req.file.path;
+      console.log(req.body.img);
+      // 64진법으로 인코딩??
+      const base64Data = Buffer.from(req.body.img, "base64");
+      const fsPromises = require("fs/promises");
+      await fsPromises.writeFile(`uploads/${Date.now()}.png`, base64Data); // "경로 및 파일명", base64Data
 
-      if (img === undefined) {
-        return res.status(400).send("이미지가 존재하지 않습니다.");
-      }
+      // console.log(base64Data);
+
+      // if (img === undefined) {
+      //   return res.status(400).send("이미지가 존재하지 않습니다.");
+      // }
 
       const EditImg = await userService.updateUserImg({
         userId,

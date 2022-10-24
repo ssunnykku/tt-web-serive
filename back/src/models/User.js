@@ -88,9 +88,10 @@ class User {
     });
     return img.img;
   }
-  // //img 수정(sh),
+  // img 수정(sh),
   static async EditImg({ userId, img }) {
     const addedImage = `${img}`;
+
     const updateImg = await prisma.user.update({
       where: {
         userId: userId,
