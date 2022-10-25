@@ -5,6 +5,7 @@ import "../../styles/mypage/mypage.css";
 import UserEditForm from "./UserEditForm";
 import * as Api from "../../api";
 import axios from "axios";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 const UserCard = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -17,15 +18,22 @@ const UserCard = () => {
   const [profileImage, setProfileImage] = useState(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU"
   );
+  const [upload, setUpload] = useState("");
   const fileInput = useRef(null);
-  const onChangeImage = async (e) => {
-    // console.log("e.target.files[0]", e.target.files[0]);
+  const onChangeImage = (e) => {
+    // const nowImageUrl = URL.createObjectURL(e.target.files[0]);
+    let nowImageUrl = window.URL.createObjectURL(e.target.files[0]);
+    nowImageUrl = nowImageUrl.substring(5);
+    console.log("nowImageUrl", nowImageUrl);
+    // console.log("e.target.files[0] : ", e.target.files[0]);
+    // console.log("e.target : ", e.target.files[0].params);
+
     let res = {};
     const formData = new FormData();
-    formData.append("img", e.target.files[0]);
+    formData.append("img", e.target.files[0], e.target.files[0].name);
     try {
-      res = await Api.put("userImg", {
-        img: profileImage,
+      res = Api.put("userImg", {
+        img: nowImageUrl,
       });
       console.log("res", res);
     } catch (err) {
@@ -107,6 +115,7 @@ const UserCard = () => {
           accept="image/jpg, image/png, image/jpeg"
           name="Img"
           onChange={onChangeImage}
+          encType="multipart/form-data"
           ref={fileInput}
         ></input>
       </form>
