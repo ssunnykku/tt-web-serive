@@ -137,17 +137,17 @@ userRouter.put(
       // 64진법으로 인코딩??
       const base64Data = Buffer.from(req.body.img, "base64");
       const fsPromises = require("fs/promises");
-      await fsPromises.writeFile(`uploads/${Date.now()}.png`, base64Data); // "경로 및 파일명", base64Data
+      await fsPromises.writeFile(`uploads/${Date.now()}`, base64Data); // "경로 및 파일명", base64Data
 
       // console.log(base64Data);
 
       // if (img === undefined) {
       //   return res.status(400).send("이미지가 존재하지 않습니다.");
       // }
-
+      console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img,
+        img: `uploads/${Date.now()}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {
