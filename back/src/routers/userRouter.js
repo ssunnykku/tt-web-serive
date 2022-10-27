@@ -133,11 +133,12 @@ userRouter.put(
     try {
       const userId = req.currentUserId;
       // const img = req.file.path;
-      console.log(req.body.img);
+      console.log(req.body.img.split(";")[0].split("/")[1]);
       // 64진법으로 인코딩??
+      const ext = req.body.img.split(";")[0].split("/")[1];
       const base64Data = Buffer.from(req.body.img, "base64");
       const fsPromises = require("fs/promises");
-      await fsPromises.writeFile(`uploads/${Date.now()}`, base64Data); // "경로 및 파일명", base64Data
+      await fsPromises.writeFile(`uploads/${Date.now()}.${ext}`, base64Data); // "경로 및 파일명", base64Data
 
       // console.log(base64Data);
 
@@ -147,7 +148,7 @@ userRouter.put(
       console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img: `uploads/${Date.now()}`,
+        img: `uploads/${Date.now()}.${ext}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {
