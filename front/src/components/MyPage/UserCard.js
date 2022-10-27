@@ -18,39 +18,38 @@ const UserCard = () => {
   const [profileImage, setProfileImage] = useState(
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU"
   );
-  const [img, setImg] = useState("");
+  // const [img, setImg] = useState("");
   const formData = new FormData();
   const fileInput = useRef(null);
 
-  const handlerOnclick = async (e) => {
-    setImg(e.target.files[0]);
-  };
-  const onChangeImage = async (e) => {
-    // if (e.target.file[0]) {
-    // var reader = new FileReader(e.target.file[0]);
-    // reader.onload = function () {
-    //   result = reader.result;
-    // };
-    // console.log("result : ", result);
+  const onChangeImage = (e) => {
     let res = {};
+    let img;
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = async function () {
-      setImg(reader.result);
-      // console.log(reader.result);
+      img = reader.result;
       try {
         res = await Api.put("userImg", {
-          img: reader.result,
+          img,
         });
-        console.log("res", res);
+        console.log("res.data : ", res.data);
+        console.log("res.data.EditImg.img : ", res.data.EditImg.img);
       } catch (err) {
         console.log("userImg 업로드 실패!");
         // }
       }
     };
-    setImg(e.target.files[0]);
 
-    Api.get("userImg").then((res) => setProfileImage(res.data));
+    console.log("img", img);
+    console.log("ProfileImage", profileImage);
+    {
+      res && res.data.EditImg.img ? (
+        Api.get("userImg").then((res) => setProfileImage(res.data.EditImg.img))
+      ) : (
+        <alert>이미지 업로드 실패!</alert>
+      );
+    }
   };
 
   const onSubmit = (e) => {
@@ -96,7 +95,6 @@ const UserCard = () => {
           accept="image/jpg, image/png, image/jpeg"
           name="Img"
           onChange={onChangeImage}
-          onClick={handlerOnclick}
           ref={fileInput}
         ></input>
       </form>
