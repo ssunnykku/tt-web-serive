@@ -25,7 +25,7 @@ const UserCard = () => {
   const handlerOnclick = async (e) => {
     setImg(e.target.files[0]);
   };
-  const onChangeImage = (e) => {
+  const onChangeImage = async (e) => {
     // if (e.target.file[0]) {
     // var reader = new FileReader(e.target.file[0]);
     // reader.onload = function () {
@@ -33,15 +33,22 @@ const UserCard = () => {
     // };
     // console.log("result : ", result);
     let res = {};
-    try {
-      res = Api.put("userImg", {
-        img,
-      });
-      console.log("res", res);
-    } catch (err) {
-      console.log("userImg 업로드 실패!");
-      // }
-    }
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = async function () {
+      setImg(reader.result);
+      // console.log(reader.result);
+      try {
+        res = await Api.put("userImg", {
+          img: reader.result,
+        });
+        console.log("res", res);
+      } catch (err) {
+        console.log("userImg 업로드 실패!");
+        // }
+      }
+    };
+    setImg(e.target.files[0]);
 
     Api.get("userImg").then((res) => setProfileImage(res.data));
   };
