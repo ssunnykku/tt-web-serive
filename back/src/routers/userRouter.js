@@ -8,6 +8,7 @@ import assert from "assert";
 import { config } from "dotenv";
 import { addImage } from "../middlewares/addImage";
 import { executionAsyncId } from "async_hooks";
+const fs = require("fs");
 const path = require("path");
 
 // const upload = addImage("uploads");
@@ -118,12 +119,13 @@ userRouter.put(
 
 userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
-    // const imgUrl = "http://localhost:3000/images/";
+    const imgUrl = "http://localhost:3000/images/";
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    // const result = imgUrl + getImg;
+    const result = imgUrl + getImg;
 
     res.status(200).send(getImg);
+    // res.status(200).send(result);
   } catch (error) {
     next(error);
   }
@@ -140,13 +142,28 @@ userRouter.put(
       // console.log(req.body.img.split(";")[0].split("/")[1]);
       // 64진법으로 인코딩??
       const ext = req.body.img.split(";")[0].split("/")[1];
-      const base64Data = Buffer.from(req.body.img, "base64");
-      const fsPromises = require("fs/promises");
-      await fsPromises.writeFile(
-        `uploads/${userId + "_" + Date.now()}.${ext}`,
-        base64Data
-      ); // "경로 및 파일명", base64Data
 
+      // const base64Data = Buffer.from(req.body.img, "base64");
+
+      // const fsPromises = require("fs/promises");
+      // await fsPromises.writeFile(
+      //   `uploads/${userId + "_" + Date.now()}.${ext}`,
+      //   base64Data
+      // ); // "경로 및 파일명", base64Data
+      // const fileCount = req.body.img.length; //넘어온 이미지 갯수
+      const timeStamp = +new Date();
+
+      let fileName = userId + "_" + timeStamp + "." + `${ext}`;
+      console.log(req.body.img.split(",")[0]);
+      /*이미지 저장 */
+      fs.writeFileSync(
+        `uploads/${fileName}`,
+        req.body.img.split(",")[1],
+        "base64"
+      );
+      //   req.body.img.replace(/^data:image\/png;base64,/, ""),
+      //   "base64"
+      // );
       // console.log(req.body.img);
       // console.log(base64Data);
       // if (img === undefined) {
@@ -155,7 +172,7 @@ userRouter.put(
       // console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img: `${userId + "_" + Date.now()}.${ext}`,
+        img: `uploads/${fileName}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {
