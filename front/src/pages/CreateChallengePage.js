@@ -136,9 +136,7 @@ const CreateChallenge = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let res = {};
-    // for (let values of formData.values()) {
-    //   console.log("formData.values()", values); // 이미지 객체의 정보
-    // }
+
     for (let key of formData.entries()) {
       console.log({ key });
     }
