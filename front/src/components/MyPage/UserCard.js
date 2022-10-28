@@ -23,61 +23,59 @@ const UserCard = () => {
   const fileInput = useRef(null);
 
   const onChangeImage = (e) => {
-    let res = {};
-    let img;
+    // let res = {};
+    let img =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU";
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = async function () {
       img = reader.result;
       try {
-        res = await Api.put("userImg", {
+        await Api.put("userImg", {
           img,
         });
-        console.log("res.data : ", res.data);
-        console.log("res.data.EditImg.img : ", res.data.EditImg.img);
+        // console.log("res.data :", res.data);
       } catch (err) {
         console.log("userImg 업로드 실패!");
         // }
       }
+      try {
+        await Api.get("userImg").then((res) => {
+          setProfileImage(res.data);
+          console.log("getRes.data : ", res.data);
+        });
+      } catch (err) {
+        console.log("유저이미지를 get하지 못함", err);
+      }
+      //   await Api.get("userImg").then((res) =>
+      //     setProfileImage(res.data.EditImg.img)
+      //   );
+      //   console.log("img", img);
+      // };
+      // console.log("res.data", res.data);
+      // {
+      //   res && res.data.EditImg.img ? (
+      //     Api.get("userImg").then((res) => setProfileImage(res.data.EditImg.img))
+      //   ) : (
+      //     <alert>이미지업로드 실패!</alert>
+      //   );
+      // }
+
+      // console.log("ProfileImage", profileImage);
+      // {
+      //   res && res.data.EditImg.img ? (
+
+      //   ) : (
+      //     <alert>이미지 업로드 실패!</alert>
+      //   );
     };
-
-    console.log("img", img);
-    console.log("ProfileImage", profileImage);
-    {
-      res && res.data.EditImg.img ? (
-        Api.get("userImg").then((res) => setProfileImage(res.data.EditImg.img))
-      ) : (
-        <alert>이미지 업로드 실패!</alert>
-      );
-    }
   };
-
-  const onSubmit = (e) => {
-    // //   e.preventDefault();
-    // //   const formData = new FormData();
-    // //   formData.append("img", e.target.files[0]);
-    // //   axios({
-    // //     method: "put",
-    // //     url: "http://localhost:5001/userImg",
-    // //     data: formData,
-    // //     headers: {
-    // //       "Content-Type": "multipart/form-data",
-    // //       Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
-    // //     },
-    // //   });
-    // // }
-    //   // .post("http://localhost:5001/upload", formData)
-    //   //         .then(res => {
-    //   //             const { fileName } = res.data;
-    //   //             console.log(fileName);
-    //   //             setUploadedImg({ fileName });
-    //   //             alert("The file is successfully uploaded");
-    //   //         })
-    //   //         .catch(err => {
-    //   //             console.error(err);
-    //   //         });
-  };
-
+  // useEffect(() => {
+  //   Api.get("userImg").then((res) => {
+  //     setProfileImage(res.data);
+  //     console.log("getRes.data : ", res.data);
+  //   });
+  // }, []);
   return (
     <div className="userprofile">
       <form className="imageForm" encType="multipart/form-data">
