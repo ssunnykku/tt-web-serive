@@ -3,14 +3,14 @@ const userRouter = Router();
 import { userService } from "../services/userService";
 import { loginRequired } from "../middlewares/loginRequired";
 import is from "@sindresorhus/is";
-import multer from "multer";
+// import multer from "multer";
 import assert from "assert";
 import { config } from "dotenv";
 import { addImage } from "../middlewares/addImage";
 import { executionAsyncId } from "async_hooks";
 const path = require("path");
 
-const upload = addImage("uploads");
+// const upload = addImage("uploads");
 
 userRouter.post("/register", async (req, res, next) => {
   try {
@@ -117,9 +117,13 @@ userRouter.put(
 
 userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
+    const imgUrl = "http://localhost:3000/images/";
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    res.status(200).send(getImg);
+    const result = imgUrl + getImg;
+
+    res.status(200).send(result);
+    console.log("이미지 제발 가져와+", result);
   } catch (error) {
     next(error);
   }
@@ -138,17 +142,20 @@ userRouter.put(
       const ext = req.body.img.split(";")[0].split("/")[1];
       const base64Data = Buffer.from(req.body.img, "base64");
       const fsPromises = require("fs/promises");
-      await fsPromises.writeFile(`uploads/${Date.now()}.${ext}`, base64Data); // "경로 및 파일명", base64Data
+      await fsPromises.writeFile(
+        `uploads/${userId + "_" + Date.now()}.${ext}`,
+        base64Data
+      ); // "경로 및 파일명", base64Data
 
+      // console.log(req.body.img);
       // console.log(base64Data);
-
       // if (img === undefined) {
       //   return res.status(400).send("이미지가 존재하지 않습니다.");
       // }
       console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img: `uploads/${Date.now()}.${ext}`,
+        img: `uploads/${userId + "_" + Date.now()}.${ext}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {

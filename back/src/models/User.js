@@ -88,6 +88,7 @@ class User {
     });
     return img.img;
   }
+
   // img 수정(sh),
   static async EditImg({ userId, img }) {
     const addedImage = `${img}`;

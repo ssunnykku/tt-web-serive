@@ -112,7 +112,7 @@ class userService {
     const newImg = await User.getUserImg({ userId });
 
     if (!newImg) {
-      const errorMessage = "no iamge";
+      const errorMessage = "no image";
       return errorMessage;
     }
     ("");
