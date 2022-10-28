@@ -172,7 +172,7 @@ userRouter.put(
       // console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img: `uploads/${fileName}`,
+        img: `${fileName}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {
