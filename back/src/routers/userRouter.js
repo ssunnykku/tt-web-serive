@@ -138,19 +138,8 @@ userRouter.put(
   async (req, res, next) => {
     try {
       const userId = req.currentUserId;
-      // const img = req.file.path;
-      // console.log(req.body.img.split(";")[0].split("/")[1]);
-      // 64진법으로 인코딩??
       const ext = req.body.img.split(";")[0].split("/")[1];
 
-      // const base64Data = Buffer.from(req.body.img, "base64");
-
-      // const fsPromises = require("fs/promises");
-      // await fsPromises.writeFile(
-      //   `uploads/${userId + "_" + Date.now()}.${ext}`,
-      //   base64Data
-      // ); // "경로 및 파일명", base64Data
-      // const fileCount = req.body.img.length; //넘어온 이미지 갯수
       const timeStamp = +new Date();
 
       let fileName = userId + "_" + timeStamp + "." + `${ext}`;
@@ -161,15 +150,6 @@ userRouter.put(
         req.body.img.split(",")[1],
         "base64"
       );
-      //   req.body.img.replace(/^data:image\/png;base64,/, ""),
-      //   "base64"
-      // );
-      // console.log(req.body.img);
-      // console.log(base64Data);
-      // if (img === undefined) {
-      //   return res.status(400).send("이미지가 존재하지 않습니다.");
-      // }
-      // console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
         img: `${fileName}`,
