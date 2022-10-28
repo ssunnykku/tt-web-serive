@@ -66,6 +66,7 @@ userRouter.get("/currentUser", loginRequired, async (req, res, next) => {
       throw new Error(currentUser.errorMessage);
     }
     res.status(200).json(currentUser);
+    console.log(currentUser.img);
   } catch (error) {
     next(error);
   }
@@ -117,13 +118,12 @@ userRouter.put(
 
 userRouter.get("/userImg", loginRequired, async (req, res, next) => {
   try {
-    const imgUrl = "http://localhost:3000/images/";
+    // const imgUrl = "http://localhost:3000/images/";
     const userId = req.currentUserId;
     const getImg = await userService.getCurrentImg({ userId });
-    const result = imgUrl + getImg;
+    // const result = imgUrl + getImg;
 
-    res.status(200).send(result);
-    console.log("이미지 제발 가져와+", result);
+    res.status(200).send(getImg);
   } catch (error) {
     next(error);
   }
@@ -137,7 +137,7 @@ userRouter.put(
     try {
       const userId = req.currentUserId;
       // const img = req.file.path;
-      console.log(req.body.img.split(";")[0].split("/")[1]);
+      // console.log(req.body.img.split(";")[0].split("/")[1]);
       // 64진법으로 인코딩??
       const ext = req.body.img.split(";")[0].split("/")[1];
       const base64Data = Buffer.from(req.body.img, "base64");
@@ -152,10 +152,10 @@ userRouter.put(
       // if (img === undefined) {
       //   return res.status(400).send("이미지가 존재하지 않습니다.");
       // }
-      console.log("1. 라우터 : ", base64Data);
+      // console.log("1. 라우터 : ", base64Data);
       const EditImg = await userService.updateUserImg({
         userId,
-        img: `uploads/${userId + "_" + Date.now()}.${ext}`,
+        img: `${userId + "_" + Date.now()}.${ext}`,
       });
       res.status(200).json({ EditImg });
     } catch (error) {
