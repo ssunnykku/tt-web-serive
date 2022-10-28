@@ -24,8 +24,7 @@ const UserCard = () => {
 
   const onChangeImage = (e) => {
     // let res = {};
-    let img =
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdW1f0vtx6CSeYeTkNJtlAR27mmUGtANNA1g&usqp=CAU";
+    let img = "";
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onload = async function () {
@@ -40,42 +39,16 @@ const UserCard = () => {
         // }
       }
       try {
-        await Api.get("userImg").then((res) => {
-          setProfileImage(res.data);
-          console.log("getRes.data : ", res.data);
-        });
+        const res = await Api.get("userImg");
+        setProfileImage(res.data);
+        console.log("getRes : ", res.data);
+        // console.log("profileImage : ", profileImage);
       } catch (err) {
         console.log("유저이미지를 get하지 못함", err);
       }
-      //   await Api.get("userImg").then((res) =>
-      //     setProfileImage(res.data.EditImg.img)
-      //   );
-      //   console.log("img", img);
-      // };
-      // console.log("res.data", res.data);
-      // {
-      //   res && res.data.EditImg.img ? (
-      //     Api.get("userImg").then((res) => setProfileImage(res.data.EditImg.img))
-      //   ) : (
-      //     <alert>이미지업로드 실패!</alert>
-      //   );
-      // }
-
-      // console.log("ProfileImage", profileImage);
-      // {
-      //   res && res.data.EditImg.img ? (
-
-      //   ) : (
-      //     <alert>이미지 업로드 실패!</alert>
-      //   );
     };
   };
-  // useEffect(() => {
-  //   Api.get("userImg").then((res) => {
-  //     setProfileImage(res.data);
-  //     console.log("getRes.data : ", res.data);
-  //   });
-  // }, []);
+  console.log("profileImage :", profileImage);
   return (
     <div className="userprofile">
       <form className="imageForm" encType="multipart/form-data">
