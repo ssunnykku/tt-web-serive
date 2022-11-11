@@ -33,12 +33,6 @@ class joinedChallengeService {
       await JoinedChallenge.getChallengePointInfoList({ userId, challengeId });
     return getChallengePointInfoList;
   }
-  //user별 참가한 챌린지 포인트조회
-  static async getUserChallengePoint(userId) {
-    const getChallengePointInfoList =
-      await JoinedChallenge.getChallengePointInfoList({ userId });
-    return getChallengePointInfoList;
-  }
 }
 
 export { joinedChallengeService };

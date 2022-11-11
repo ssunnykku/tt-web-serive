@@ -121,63 +121,13 @@ const CreateFont = styled.h2`
   padding: 0.2em 2em;
 `;
 
-const data2 = [
-  {
-    challengeId: 5,
-    title: "제목 ",
-    holdUserId: "6d93b31c-b5f2-4f9f-a65f-014792effe88",
-    description: "내용 ",
-    method: "asd",
-    fromDate: "2022-10-22",
-    toDate: "2022-11-19",
-    mainImg: "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321275.jpg",
-    explainImg:
-      "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321291.jpg,uploads\\프론트엔드 - 복사본-1666282321295.png",
-    createdAt: "2022-10-20T16:12:01.300Z",
-    updatedAt: "2022-10-20T16:12:01.300Z",
-    description: "재활용하기",
-    countUpload: 0,
-  },
-  {
-    challengeId: 5,
-    title: "제목 ",
-    holdUserId: "6d93b31c-b5f2-4f9f-a65f-014792effe88",
-    description: "내용 ",
-    method: "asd",
-    fromDate: "2022-10-22",
-    toDate: "2022-11-19",
-    mainImg: "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321275.jpg",
-    explainImg:
-      "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321291.jpg,uploads\\프론트엔드 - 복사본-1666282321295.png",
-    createdAt: "2022-10-20T16:12:01.300Z",
-    updatedAt: "2022-10-20T16:12:01.300Z",
-    description: "ㅁㄴㅇ",
-    countUpload: 0,
-  },
-  {
-    challengeId: 5,
-    title: "제목 ",
-    holdUserId: "6d93b31c-b5f2-4f9f-a65f-014792effe88",
-    description: "내용 ",
-    method: "asd",
-    fromDate: "2022-10-22",
-    toDate: "2022-11-19",
-    mainImg: "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321275.jpg",
-    explainImg:
-      "uploads/uploads\\BB1fsA3h 쾰른독일-1666282321291.jpg,uploads\\프론트엔드 - 복사본-1666282321295.png",
-    createdAt: "2022-10-20T16:12:01.300Z",
-    updatedAt: "2022-10-20T16:12:01.300Z",
-    description: "ㅁㄴㅇ",
-    countUpload: 0,
-  },
-];
 // 참가버튼 누르면 포인트 10 획득, 챌린지 개설하기 버튼 누르면 포인트 -50
 
-const PointContent = ({ myChallengeList, challengeId }) => {
+const PointContent = ({ myChallengeList }) => {
   const [visible, setVisible] = useState(10);
   const [joinedChallengeList, setJoinedChallengeList] = useState([]);
   useEffect(() => {
-    Api.get("joinedChallenge/mypage/userToChallengePoint").then((res) => {
+    Api.get("pointinfo").then((res) => {
       setJoinedChallengeList(res.data);
       // console.log(res.data[0].challenges.challengeId);
     });
