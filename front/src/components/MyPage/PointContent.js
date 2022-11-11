@@ -82,7 +82,6 @@ const MinusPoint = styled.h5`
   font-weight: bold;
   color: red;
   font-family: "Nanum Gothic", sans-serif;
-  padding-top: 6%;
 `;
 
 const Point = styled.h5`
