@@ -152,11 +152,13 @@ const PointContent = ({ myChallengeList }) => {
                 <JoinedChallengePoint className="item">
                   {joinedChallengeList.map((x, j) => {
                     if (
-                      joinedChallengeList[j].challenges.challengeId ==
+                      joinedChallengeList[j].chalngId ==
                       myChallengeList[i].challenge["challengeId"]
                     ) {
                       return (
-                        <EachJoinedChallenge>
+                        <EachJoinedChallenge
+                          key={joinedChallengeList[j].joinedId}
+                        >
                           <JoinedChallengeDate>
                             {joinedChallengeList[j].createAt.substr(0, 10)}
                           </JoinedChallengeDate>
