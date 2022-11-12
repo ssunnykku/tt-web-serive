@@ -10,7 +10,6 @@ class PointInfo {
         userId: userId,
       },
       select: {
-        challenges: true,
         createAt: true,
         countUpload: true,
         chalngId: true,
