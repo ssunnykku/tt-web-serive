@@ -8,9 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { Button, Carousel } from "react-bootstrap";
 import CheckImgSlide from "../CheckImgSlide";
 
-const CheckImg2 = ({ id,dif }) => {
+const CheckImg2 = ({ id, dif }) => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = ("0" + (today.getMonth() + 1)).slice(-2);
+  const day = ("0" + today.getDate()).slice(-2);
+  const dateString = year + "-" + month + "-" + day;
   console.log("id", id);
-  const [imgData,setImgData]=useState(null)
+  const [imgData, setImgData] = useState(null);
   const navigate = useNavigate();
   const [image, setImage] = useState({
     image_file: blankImg,
@@ -20,11 +25,10 @@ const CheckImg2 = ({ id,dif }) => {
   useEffect(() => {
     Api.get(`joinedChallenge/mypage/${id}`).then((res) => {
       // console.log("res", res.data[0].addedImage);
-      setImgData(res.data)
+      setImgData(res.data);
     });
-  },[]);
-  console.log(imgData?.length)
-  console.log(dif+1)
+  }, []);
+
   // const [firstImage, setFirstImage] = useState(blankImg);
   // const [secondImage, setSecondImage] = useState(blankImg);
   // const [thirdImage, setThirdImage] = useState(blankImg);
@@ -80,10 +84,10 @@ const CheckImg2 = ({ id,dif }) => {
           },
         });
         if (res.status === 200 || res.status === 201) {
-          Api.put('addpoint').then((res)=>console.log('하핫',res))
+          Api.put("addpoint").then((res) => console.log("하핫", res));
           Api.get(`joinedChallenge/mypage/${id}`).then((res) => {
             // console.log("res", res.data[0].addedImage);
-            setImgData(res.data)
+            setImgData(res.data);
           });
           Swal.fire({
             position: "top-center",
@@ -134,32 +138,51 @@ const CheckImg2 = ({ id,dif }) => {
   // };
   return (
     <div className="allcheck">
-    <form encType="multipart/form-data" acceptCharset="UTF-8">
-      <input
-        type="file"
-        accept="image/jpg, image/png, image/jpeg"
-        onChange={saveImage}
-        //클릭할 때마다 file input의 value값을 초기화 하지 않으면 버그가 발생할 수 있음
-        //사진 등록을 두 개 띄우고 첫번째 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
-        onClick={(e) => (e.target.value = null)}
-        ref={(refParam) => (inputRef = refParam)}
-        style={{ display: "none"}}
-      ></input>
-      <div className="img-wrapper">
-        <img style={{width:'30%'}} src={image.preview_URL}></img>
-      </div>
-      <div className="upload-btn">
-        <button disabled={!!imgData&&dif&&imgData.length>=dif+1} type="button" onClick={() => inputRef.click()}>
-          미리보기
-        </button>
-        <button type="button" onClick={deleteImage}>
-          삭제하기
-        </button>
-        <button disabled={!!imgData&&dif&&imgData.length>=dif+1} type="button" onClick={sendImageToServer}>
-          업로드하기
-        </button>
-      </div>
-      {/* <div id="checkImgContainer">
+      <form encType="multipart/form-data" acceptCharset="UTF-8">
+        <input
+          type="file"
+          accept="image/jpg, image/png, image/jpeg"
+          onChange={saveImage}
+          //클릭할 때마다 file input의 value값을 초기화 하지 않으면 버그가 발생할 수 있음
+          //사진 등록을 두 개 띄우고 첫번째 사진을 올리고 지우고 두번째에 같은 사진을 올리면 그 값이 남아있음!
+          onClick={(e) => (e.target.value = null)}
+          ref={(refParam) => (inputRef = refParam)}
+          style={{ display: "none" }}
+        ></input>
+        <div className="img-wrapper">
+          <img style={{ width: "30%" }} src={image.preview_URL}></img>
+        </div>
+        <div className="upload-btn">
+          <button
+            disabled={
+              (!!imgData && dif && imgData?.length >= dif + 1) ||
+              (!!imgData &&
+                imgData[imgData.length - 1]?.createAt.substring(0, 10) ==
+                  dateString)
+            }
+            type="button"
+            onClick={() => inputRef.click()}
+          >
+            미리보기
+          </button>
+
+          <button type="button" onClick={deleteImage}>
+            삭제하기
+          </button>
+          <button
+            disabled={
+              (!!imgData && dif && imgData?.length >= dif + 1) ||
+              (!!imgData &&
+                imgData[imgData.length - 1]?.createAt.substring(0, 10) ==
+                  dateString)
+            }
+            type="button"
+            onClick={sendImageToServer}
+          >
+            업로드하기
+          </button>
+        </div>
+        {/* <div id="checkImgContainer">
         <form
           name="firstImg"
           encType="multipart/form-data"
@@ -308,10 +331,10 @@ const CheckImg2 = ({ id,dif }) => {
           />
         </form>
       </div> */}
-    </form>
-    <div className="checkImgCarousel">
-    <CheckImgSlide imgData={imgData}/>
-    </div>
+      </form>
+      <div className="checkImgCarousel">
+        <CheckImgSlide imgData={imgData} />
+      </div>
     </div>
   );
 };

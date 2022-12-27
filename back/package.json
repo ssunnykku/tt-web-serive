@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon index.js --exec babel-node",
     "test": "jest --setupFiles dotenv/config",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "heroku-postbuild": "npm install && npm run build"
   },
   "repository": {
     "type": "git",
